@@ -1,0 +1,1089 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Giggles </title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+   .book-container {
+            perspective: 1500px;
+            position: relative;
+            height: 500px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .page {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            transform-origin: left;
+            transition: transform 1s;
+            z-index: 1;
+        }
+        
+        .page-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .page-content img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .page-content h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .page-content p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 400px;
+        }
+        
+        .storybook-nav {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .storybook-nav button {
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .storybook-nav button:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .main-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .main-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #9c27b0;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+.sidebar {
+        width: 250px;
+        background: linear-gradient(360deg, #9c27b0, #e91e63);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        flex-direction: column;
+        position: fixed;
+        height: 100vh;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 20px 0;
+      }
+
+
+.sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.logo-container {
+    padding: 30px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.logo-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    margin-right: 15px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(45deg, #fff, #f8f9fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Navigation Menu */
+.nav-menu {
+        margin-top: 24px;
+        flex-grow: 1;
+      }
+
+      .nav-list {
+        list-style: none;
+        padding: 0 12px;
+      }
+
+      .nav-item {
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        background-color: #f0f7ff;
+        color: #2a4b8d;
+      }
+
+      .nav-link.active {
+        background-color: #e4f0ff;
+        color: #2a4b8d;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .nav-link.active .nav-icon svg {
+        stroke: #2a4b8d;
+      }
+
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 999;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(124, 77, 255, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-profile:hover {
+    background: rgba(124, 77, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #718096;
+}
+
+.user-profile a {
+    color: #e53e3e;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.user-profile a:hover {
+    color: #c53030;
+}
+
+/* Content Area */
+.content {
+    margin-left: 250px;
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+}
+
+.main-content {
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    position: relative;
+    text-align:center;
+    overflow: hidden;
+}
+
+.welcome-banner::before {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    opacity: 0.3;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(-50%) rotate(0deg); }
+    50% { transform: translateY(-60%) rotate(5deg); }
+}
+
+.welcome-content h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color:#764ba2;
+}
+
+.welcome-content p {
+    font-size: 20px;
+    opacity: 0.9;
+    color:#764ba2;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, #9c27b0, #e91e63);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Game Cards */
+.game-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.game-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+}
+
+.game-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.game-card.mario {
+    border-color: #ff6b6b;
+    background: linear-gradient(135deg, #fff 0%, #ffe0e0 100%);
+}
+
+.game-card.mario:hover {
+    box-shadow: 0 25px 50px rgba(255, 107, 107, 0.3);
+}
+
+.game-card.sonic {
+    border-color: #4ecdc4;
+    background: linear-gradient(135deg, #fff 0%, #e0f7f5 100%);
+}
+
+.game-card.sonic:hover {
+    box-shadow: 0 25px 50px rgba(78, 205, 196, 0.3);
+}
+
+.game-card.donkey {
+    border-color: #45b7d1;
+    background: linear-gradient(135deg, #fff 0%, #e0f2ff 100%);
+}
+
+.game-card.donkey:hover {
+    box-shadow: 0 25px 50px rgba(69, 183, 209, 0.3);
+}
+
+.game-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #666;
+}
+
+.icon-container {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0.1;
+}
+
+.mario .icon-container::after {
+    content: '🦁';
+    font-size: 40px;
+    z-index: 1;
+}
+
+.sonic .icon-container::after {
+    content: '🐨';
+    font-size: 40px;
+    z-index: 1;
+}
+
+.donkey .icon-container::after {
+    content: '🐯';
+    font-size: 40px;
+    z-index: 1;
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.game-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.game-subtitle {
+    color: #718096;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+/* Badges Section */
+.badges-section {
+    margin-bottom: 50px;
+}
+
+.badges-section h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #2d3748;
+    text-align: center;
+    position: relative;
+}
+
+.badges-section h2::after {
+    content: '🏆✨🎯';
+    margin-left: 15px;
+    font-size: 24px;
+}
+
+.badges-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.badge-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.badge-card:hover::before {
+    transform: translateX(0);
+}
+
+.badge-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.badge-card.badge-1 {
+    border-color: #ff6b6b;
+    background: linear-gradient(135deg, #fff 0%, #ffe0e0 100%);
+}
+
+.badge-card.badge-2 {
+    border-color: #4ecdc4;
+    background: linear-gradient(135deg, #fff 0%, #e0f7f5 100%);
+}
+
+.badge-card.badge-3 {
+    border-color: #45b7d1;
+    background: linear-gradient(135deg, #fff 0%, #e0f2ff 100%);
+}
+
+.badge-card.badge-4 {
+    border-color: #96ceb4;
+    background: linear-gradient(135deg, #fff 0%, #e8f5e8 100%);
+}
+
+.badge-card.badge-5 {
+    border-color: #feca57;
+    background: linear-gradient(135deg, #fff 0%, #fff8e1 100%);
+}
+
+.badge-card.badge-locked {
+    opacity: 0.6;
+    filter: grayscale(50%);
+    position: relative;
+}
+
+.badge-card.badge-locked::after {
+    content: '🔒';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    opacity: 0.7;
+}
+
+.badge-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    display: block;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.badge-card.badge-locked .badge-icon {
+    animation: none;
+}
+
+.badge-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.badge-desc {
+    color: #718096;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    color: white;
+    margin-top: 60px;
+    margin-left: 100px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px 30px;
+    margin-left:250px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #e2e8f0;
+}
+
+.footer-col p {
+    color: #a0aec0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #a0aec0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #e2e8f0;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 30px;
+    text-align: center;
+    color: #a0aec0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+    
+    .header {
+        left: 240px;
+    }
+    
+    .content {
+        margin-left: 240px;
+    }
+    
+    .main-content {
+        padding: 30px;
+    }
+    
+    .game-cards {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .header {
+        left: 0;
+    }
+    
+    .content {
+        margin-left: 0;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .welcome-banner {
+        padding: 40px 30px;
+    }
+    
+    .welcome-content h2 {
+        font-size: 36px;
+    }
+    
+    .game-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .badges-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+    0% { background-position: -200px 0; }
+    100% { background-position: calc(200px + 100%) 0; }
+}
+
+.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Interactive Elements */
+.interactive-element {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.interactive-element:hover {
+    transform: translateY(-2px);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus states for accessibility */
+.nav-link:focus,
+.game-card:focus,
+.badge-card:focus {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .sidebar,
+    .header,
+    footer {
+        display: none;
+    }
+    
+    .content {
+        margin: 0;
+    }
+    
+    .main-content {
+        padding: 0;
+    }
+}
+        
+       
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="{% static 'images/Giggles logo.png' %}" alt="Giggles Logo">
+                </div>
+                <div class="logo-text">Giggles<span></span></div>
+            </a>
+        </div>
+        
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link active">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
+                                <path d="M9 22V12H15V22"/>
+                            </svg>
+                        </div>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'lessons' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"/>
+                                <path d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"/>
+                            </svg>
+                        </div>
+                        <span>Lessons</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'socials' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"/>
+                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"/>
+                                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"/>
+                                <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"/>
+                            </svg>
+                        </div>
+                        <span>Social Skills</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'progress' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                                <path d="M3 20H21"/>
+                            </svg>
+                        </div>
+                        <span>Progress</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'settings' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                        </div>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+              <div id="timerDisplay"></div>
+<script src="{% static 'js/timer.js' %}"></script>
+        </nav>
+    
+    </div>
+    
+    <div class="content">
+        <div class="main-content">
+            <div class="welcome-banner">
+                <div class="welcome-content">
+                    <h2 class="gradient-text">Hello,{{ user.get_full_name|default:user.username }}!</h2>
+                </div>
+            </div>
+
+        <div class="main-title">
+        <h2>Your Learning Adventure Begins Here!</h2>
+    </div>
+    
+    <div class="book-container" id="book">
+        <div class="page" id="page1">
+            <div class="page-content">
+                <img src="images/whale.png" alt="Whale representing personalized learning">
+                <h3>Personalized Learning</h3>
+                <p>Start your journey tailored to your needs and pace. Every step is designed just for you!</p>
+            </div>
+        </div>
+        
+        <div class="page" id="page2">
+            <div class="page-content">
+                <img src="{% static 'images/top-view-puzzle-pieces-with-copy-space-education-day.jpg' %}" alt="Interactive puzzle pieces" class="w-56 h-56 object-cover rounded-xl mb-6 shadow-xl">
+                <h3>Interactive Challenges</h3>
+                <p>Solve fun quizzes and engaging puzzles as you learn new things.</p>
+            </div>
+        </div>
+        
+        <div class="page" id="page3">
+            <div class="page-content">
+                <img src="{% static 'images/safety-firewall-protection-security-insurance-concept.jpg' %}" alt="Safety and security concept">
+                <h3>Safe Environment</h3>
+                <p>No ads. No distractions. Just learning and fun.</p>
+            </div>
+        </div>
+        
+        <div class="page" id="page4">
+            <div class="page-content">
+                <img src="{% static 'images/flat-lay-statistics-presentation-with-chart-arrow.jpg' %}" alt="Progress tracking charts">
+                <h3>Progress Tracking</h3>
+                <p>Stay informed with detailed learning reports.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="storybook-nav">
+        <button onclick="turnPage()">Turn Page</button>
+    </div>
+     
+               
+    </div>
+        </div>
+
+         <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Giggles Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+
+
+    <!--------------header------------->
+    <div class="header">
+        <div class="search-container"></div>
+        <div class="header-actions">
+          
+            <div class="user-profile">
+                <div class="avatar">
+                  <span class="avatar-initial"
+                    >{{ user.first_name.0|upper|default:"U" }}</span
+                  >
+                </div>
+                <div class="user-info">
+                  <span class="user-name"
+                    >{{ user.get_full_name|default:user.username }}</span>
+                  <span class="user-role">Student</span>
+                </div>
+                
+              <p><a href="{% url 'logout' %}">Logout</a></p>
+
+            </div>
+            </div>
+    </div>
+</div>
+
+<script>
+     const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+
+        function turnPage() {
+            pages.forEach((page, index) => {
+                if (index <= currentPage) {
+                    page.style.transform = 'rotateY(-180deg)';
+                    page.style.zIndex = index + 1;
+                } else {
+                    page.style.transform = 'rotateY(0deg)';
+                    page.style.zIndex = pages.length - index;
+                }
+            });
+
+            currentPage = (currentPage + 1) % pages.length;
+        }
+    // Function to toggle dropdown menus
+    // Add recent activities
+                doc.setFontSize(16);
+                doc.setTextColor(124, 77, 255);
+                doc.text('Recent Activities', 20, 230);
+                doc.setTextColor(0, 0, 0);
+                doc.setFontSize(12);
+                doc.text('• Completed "Introduction to Fractions" - Score: 95%', 20, 240);
+                doc.text('• Completed Quiz: "Animals and Their Habitats" - Score: 85%', 20, 250);
+                doc.text('• Completed "Verb Tenses - Past and Present" - Score: 100%', 20, 260);
+
+                
+    function toggleDropdown(button) {
+        button.classList.toggle('open');
+        const dropdownId = button.nextElementSibling.id;
+        document.getElementById(dropdownId).classList.toggle('show');
+    };
+    
+    // Notification bell functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const notificationBell = document.getElementById('notification-bell');
+        const notificationContainer = document.querySelector('.notification-bell-container');
+        
+        // Toggle notifications dropdown
+        notificationBell.addEventListener('click', function() {
+            notificationContainer.classList.toggle('active');
+        });
+        
+        // Close notifications when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!notificationContainer.contains(event.target)) {
+                notificationContainer.classList.remove('active');
+            }
+        });
+        
+        // Mark all as read functionality
+        const markAllRead = document.querySelector('.mark-all-read');
+        markAllRead.addEventListener('click', function(e) {
+            e.preventDefault();
+            const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+            unreadNotifications.forEach(item => {
+                item.classList.remove('unread');
+            });
+            updateNotificationCount();
+        });
+        
+        // Update notification count badge
+        function updateNotificationCount() {
+            const count = document.querySelectorAll('.notification-item.unread').length;
+            const countBadge = document.querySelector('.notification-count');
+            
+            if (count > 0) {
+                countBadge.textContent = count;
+                countBadge.style.display = 'flex';
+            } else {
+                countBadge.style.display = 'none';
+            }
+        }
+        
+        // Initialize notification count
+        updateNotificationCount();
+
+
+ });
+        
+</script>
+</body>
+</html>

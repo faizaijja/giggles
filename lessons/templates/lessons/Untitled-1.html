@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Explorer: A Journey Through Cultures</title>
+    <style>
+      /* World Explorer CSS Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        display: flex;
+        overflow-x: hidden;
+      }
+
+      .sidebar {
+        width: 250px;
+        background: linear-gradient(360deg, #9c27b0, #e91e63);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        flex-direction: column;
+        position: fixed;
+        height: 100vh;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 20px 0;
+      }
+
+      .logo-container {
+        padding: 0 2rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: translateY(-2px);
+      }
+
+      .logo-icon img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #fff, #f8bbd9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-menu {
+        margin-top: 24px;
+        flex-grow: 1;
+      }
+
+      .nav-list {
+        list-style: none;
+        padding: 0 12px;
+      }
+
+      .nav-item {
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        background-color: #f0f7ff;
+        color: #2a4b8d;
+      }
+
+      .nav-link.active {
+        background-color: #e4f0ff;
+        color: #2a4b8d;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .nav-link.active .nav-icon svg {
+        stroke: #2a4b8d;
+      }
+
+      /* Main Container */
+      .container {
+        flex: 1;
+        margin-left: 280px;
+        padding: 2rem;
+        min-height: 100vh;
+      }
+
+      /* Header Section */
+      .header-section {
+        background: linear-gradient(135deg, #9c27b0, #e91e63);
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(156, 39, 176, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header-section h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .header-section p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      /* Notification Bell */
+      .notification-bell-container {
+        position: relative;
+      }
+
+      .notification-bell {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.75rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .notification-bell:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      .notification-bell svg {
+        width: 24px;
+        height: 24px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .notification-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4757;
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 50px;
+        min-width: 20px;
+        text-align: center;
+      }
+
+      .notifications-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      }
+
+      .notifications-header {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .notifications-header h4 {
+        color: #333;
+        font-size: 1.1rem;
+      }
+
+      .mark-all-read {
+        color: #9c27b0;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .notifications-list {
+        padding: 0.5rem 0;
+      }
+
+      .notification-item {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      .notification-icon {
+        width: 10px;
+        height: 10px;
+        background: #9c27b0;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 0.5rem;
+      }
+
+      .notification-content p {
+        color: #333;
+        margin-bottom: 0.25rem;
+      }
+
+      .notification-time {
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .no-notifications {
+        padding: 2rem;
+        text-align: center;
+        color: #666;
+      }
+
+      .notifications-footer {
+        padding: 1rem;
+        border-top: 1px solid #eee;
+        text-align: center;
+      }
+
+      .notifications-footer a {
+        color: #9c27b0;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      /* User Profile */
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.75rem 1rem;
+        border-radius: 50px;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(45deg, #fff, #f8bbd9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #9c27b0;
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-name {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .user-role {
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+
+      .logout-button {
+        background: none;
+        border: none;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .logout-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+      }
+
+      .logout-button svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+
+      /* Accessibility Controls */
+      .accessibility-controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .accessibility-btn {
+        background: linear-gradient(45deg, #9c27b0, #e91e63);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+      }
+
+      .accessibility-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+      }
+
+      /* Progress Container */
+      .progress-container {
+        background: white;
+        border-radius: 15px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress-bar {
+        height: 20px;
+        background: linear-gradient(90deg, #9c27b0, #e91e63);
+        border-radius: 10px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: width 0.5s ease;
+        width: 0%;
+        min-width: 60px;
+      }
+
+      /* Lesson Navigation */
+      .lesson-nav {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        background: white;
+        padding: 1rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-button {
+        background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        color: #495057;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .nav-button:hover {
+        background: linear-gradient(45deg, #9c27b0, #e91e63);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+      }
+
+      .nav-button.active {
+        background: linear-gradient(45deg, #9c27b0, #e91e63);
+        color: white;
+        box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+      }
+
+      /* Lesson Content */
+      .lesson-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+      }
+
+      .lesson-content h2 {
+        color: #9c27b0;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+      }
+
+      .lesson-content h3 {
+        color: #e91e63;
+        margin: 1.5rem 0 1rem;
+        font-size: 1.5rem;
+      }
+
+      .lesson-content h4 {
+        color: #9c27b0;
+        margin: 1rem 0 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .lesson-content h5 {
+        color: #e91e63;
+        margin: 0.75rem 0 0.5rem;
+        font-size: 1.1rem;
+      }
+
+      .lesson-content p {
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      .lesson-content ul,
+      .lesson-content ol {
+        margin: 1rem 0;
+        padding-left: 2rem;
+      }
+
+      .lesson-content li {
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+
+      .lesson-content strong {
+        color: #9c27b0;
+      }
+
+      /* Story Container */
+      .story-container {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+      }
+
+      .story-container h2 {
+        color: white;
+        margin-bottom: 1rem;
+      }
+
+      .story-container p {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .story-container ul,
+      .story-container ol {
+        margin: 1rem 0;
+        padding-left: 2rem;
+      }
+
+      .story-container li {
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.95);
+      }
+
+      /* World Map */
+      .world-map {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        height: 400px;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+        margin: 2rem 0;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+      }
+
+      .continent {
+        position: absolute;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        opacity: 0.8;
+      }
+
+      .continent:hover {
+        opacity: 1;
+        transform: scale(1.05);
+        z-index: 10;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .continent.selected {
+        opacity: 1;
+        transform: scale(1.1);
+        z-index: 10;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);
+      }
+
+      .character {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(45deg, #9c27b0, #e91e63);
+        border-radius: 50%;
+        transition: all 0.5s ease;
+        z-index: 20;
+        box-shadow: 0 3px 10px rgba(156, 39, 176, 0.5);
+      }
+
+      .character::before {
+        content: "🌍";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.2rem;
+      }
+
+      /* Quiz Container */
+      .quiz-container {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+      }
+
+      .quiz-container h4 {
+        color: white;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .quiz-option {
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        user-select: none;
+      }
+
+      .quiz-option:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .quiz-option.correct {
+        border-color: #4caf50;
+        background: linear-gradient(45deg, #4caf50, #8bc34a);
+        color: white;
+      }
+
+      .quiz-option.incorrect {
+        border-color: #f44336;
+        background: linear-gradient(45deg, #f44336, #ff5722);
+        color: white;
+      }
+
+      .quiz-option[draggable="true"] {
+        cursor: move;
+      }
+
+      .quiz-option[draggable="true"]:hover {
+        background: linear-gradient(45deg, #e3f2fd, #bbdefb);
+      }
+
+      /* Cultural Explorer */
+      #culturalExplorer {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.2);
+      }
+
+      #regionContent {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Flag Game */
+      .flag-game {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        color: white;
+        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.3);
+      }
+
+      .flag-game h4 {
+        color: white;
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+      }
+
+      .flag-options {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+
+      .flag-option {
+        width: 120px;
+        height: 80px;
+        background: white;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-size: cover;
+        background-position: center;
+        border: 3px solid transparent;
+      }
+
+      .flag-option:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Feedback */
+      .feedback {
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        font-weight: 500;
+      }
+
+      .feedback.success {
+        background: linear-gradient(45deg, #4caf50, #8bc34a);
+        color: white;
+      }
+
+      .feedback.error {
+        background: linear-gradient(45deg, #f44336, #ff5722);
+        color: white;
+      }
+
+      /* Reward Stars */
+      .reward {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 2rem 0;
+        padding: 2rem;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .star {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .star::before {
+        content: "☆";
+        font-size: 2rem;
+        color: #ddd;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
+
+      .star.earned::before {
+        content: "★";
+        color: #ffd700;
+        animation: starBounce 0.5s ease;
+      }
+
+      @keyframes starBounce {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.3);
+        }
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: white;
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 600px;
+        position: relative;
+        animation: modalSlideIn 0.3s ease;
+        box-shadow: 0 15px 35px rgba(156, 39, 176, 0.3);
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #999;
+        transition: color 0.3s ease;
+      }
+
+      .close-btn:hover {
+        color: #e91e63;
+      }
+
+      /* Celebration */
+      .celebration {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3000;
+        display: none;
+      }
+
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #9c27b0;
+        animation: confettiFall 3s linear infinite;
+      }
+
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(-100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Accessibility Classes */
+      .high-contrast {
+        filter: contrast(150%);
+      }
+
+      .large-text {
+        font-size: 1.2em;
+      }
+
+      .large-text h1 {
+        font-size: 3rem;
+      }
+      .large-text h2 {
+        font-size: 2.4rem;
+      }
+      .large-text h3 {
+        font-size: 1.8rem;
+      }
+      .large-text h4 {
+        font-size: 1.44rem;
+      }
+      .large-text p,
+      .large-text li {
+        font-size: 1.2rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 250px;
+        }
+
+        .container {
+          margin-left: 250px;
+        }
+
+        .header-section {
+          flex-direction: column;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        .header-section h1 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+
+        .sidebar.open {
+          transform: translateX(0);
+        }
+
+        .container {
+          margin-left: 0;
+          padding: 1rem;
+        }
+
+        .header-section {
+          padding: 1.5rem;
+        }
+
+        .header-section h1 {
+          font-size: 1.8rem;
+        }
+
+        .lesson-nav {
+          justify-content: center;
+        }
+
+        .nav-button {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .lesson-content {
+          padding: 1.5rem;
+        }
+
+        .accessibility-controls {
+          justify-content: center;
+        }
+
+        .flag-options {
+          justify-content: center;
+        }
+
+        .modal-content {
+          width: 95%;
+          margin: 10% auto;
+          padding: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header-section h1 {
+          font-size: 1.5rem;
+        }
+
+        .lesson-content {
+          padding: 1rem;
+        }
+
+        .quiz-container,
+        .story-container,
+        #culturalExplorer,
+        .flag-game {
+          padding: 1rem;
+        }
+
+        .nav-button {
+          padding: 0.5rem 0.75rem;
+          font-size: 0.8rem;
+        }
+
+        .user-profile {
+          flex-direction: column;
+          gap: 0.5rem;
+          padding: 0.5rem;
+        }
+
+        .header-actions {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      /* Print Styles */
+      @media print {
+        .sidebar,
+        .header-actions,
+        .accessibility-controls,
+        .lesson-nav,
+        .reward,
+        .nav-button {
+          display: none;
+        }
+
+        .container {
+          margin-left: 0;
+        }
+
+        .lesson-content {
+          box-shadow: none;
+          border: 1px solid #ddd;
+        }
+
+        .story-container,
+        .quiz-container,
+        #culturalExplorer,
+        .flag-game {
+          background: #f5f5f5 !important;
+          color: #333 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img src="images/Giggles logo.png" alt="Giggles Logo" />
+          </div>
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="lessons.html" class="nav-link active">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container" id="mainContainer">
+      <header class="header-section">
+        <h1>
+          World Explorer: A Journey Through Cultures
+          <p>Join Mia and Leo on an adventure around the world!</p>
+        </h1>
+
+        <!--------------header------------->
+
+        <div class="header-actions">
+          <div class="user-profile">
+            <div class="avatar">
+              <span class="avatar-initial">F</span>
+            </div>
+            <div class="user-info">
+              <span class="user-name">Faiza</span>
+              <span class="user-role">Student</span>
+            </div>
+            <button class="logout-button">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="accessibility-controls">
+        <button class="accessibility-btn" id="contrastToggle">
+          High Contrast
+        </button>
+        <button class="accessibility-btn" id="textSizeToggle">
+          Larger Text
+        </button>
+        <button class="accessibility-btn" id="readAloudToggle">
+          Read Aloud
+        </button>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">0%</div>
+      </div>
+
+      <div class="lesson-nav">
+        <button class="nav-button active" data-section="intro">
+          Introduction
+        </button>
+        <button class="nav-button" data-section="history">History</button>
+        <button class="nav-button" data-section="geography">Geography</button>
+        <button class="nav-button" data-section="culture">Culture</button>
+        <button class="nav-button" data-section="citizenship">
+          Citizenship
+        </button>
+        <button class="nav-button" data-section="economics">Economics</button>
+        <button class="nav-button" data-section="current">
+          Current Events
+        </button>
+        <button class="nav-button" data-section="game">Flag Game</button>
+      </div>
+
+      <div class="lesson-content" id="lessonContent">
+        <!-- Content will be loaded here -->
+      </div>
+
+      <div class="reward">
+        <div class="star" id="star1"></div>
+        <div class="star" id="star2"></div>
+        <div class="star" id="star3"></div>
+        <div class="star" id="star4"></div>
+        <div class="star" id="star5"></div>
+      </div>
+    </div>
+
+    <div class="modal" id="countryModal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+      // Main lesson data structure
+      const lessonData = {
+        intro: {
+          title: "Meet Your Guides!",
+          content: `
+                    <div class="story-container">
+                        <h2>The Adventure Begins</h2>
+                        <p>Meet Mia and Leo, two curious friends who love to explore the world! 🌎</p>
+                        <p>Mia has a magical compass that can take them anywhere in the world. Leo has a special book that tells stories about different places and people.</p>
+                        <p>"Where should we go first?" asks Mia.</p>
+                        <p>"Let's explore the whole world!" says Leo.</p>
+                        <p>Join them as they travel to different continents and learn about:</p>
+                        <ul>
+                            <li>Amazing history and how people lived long ago</li>
+                            <li>Geography and how to read maps</li>
+                            <li>Different cultures and ways of life</li>
+                            <li>How communities work together</li>
+                            <li>How money and resources are used</li>
+                            <li>What's happening in the world today</li>
+                        </ul>
+                        <p>Are you ready for the adventure? Click the buttons above to explore different topics!</p>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <img src="images/kid-adventures.jfif" alt="Illustration of Mia and Leo ready for adventure" style="max-width: 100%; border-radius: 10px;">
+                    </div>
+                `,
+        },
+        history: {
+          title: "History Time Machine",
+          content: `
+                    <div class="story-container">
+                        <h2>Traveling Through Time</h2>
+                        <p>"Leo, look what I found in the attic!" said Mia, holding up an old pocket watch.</p>
+                        <p>"It's not just any watch," Leo said excitedly. "It's a time machine that can show us history!"</p>
+                        <p>When they opened it, magical images appeared showing people from long ago...</p>
+                    </div>
+                    
+                    <h3>What is History?</h3>
+                    <p>History is like a story about real people who lived before us. It helps us understand:</p>
+                    <ul>
+                        <li>How people lived long ago</li>
+                        <li>Important events that changed the world</li>
+                        <li>How the past affects our lives today</li>
+                    </ul>
+                    
+                    <h3>Historical Thinking Skills</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0;">
+                        <div style="flex: 1 0 200px; background-color: #e8f5e9; padding: 10px; border-radius: 8px;">
+                            <h4>Chronology</h4>
+                            <p>Putting events in the order they happened</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #e3f2fd; padding: 10px; border-radius: 8px;">
+                            <h4>Evidence</h4>
+                            <p>Looking for clues to understand what happened</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #fff3e0; padding: 10px; border-radius: 8px;">
+                            <h4>Change & Continuity</h4>
+                            <p>Seeing what has changed and what has stayed the same</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Let's Practice!</h3>
+                    <div class="quiz-container">
+                        <h4>Put these events in order from oldest to newest:</h4>
+                        <div class="quiz-options" id="chronologyQuiz">
+                            <div class="quiz-option" data-order="3">Smartphones are invented</div>
+                            <div class="quiz-option" data-order="2">First airplane flight</div>
+                            <div class="quiz-option" data-order="1">Ancient pyramids built in Egypt</div>
+                        </div>
+                        <button class="nav-button" id="checkChronology" style="margin-top: 15px;">Check Answer</button>
+                        <div class="feedback" id="chronologyFeedback" style="display: none;"></div>
+                    </div>
+                `,
+        },
+        geography: {
+          title: "Map Explorer",
+          content: `
+                    <div class="story-container">
+                        <h2>The Magical Atlas</h2>
+                        <p>"This compass is amazing," said Mia, watching it glow with blue light.</p>
+                        <p>Leo opened his book to a blank page. "And look what happens when we put the compass on the book!"</p>
+                        <p>Suddenly, a colorful map appeared, showing all the continents and oceans of the world.</p>
+                        <p>"It's a magical atlas!" they both exclaimed.</p>
+                    </div>
+                    
+                    <h3>Our World Map</h3>
+                    <div class="world-map" id="worldMap">
+                        <div class="character" id="character"></div>
+                        <!-- Continents will be added here by JavaScript -->
+                    </div>
+                    
+                    <h3>Geography Concepts</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0;">
+                        <div style="flex: 1 0 200px; background-color: #e8f5e9; padding: 10px; border-radius: 8px;">
+                            <h4>Location</h4>
+                            <p>Where places are on Earth</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #e3f2fd; padding: 10px; border-radius: 8px;">
+                            <h4>Place</h4>
+                            <p>What makes each place special</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #fff3e0; padding: 10px; border-radius: 8px;">
+                            <h4>Region</h4>
+                            <p>Areas with similar features</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #f3e5f5; padding: 10px; border-radius: 8px;">
+                            <h4>Movement</h4>
+                            <p>How people, goods, and ideas travel</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Map Skills</h3>
+                    <p>Maps help us understand where things are located. They use special tools:</p>
+                    <ul>
+                        <li><strong>Compass Rose:</strong> Shows directions (North, South, East, West)</li>
+                        <li><strong>Scale:</strong> Shows distances on the map</li>
+                        <li><strong>Legend/Key:</strong> Explains the symbols on the map</li>
+                        <li><strong>Grid:</strong> Helps find exact locations</li>
+                    </ul>
+                    
+                    <h3>Let's Practice!</h3>
+                    <p>Click on different continents on the map to learn about them!</p>
+                `,
+        },
+        culture: {
+          title: "Cultural Journeys",
+          content: `
+                    <div class="story-container">
+                        <h2>Festival of Colors</h2>
+                        <p>Mia and Leo landed in a village where everyone was throwing colorful powder into the air.</p>
+                        <p>"We've arrived during Holi!" exclaimed Leo, looking at his book. "It's a spring festival in India."</p>
+                        <p>A friendly girl named Priya invited them to join. "Every culture has special celebrations," she explained. "They tell us who we are and what we value."</p>
+                    </div>
+                    
+                    <h3>What is Culture?</h3>
+                    <p>Culture is how people live, what they believe, and what they create. It includes:</p>
+                    <ul>
+                        <li>Language and how people communicate</li>
+                        <li>Food, clothing, and art</li>
+                        <li>Celebrations and traditions</li>
+                        <li>Values and beliefs</li>
+                        <li>Rules and expectations</li>
+                    </ul>
+                    
+                    <h3>Cultural Regions Around the World</h3>
+                    <div id="culturalExplorer">
+                        <p>Click on a region to learn about some of its cultures:</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0;">
+                            <button class="nav-button" data-region="asia">Asia</button>
+                            <button class="nav-button" data-region="africa">Africa</button>
+                            <button class="nav-button" data-region="europe">Europe</button>
+                            <button class="nav-button" data-region="namerica">North America</button>
+                            <button class="nav-button" data-region="samerica">South America</button>
+                            <button class="nav-button" data-region="oceania">Oceania</button>
+                        </div>
+                        <div id="regionContent" style="background-color: #f5f5f5; padding: 15px; border-radius: 10px; min-height: 200px;">
+                            <p>Select a region above to explore its cultures!</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Cultural Diversity and Respect</h3>
+                    <p>People around the world live in different ways. This diversity makes our world interesting! When we learn about other cultures, we should:</p>
+                    <ul>
+                        <li>Be curious and open-minded</li>
+                        <li>Respect differences</li>
+                        <li>Look for what we have in common</li>
+                        <li>Avoid judging based on our own cultural views</li>
+                    </ul>
+                `,
+        },
+        citizenship: {
+          title: "Citizenship and Community",
+          content: `
+                    <div class="story-container">
+                        <h2>The Community Garden</h2>
+                        <p>Mia and Leo visited a neighborhood where people were working together in a garden.</p>
+                        <p>"What are you doing?" Leo asked a boy who was planting seeds.</p>
+                        <p>"We're growing food for everyone in our community," the boy explained. "Each person helps out, and we all benefit. That's what being a good citizen is about!"</p>
+                    </div>
+                    
+                    <h3>What is Citizenship?</h3>
+                    <p>Being a citizen means belonging to a community or country and having certain rights and responsibilities.</p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0;">
+                        <div style="flex: 1 0 200px; background-color: #e8f5e9; padding: 10px; border-radius: 8px;">
+                            <h4>Rights</h4>
+                            <p>Things you are allowed to have or do:</p>
+                            <ul>
+                                <li>Be safe</li>
+                                <li>Go to school</li>
+                                <li>Share your ideas</li>
+                                <li>Be treated fairly</li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #e3f2fd; padding: 10px; border-radius: 8px;">
+                            <h4>Responsibilities</h4>
+                            <p>Things you should do:</p>
+                            <ul>
+                                <li>Follow rules and laws</li>
+                                <li>Help others</li>
+                                <li>Take care of shared spaces</li>
+                                <li>Learn about important issues</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>Communities Big and Small</h3>
+                    <p>We belong to many communities:</p>
+                    <ul>
+                        <li><strong>Family:</strong> The people you live with and are related to</li>
+                        <li><strong>School:</strong> Students, teachers, and staff</li>
+                        <li><strong>Neighborhood:</strong> People who live near each other</li>
+                        <li><strong>Town/City:</strong> A larger area where people live and work</li>
+                        <li><strong>Country:</strong> A nation with its own government</li>
+                        <li><strong>World:</strong> All people everywhere</li>
+                    </ul>
+                    
+                    <h3>Making Decisions Together</h3>
+                    <p>Communities need to make decisions. In a democracy, citizens help make these decisions by:</p>
+                    <ul>
+                        <li>Voting</li>
+                        <li>Speaking up about important issues</li>
+                        <li>Listening to different viewpoints</li>
+                        <li>Finding solutions that work for everyone</li>
+                    </ul>
+                    
+                    <h3>Let's Practice!</h3>
+                    <div class="quiz-container">
+                        <h4>What would a good citizen do?</h4>
+                        <div class="quiz-options" id="citizenshipQuiz">
+                            <div class="quiz-option" data-correct="true">Help clean up trash in the park</div>
+                            <div class="quiz-option" data-correct="false">Break playground equipment</div>
+                            <div class="quiz-option" data-correct="true">Listen to others' ideas even if they're different</div>
+                        </div>
+                        <button class="nav-button" id="checkCitizenship" style="margin-top: 15px;">Check Answers</button>
+                        <div class="feedback" id="citizenshipFeedback" style="display: none;"></div>
+                    </div>
+                `,
+        },
+        economics: {
+          title: "Economics Explorer",
+          content: `
+                    <div class="story-container">
+                        <h2>The Lemonade Stand</h2>
+                        <p>Mia and Leo noticed children setting up a lemonade stand on a hot day.</p>
+                        <p>"Why are you selling lemonade?" Mia asked.</p>
+                        <p>"We're earning money to buy new books for our school library," one girl explained. "We had to buy lemons, sugar, and cups with our savings. Then we make lemonade and sell it for more than what it cost us to make."</p>
+                        <p>Leo smiled. "That's economics in action!"</p>
+                    </div>
+                    
+                    <h3>What is Economics?</h3>
+                    <p>Economics is about how people make choices when using limited resources. Resources include:</p>
+                    <ul>
+                        <li><strong>Natural resources:</strong> Things from nature like water, trees, and minerals</li>
+                        <li><strong>Human resources:</strong> People's work and skills</li>
+                        <li><strong>Capital resources:</strong> Tools, machines, and buildings used to make things</li>
+                    </ul>
+                    
+                    <h3>Basic Economic Concepts</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0;">
+                        <div style="flex: 1 0 200px; background-color: #e8f5e9; padding: 10px; border-radius: 8px;">
+                            <h4>Needs vs. Wants</h4>
+                            <p><strong>Needs:</strong> Things we must have to survive (food, water, shelter)</p>
+                            <p><strong>Wants:</strong> Things that are nice to have but not necessary (toys, ice cream)</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #e3f2fd; padding: 10px; border-radius: 8px;">
+                            <h4>Goods vs. Services</h4>
+                            <p><strong>Goods:</strong> Physical items you can buy (books, clothes)</p>
+                            <p><strong>Services:</strong> Work that people do for others (haircuts, teaching)</p>
+                            </div>
+                        <div style="flex: 1 0 200px; background-color: #fff3e0; padding: 10px; border-radius: 8px;">
+                            <h4>Producers vs. Consumers</h4>
+                            <p><strong>Producers:</strong> People who make goods or provide services</p>
+                            <p><strong>Consumers:</strong> People who use goods and services</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #f3e5f5; padding: 10px; border-radius: 8px;">
+                            <h4>Scarcity</h4>
+                            <p>Not having enough resources for everyone to have everything they want</p>
+                            <p>This means people have to make choices about how to use resources</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Money and Trade</h3>
+                    <p>Long ago, people traded goods directly (called bartering). Today, we use money to buy things because it's easier.</p>
+                    <p>People earn money by working, then use it to buy what they need and want. Some money is saved for the future.</p>
+                    
+                    <h3>Global Economics</h3>
+                    <p>Countries trade goods and services with each other. This helps everyone get what they need and what they're good at making.</p>
+                    <ul>
+                        <li><strong>Imports:</strong> Goods and services bought from other countries</li>
+                        <li><strong>Exports:</strong> Goods and services sold to other countries</li>
+                    </ul>
+                    
+                    <h3>Let's Practice!</h3>
+                    <div class="quiz-container">
+                        <h4>Sort these into the correct categories:</h4>
+                        <p><strong>Is it a need or a want?</strong></p>
+                        <div class="quiz-options" id="economicsQuiz">
+                            <div class="quiz-option" data-type="need">Clean water</div>
+                            <div class="quiz-option" data-type="want">Video games</div>
+                            <div class="quiz-option" data-type="need">A place to live</div>
+                            <div class="quiz-option" data-type="want">Ice cream</div>
+                        </div>
+                        <button class="nav-button" id="checkEconomics" style="margin-top: 15px;">Check Answers</button>
+                        <div class="feedback" id="economicsFeedback" style="display: none;"></div>
+                    </div>
+                `,
+        },
+        current: {
+          title: "Today's World",
+          content: `
+                    <div class="story-container">
+                        <h2>The Global Connection</h2>
+                        <p>"It's amazing how connected the world is now," said Leo, looking at a news article on a tablet.</p>
+                        <p>Mia nodded. "Something that happens on the other side of the world can affect us here. That's why it's important to know what's going on."</p>
+                        <p>"And to think about how we can help make the world better," added Leo.</p>
+                    </div>
+                    
+                    <h3>Current Events</h3>
+                    <p>Current events are important things happening in the world right now. Learning about them helps us:</p>
+                    <ul>
+                        <li>Understand how the world works</li>
+                        <li>Be informed citizens</li>
+                        <li>Connect history to today</li>
+                        <li>Think about solutions to problems</li>
+                    </ul>
+                    
+                    <h3>Global Challenges</h3>
+                    <p>Countries around the world work together on big challenges like:</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 15px 0;">
+                        <div style="flex: 1 0 200px; background-color: #e8f5e9; padding: 10px; border-radius: 8px;">
+                            <h4>Environmental Protection</h4>
+                            <p>Taking care of our planet, fighting pollution, and protecting plants and animals</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #e3f2fd; padding: 10px; border-radius: 8px;">
+                            <h4>Health</h4>
+                            <p>Fighting diseases, improving healthcare, and making sure everyone can be healthy</p>
+                        </div>
+                        <div style="flex: 1 0 200px; background-color: #fff3e0; padding: 10px; border-radius: 8px;">
+                            <h4>Education</h4>
+                            <p>Making sure all children can go to school and learn</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Finding Good Information</h3>
+                    <p>With so much information available, it's important to know how to find reliable sources. Ask these questions:</p>
+                    <ul>
+                        <li>Who created this information?</li>
+                        <li>How do they know it's true?</li>
+                        <li>Does the information seem complete?</li>
+                        <li>Are different viewpoints included?</li>
+                        <li>Is it up to date?</li>
+                    </ul>
+                    
+                    <h3>Making a Difference</h3>
+                    <p>Even kids can help make the world better! Some ways to make a difference:</p>
+                    <ul>
+                        <li>Learn about important issues</li>
+                        <li>Share what you learn with others</li>
+                        <li>Volunteer in your community</li>
+                        <li>Conserve resources (like water and energy)</li>
+                        <li>Be kind and include everyone</li>
+                    </ul>
+                `,
+        },
+        game: {
+          title: "Flag Game",
+          content: `
+                    <div class="story-container">
+                        <h2>The Flag Collection</h2>
+                        <p>"Look at all these colorful flags!" exclaimed Mia, pointing to a display.</p>
+                        <p>"Each flag represents a country and tells a story," Leo explained. "The colors and symbols have special meanings."</p>
+                        <p>"Let's see if we can match the flags to their countries!" suggested Mia.</p>
+                    </div>
+                    
+                    <h3>Flag Quiz</h3>
+                    <p>Can you match these flags to their countries?</p>
+                    
+                    <div class="flag-game">
+                        <h4 id="flagQuestion">Which flag belongs to this country: <span id="currentCountry">United States</span>?</h4>
+                        <div class="flag-options" id="flagOptions">
+                            <!-- Flag options will be added here by JavaScript -->
+                        </div>
+                        <div class="feedback" id="flagFeedback" style="display: none;"></div>
+                    </div>
+                    
+                    <h3>Flag Facts</h3>
+                    <p>Flags are important symbols that represent countries. They often include:</p>
+                    <ul>
+                        <li><strong>Colors</strong> that stand for important values or features of the country</li>
+                        <li><strong>Symbols</strong> like animals, plants, or stars that have special meaning</li>
+                        <li><strong>Patterns</strong> that might come from the country's history</li>
+                    </ul>
+                    <p>Learning about flags helps us recognize countries and understand what's important to them.</p>
+                `,
+        },
+      };
+
+      // Cultural regions data
+      const culturalData = {
+        asia: `
+                <h4>Asia</h4>
+                <p>Asia is the largest continent and home to about 60% of the world's population!</p>
+                <h5>Cultural Highlights:</h5>
+                <ul>
+                    <li><strong>Japan:</strong> Traditional arts like origami and tea ceremonies blend with modern technology</li>
+                    <li><strong>India:</strong> Rich in festivals, colorful clothing, and diverse religions</li>
+                    <li><strong>China:</strong> Ancient traditions like calligraphy and celebrations like Lunar New Year</li>
+                </ul>
+                <p>Interesting fact: In many Asian cultures, the color red symbolizes good luck and happiness!</p>
+            `,
+        africa: `
+                <h4>Africa</h4>
+                <p>Africa is the second-largest continent with over 50 countries and more than 2,000 languages!</p>
+                <h5>Cultural Highlights:</h5>
+                <ul>
+                    <li><strong>Ghana:</strong> Known for colorful kente cloth and storytelling traditions</li>
+                    <li><strong>Kenya:</strong> Maasai people are known for their distinctive clothing and jumping dances</li>
+                    <li><strong>Morocco:</strong> Famous for intricate architecture, mint tea, and bustling markets</li>
+                </ul>
+                <p>Interesting fact: Many African cultures have a strong tradition of oral storytelling that passes history down through generations.</p>
+            `,
+        europe: `
+                <h4>Europe</h4>
+                <p>Europe is known for its historic cities, art, and diverse traditions.</p>
+                <h5>Cultural Highlights:</h5>
+                <ul>
+                    <li><strong>Italy:</strong> Famous for pasta, pizza, art, and architecture</li>
+                    <li><strong>Sweden:</strong> Celebrates midsummer with dancing around a maypole</li>
+                    <li><strong>Greece:</strong> Rich mythology and traditions like plate-breaking at celebrations</li>
+                </ul>
+                <p>Interesting fact: The European Union allows people to travel freely between many European countries without needing a passport check!</p>
+            `,
+        namerica: `
+                <h4>North America</h4>
+                <p>North America includes Canada, the United States, Mexico, and the Caribbean islands.</p>
+                <h5>Cultural Highlights:</h5>
+                <ul>
+                    <li><strong>United States:</strong> Diverse traditions from people who've come from all over the world</li>
+                    <li><strong>Mexico:</strong> Colorful celebrations like Day of the Dead honor ancestors</li>
+                    <li><strong>Canada:</strong> Indigenous peoples maintain traditions while creating new cultural expressions</li>
+                </ul>
+                <p>Interesting fact: Maple syrup was first collected and used by the Indigenous peoples of North America!</p>
+            `,
+        samerica: `
+                <h4>South America</h4>
+                <p>South America is known for its vibrant music, dance, and natural wonders.</p>
+                <h5>Cultural Highlights:</h5>
+                <ul>
+                    <li><strong>Brazil:</strong> Home to the energetic Carnival celebration with music and colorful costumes</li>
+                    <li><strong>Peru:</strong> Ancient Inca traditions continue in music, art, and celebrations</li>
+                    <li><strong>Argentina:</strong> Known for tango dancing and special barbecue called asado</li>
+                </ul>
+                <p>Interesting fact: Soccer (football) is hugely popular across South America and an important part of many countries' cultures!</p>
+            `,
+        oceania: `
+                <h4>Oceania</h4>
+                <p>Oceania includes Australia, New Zealand, and many Pacific islands.</p>
+                <h5>Cultural Highlights:</h5>
+                <ul>
+                    <li><strong>Australia:</strong> Aboriginal art and stories connect to the land and Dreamtime</li>
+                    <li><strong>New Zealand:</strong> Māori traditions include the haka dance and intricate carvings</li>
+                    <li><strong>Samoa:</strong> Community-centered lifestyle with important traditions like tatau (tattoos)</li>
+                </ul>
+                <p>Interesting fact: Many Pacific Island cultures have navigated vast ocean distances using stars and currents for thousands of years!</p>
+            `,
+      };
+
+      // Flag game data
+      const flagData = [
+        { country: "United States", flag: "us-flag-placeholder" },
+        { country: "Japan", flag: "japan-flag-placeholder" },
+        { country: "Brazil", flag: "brazil-flag-placeholder" },
+        { country: "South Africa", flag: "south-africa-flag-placeholder" },
+        { country: "United Kingdom", flag: "uk-flag-placeholder" },
+        { country: "India", flag: "india-flag-placeholder" },
+      ];
+
+      // Continent data for the world map
+      const continentData = [
+        {
+          name: "North America",
+          color: "#A8D58E",
+          shape: "M100,110 L150,80 L200,90 L220,150 L180,220 L130,170 Z",
+          position: { x: 150, y: 120 },
+        },
+        {
+          name: "South America",
+          color: "#95D1A4",
+          shape: "M180,230 L210,260 L190,320 L170,340 L150,290 L160,250 Z",
+          position: { x: 180, y: 290 },
+        },
+        {
+          name: "Europe",
+          color: "#81C7E8",
+          shape: "M350,100 L400,80 L430,100 L410,130 L370,150 L340,140 Z",
+          position: { x: 385, y: 110 },
+        },
+        {
+          name: "Africa",
+          color: "#F3CA7E",
+          shape:
+            "M360,160 L400,150 L430,180 L420,240 L380,290 L350,250 L350,200 Z",
+          position: { x: 390, y: 220 },
+        },
+        {
+          name: "Asia",
+          color: "#F19D9D",
+          shape:
+            "M440,100 L500,80 L550,100 L570,150 L530,200 L480,220 L450,190 L440,150 Z",
+          position: { x: 500, y: 150 },
+        },
+        {
+          name: "Oceania",
+          color: "#C688DE",
+          shape: "M550,250 L580,260 L590,290 L570,310 L540,300 L530,270 Z",
+          position: { x: 560, y: 280 },
+        },
+      ];
+
+      // DOM references
+      const lessonContent = document.getElementById("lessonContent");
+      const progressBar = document.getElementById("progressBar");
+      const navButtons = document.querySelectorAll(".nav-button[data-section]");
+
+      // Track progress
+      let progress = {
+        intro: false,
+        history: false,
+        geography: false,
+        culture: false,
+        citizenship: false,
+        economics: false,
+        current: false,
+        game: false,
+      };
+
+      // Load a section
+      function loadSection(section) {
+        // Update active button
+        navButtons.forEach((button) => {
+          if (button.dataset.section === section) {
+            button.classList.add("active");
+          } else {
+            button.classList.remove("active");
+          }
+        });
+
+        // Load content
+        const data = lessonData[section];
+        lessonContent.innerHTML = `
+                <h2>${data.title}</h2>
+                ${data.content}
+            `;
+
+        // Mark as visited and update progress
+        progress[section] = true;
+        updateProgress();
+
+        // Initialize section-specific functionality
+        if (section === "history") {
+          initHistory();
+        } else if (section === "geography") {
+          initGeography();
+        } else if (section === "culture") {
+          initCulture();
+        } else if (section === "citizenship") {
+          initCitizenship();
+        } else if (section === "economics") {
+          initEconomics();
+        } else if (section === "game") {
+          initFlagGame();
+        }
+      }
+
+      // Update progress bar
+      function updateProgress() {
+        const completed = Object.values(progress).filter(Boolean).length;
+        const total = Object.keys(progress).length;
+        const percentage = Math.round((completed / total) * 100);
+
+        progressBar.style.width = `${percentage}%`;
+        progressBar.textContent = `${percentage}%`;
+
+        // Update stars
+        updateStars(completed);
+
+        // Show celebration if all complete
+        if (completed === total) {
+          showCelebration();
+        }
+      }
+
+      // Update reward stars
+      function updateStars(completed) {
+        const stars = document.querySelectorAll(".star");
+        const threshold = Math.ceil(
+          Object.keys(progress).length / stars.length
+        );
+
+        stars.forEach((star, index) => {
+          if (completed > index * threshold) {
+            if (!star.classList.contains("earned")) {
+              star.classList.add("earned");
+            }
+          } else {
+            star.classList.remove("earned");
+          }
+        });
+      }
+
+      // Show celebration animation
+      function showCelebration() {
+        const celebration = document.getElementById("celebration");
+        celebration.style.display = "block";
+
+        // Create confetti
+        for (let i = 0; i < 100; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          confetti.style.left = `${Math.random() * 100}%`;
+          confetti.style.top = `${Math.random() * 100}%`;
+          confetti.style.backgroundColor = `hsl(${
+            Math.random() * 360
+          }, 100%, 50%)`;
+          confetti.style.width = `${Math.random() * 10 + 5}px`;
+          confetti.style.height = `${Math.random() * 10 + 5}px`;
+          confetti.style.opacity = "1";
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+          celebration.appendChild(confetti);
+
+          // Animate confetti
+          setTimeout(() => {
+            confetti.style.transition = `all 3s ease-out`;
+            confetti.style.top = `${100 + Math.random() * 20}%`;
+            confetti.style.opacity = "0";
+          }, 10);
+        }
+
+        // Clean up
+        setTimeout(() => {
+          celebration.style.display = "none";
+          celebration.innerHTML = "";
+        }, 4000);
+      }
+
+      // Initialize history section interactions
+      function initHistory() {
+        const checkButton = document.getElementById("checkChronology");
+        if (checkButton) {
+          checkButton.addEventListener("click", () => {
+            const options = document.querySelectorAll(
+              "#chronologyQuiz .quiz-option"
+            );
+            const feedback = document.getElementById("chronologyFeedback");
+
+            // Check if options are in correct order
+            let isCorrect = true;
+            let currentOrder = 1;
+
+            options.forEach((option) => {
+              const expectedOrder = parseInt(option.dataset.order);
+              if (expectedOrder !== currentOrder) {
+                isCorrect = false;
+              }
+              currentOrder++;
+            });
+
+            // Show feedback
+            feedback.style.display = "block";
+            if (isCorrect) {
+              feedback.textContent =
+                "Great job! You put the events in the correct order.";
+              feedback.className = "feedback success";
+            } else {
+              feedback.textContent =
+                "Not quite right. Try again! Remember: Egypt pyramids → airplane flight → smartphones";
+              feedback.className = "feedback error";
+            }
+          });
+        }
+      }
+
+      // Initialize geography section interactions
+      function initGeography() {
+        const worldMap = document.getElementById("worldMap");
+        const character = document.getElementById("character");
+
+        if (worldMap && character) {
+          // Position character
+          character.style.left = "150px";
+          character.style.top = "120px";
+
+          // Add continents to map
+          continentData.forEach((continent) => {
+            const continentEl = document.createElement("div");
+            continentEl.classList.add("continent");
+            continentEl.setAttribute("title", continent.name);
+            continentEl.style.backgroundColor = continent.color;
+            continentEl.innerHTML = `<svg viewBox="0 0 700 400" style="width: 100%; height: 100%;">
+                        <path d="${continent.shape}" fill="${continent.color}" stroke="#333" stroke-width="2" />
+                    </svg>`;
+            worldMap.appendChild(continentEl);
+
+            // Add click event
+            continentEl.addEventListener("click", () => {
+              // Move character
+              character.style.left = `${continent.position.x}px`;
+              character.style.top = `${continent.position.y}px`;
+
+              // Show modal with continent info
+              showCountryModal(
+                continent.name,
+                `
+                            <h3>${continent.name}</h3>
+                            <p>You've discovered ${continent.name}! This continent is home to many countries and cultures.</p>
+                            <p>As you explore each continent, you'll learn about its:</p>
+                            <ul>
+                                <li>Geography and natural features</li>
+                                <li>Countries and people</li>
+                                <li>History and important events</li>
+                                <li>Cultures and traditions</li>
+                            </ul>
+                            <p>Click on other continents to continue your journey!</p>
+                        `
+              );
+
+              // Highlight selected continent
+              document
+                .querySelectorAll(".continent")
+                .forEach((c) => c.classList.remove("selected"));
+              continentEl.classList.add("selected");
+            });
+          });
+        }
+      }
+
+      // Initialize culture section interactions
+      function initCulture() {
+        const regionButtons = document.querySelectorAll(
+          "#culturalExplorer .nav-button[data-region]"
+        );
+        const regionContent = document.getElementById("regionContent");
+
+        if (regionButtons.length && regionContent) {
+          regionButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              const region = button.dataset.region;
+              regionContent.innerHTML = culturalData[region];
+
+              // Update active button
+              regionButtons.forEach((btn) => btn.classList.remove("active"));
+              button.classList.add("active");
+            });
+          });
+        }
+      }
+
+      // Initialize citizenship section interactions
+      function initCitizenship() {
+        const checkButton = document.getElementById("checkCitizenship");
+        if (checkButton) {
+          checkButton.addEventListener("click", () => {
+            const options = document.querySelectorAll(
+              "#citizenshipQuiz .quiz-option"
+            );
+            const feedback = document.getElementById("citizenshipFeedback");
+
+            let allCorrect = true;
+
+            options.forEach((option) => {
+              const isCorrect = option.dataset.correct === "true";
+              if (isCorrect) {
+                option.classList.add("correct");
+              } else {
+                option.classList.add("incorrect");
+                allCorrect = false;
+              }
+            });
+
+            // Show feedback
+            feedback.style.display = "block";
+            if (allCorrect) {
+              feedback.textContent =
+                "Great job! You know what good citizens do.";
+              feedback.className = "feedback success";
+            } else {
+              feedback.textContent =
+                "Take another look! Good citizens help their community and respect others.";
+              feedback.className = "feedback error";
+            }
+          });
+        }
+      }
+
+      // Initialize economics section interactions
+      function initEconomics() {
+        const checkButton = document.getElementById("checkEconomics");
+        if (checkButton) {
+          checkButton.addEventListener("click", () => {
+            const options = document.querySelectorAll(
+              "#economicsQuiz .quiz-option"
+            );
+            const feedback = document.getElementById("economicsFeedback");
+
+            let allCorrect = true;
+
+            options.forEach((option) => {
+              const correctType = option.dataset.type;
+              // In a real implementation, we would check user selections here
+
+              // For demonstration, just show all correct answers
+              if (correctType === "need") {
+                option.classList.add("correct");
+                option.textContent += " - Need";
+              } else {
+                option.classList.add("correct");
+                option.textContent += " - Want";
+              }
+            });
+
+            // Show feedback
+            feedback.style.display = "block";
+            feedback.textContent = "Good job learning about needs and wants!";
+            feedback.className = "feedback success";
+          });
+        }
+      }
+
+      // Initialize flag game
+      function initFlagGame() {
+        const flagOptions = document.getElementById("flagOptions");
+        const currentCountry = document.getElementById("currentCountry");
+        const feedback = document.getElementById("flagFeedback");
+
+        if (flagOptions && currentCountry) {
+          // Shuffle and select country
+          const shuffledFlags = [...flagData].sort(() => Math.random() - 0.5);
+          const correctCountry = shuffledFlags[0];
+          currentCountry.textContent = correctCountry.country;
+
+          // Create flag options (only show 3)
+          const gameFlags = shuffledFlags
+            .slice(0, 3)
+            .sort(() => Math.random() - 0.5);
+
+          flagOptions.innerHTML = "";
+          gameFlags.forEach((flag) => {
+            const flagEl = document.createElement("div");
+            flagEl.classList.add("flag-option");
+            flagEl.style.backgroundImage = `url('/api/placeholder/120/80')`; // Placeholder for flag images
+            flagEl.dataset.country = flag.country;
+            flagOptions.appendChild(flagEl);
+
+            // Add click event
+            flagEl.addEventListener("click", () => {
+              // Check if correct
+              const isCorrect = flag.country === correctCountry.country;
+
+              // Show feedback
+              feedback.style.display = "block";
+              if (isCorrect) {
+                feedback.textContent = `Correct! That's the flag of ${flag.country}.`;
+                feedback.className = "feedback success";
+                flagEl.style.boxShadow = "0 0 10px 3px green";
+              } else {
+                feedback.textContent = `Not quite. That's the flag of ${flag.country}. Try again!`;
+                feedback.className = "feedback error";
+                flagEl.style.boxShadow = "0 0 10px 3px red";
+              }
+            });
+          });
+        }
+      }
+
+      // Show country modal
+      function showCountryModal(title, content) {
+        const modal = document.getElementById("countryModal");
+        const modalContent = document.getElementById("modalContent");
+        const closeBtn = document.querySelector(".close-btn");
+
+        modalContent.innerHTML = content;
+        modal.style.display = "block";
+
+        // Close modal on click
+        closeBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        };
+      }
+
+      // Accessibility functions
+      document
+        .getElementById("contrastToggle")
+        .addEventListener("click", function () {
+          document
+            .getElementById("mainContainer")
+            .classList.toggle("high-contrast");
+        });
+
+      document
+        .getElementById("textSizeToggle")
+        .addEventListener("click", function () {
+          document
+            .getElementById("mainContainer")
+            .classList.toggle("large-text");
+        });
+
+      let readAloudActive = false;
+      document
+        .getElementById("readAloudToggle")
+        .addEventListener("click", function () {
+          readAloudActive = !readAloudActive;
+          if (readAloudActive) {
+            // In a real implementation, this would use the Web Speech API
+            alert("Read aloud feature would be active now!");
+            this.textContent = "Stop Reading";
+          } else {
+            alert("Read aloud feature would be stopped now!");
+            this.textContent = "Read Aloud";
+          }
+        });
+
+      // Make elements draggable for sorting quizzes
+      function initDraggable() {
+        const options = document.querySelectorAll(".quiz-option");
+        options.forEach((option) => {
+          option.setAttribute("draggable", "true");
+
+          option.addEventListener("dragstart", function (e) {
+            e.dataTransfer.setData("text/plain", this.dataset.order);
+            this.style.opacity = "0.5";
+          });
+
+          option.addEventListener("dragend", function () {
+            this.style.opacity = "1";
+          });
+
+          option.addEventListener("dragover", function (e) {
+            e.preventDefault();
+          });
+
+          option.addEventListener("drop", function (e) {
+            e.preventDefault();
+            const fromOrder = e.dataTransfer.getData("text/plain");
+            const toOrder = this.dataset.order;
+
+            // In a real implementation, we would swap the elements here
+            console.log(`Swap ${fromOrder} with ${toOrder}`);
+          });
+        });
+      }
+
+      // Initialize the app
+      function init() {
+        // Load intro section by default
+        loadSection("intro");
+
+        // Add click handlers to navigation buttons
+        navButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            loadSection(button.dataset.section);
+          });
+        });
+      }
+
+      // Run initialization when DOM is loaded
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
+</html>

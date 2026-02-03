@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giggles - Learning Made Fun!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    
+    body {
+      background-color: #f0f7ff;
+      overflow-x: hidden;
+    }
+    
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 260px;
+      height: 100%;
+      background: linear-gradient(180deg, #5b3dc9 0%, #2e1a7a 100%);
+      color: white;
+      overflow: hidden;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+    
+    .logo-container {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #1f104d;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-text {
+      font-size: 42px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff7b00, #ffeb3b, #4caf50, #2196f3, #9c27b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      z-index: 2;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .bubbles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .nav-item {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid transparent;
+      position: relative;
+    }
+    
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 4px solid #ffeb3b;
+    }
+    
+    .nav-item.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-left: 4px solid #ffeb3b;
+    }
+    
+    .nav-text {
+      font-size: 18px;
+      margin-left: 15px;
+    }
+    
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .login-button {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      padding: 12px;
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      border: none;
+      border-radius: 25px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .main-content {
+      margin-left: 260px;
+      padding: 20px;
+    }
+    
+    .user-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+    
+    .accessibility-options {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .acc-button {
+      background-color: white;
+      border: 2px solid #5b3dc9;
+      border-radius: 20px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .acc-button:hover {
+      background-color: #5b3dc9;
+      color: white;
+    }
+    
+    .hero-section {
+      background-color: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-title {
+      font-size: 42px;
+      margin-bottom: 15px;
+      color: #333;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-text {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: #555;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .start-button {
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .start-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.4);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    
+    .feature-card {
+      background-color: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .feature-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .feature-text {
+      font-size: 16px;
+      color: #555;
+    }
+    
+    .character {
+      position: absolute;
+      z-index: 1;
+      transition: all 0.5s;
+    }
+    
+    #robot {
+      bottom: -30px;
+      right: -30px;
+      transform: rotate(10deg);
+      animation: bounce 3s ease-in-out infinite;
+    }
+    
+    #dinosaur {
+      bottom: -30px;
+      left: -30px;
+      transform: scaleX(-1);
+      animation: sway 4s ease-in-out infinite;
+    }
+    
+    #rocket {
+      top: 20px;
+      right: 50px;
+      animation: float-rocket 5s ease-in-out infinite;
+    }
+
+    #stars {
+      top: 40px;
+      left: 40px;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+    
+    #game-character {
+      bottom: -20px;
+      right: 20px;
+      width: 100px;
+      height: 100px;
+      animation: hop 2s ease-in-out infinite;
+    }
+    
+    #progress-character {
+      bottom: -20px;
+      right: 20px;
+      width: 90px;
+      height: 90px;
+      animation: wave 3s ease-in-out infinite;
+    }
+    
+    #learn-character {
+      bottom: -20px;
+      right: 20px;
+      width: 100px;
+      height: 100px;
+      animation: spin 4s linear infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(10deg); }
+      50% { transform: translateY(-15px) rotate(10deg); }
+    }
+    
+    @keyframes sway {
+      0%, 100% { transform: translateX(0) scaleX(-1); }
+      50% { transform: translateX(-10px) scaleX(-1); }
+    }
+    
+    @keyframes float-rocket {
+      0%, 100% { transform: translateY(0) rotate(10deg); }
+      50% { transform: translateY(-20px) rotate(-5deg); }
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+    
+    @keyframes hop {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    @keyframes wave {
+      0%, 100% { transform: rotate(0); }
+      25% { transform: rotate(10deg); }
+      75% { transform: rotate(-10deg); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0.8;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo-container">
+      <div class="bubbles">
+        <div class="bubble" style="width: 20px; height: 20px; left: 10%; top: 30%; animation-delay: 0s;"></div>
+        <div class="bubble" style="width: 15px; height: 15px; left: 30%; top: 60%; animation-delay: 0.5s;"></div>
+        <div class="bubble" style="width: 25px; height: 25px; left: 60%; top: 40%; animation-delay: 1s;"></div>
+        <div class="bubble" style="width: 18px; height: 18px; left: 80%; top: 20%; animation-delay: 1.5s;"></div>
+      </div>
+      <div class="logo-text">Giggles</div>
+    </div>
+    
+    <div class="nav-item active">
+      <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+      </svg>
+      <span class="nav-text">Home</span>
+    </div>
+    
+    <div class="nav-item">
+      <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 9h7V2l-2.35 2.35z"></path>
+      </svg>
+      <span class="nav-text">Games</span>
+    </div>
+    
+    <div class="nav-item">
+      <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 18H6V4h2v8l2.5-1.5L13 12V4h5v16z"></path>
+      </svg>
+      <span class="nav-text">Lessons</span>
+    </div>
+    
+    <div class="nav-item">
+      <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2V9h2v8zm4 0h-2v-4h2v4zm4 0h-2V7h2v10z"></path>
+      </svg>
+      <span class="nav-text">Progress</span>
+    </div>
+    
+    <div class="nav-item">
+      <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"></path>
+      </svg>
+      <span class="nav-text">Social Skills & Etiquettes</span>
+    </div>
+    
+    <div class="nav-item">
+      <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"></path>
+      </svg>
+      <span class="nav-text">Help</span>
+    </div>
+    
+    <button class="login-button">
+      <svg style="width: 20px; height: 20px; margin-right: 8px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"></path>
+      </svg>
+      Login
+    </button>
+  </div>
+  
+  <div class="main-content">
+    <div class="user-bar">
+      <div class="user-info">
+        <div class="user-avatar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#666">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+          </svg>
+        </div>
+        <span>Guest User</span>
+      </div>
+      
+      <div class="accessibility-options">
+        <button class="acc-button">Larger Text</button>
+        <button class="acc-button">Smaller Text</button>
+        <button class="acc-button">High Contrast</button>
+        <button class="acc-button">Read Aloud</button>
+        <button class="acc-button">Simplify</button>
+      </div>
+    </div>
+    
+    <div class="hero-section">
+      <h1 class="hero-title">Learning Made Fun for Everyone!</h1>
+      <p class="hero-text">Interactive games and activities designed to help children with diverse learning needs discover the joy of learning at their own pace.</p>
+      <button class="start-button">Start Learning</button>
+      
+      <!-- Animated characters -->
+      <img id="robot" class="character" src="/api/placeholder/120/120" alt="Robot character" />
+      <img id="dinosaur" class="character" src="/api/placeholder/130/130" alt="Dinosaur character" />
+      <img id="rocket" class="character" src="/api/placeholder/80/80" alt="Rocket" />
+      <img id="stars" class="character" src="/api/placeholder/70/70" alt="Stars" />
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5b3dc9" width="80" height="80">
+            <path d="M21.58 16.09l-1.09-7.66C20.21 6.46 18.52 5 16.53 5H7.47C5.48 5 3.79 6.46 3.51 8.43l-1.09 7.66C2.2 17.63 3.39 19 4.94 19h0c.68 0 1.32-.27 1.8-.75L9 16h6l2.25 2.25c.48.48 1.13.75 1.8.75h0C20.61 19 21.8 17.63 21.58 16.09zM11 11H9v2H8v-2H6v-1h2V8h1v2h2V11zM15 10c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1S15.55 10 15 10zM17 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1S17.55 13 17 13z"></path>
+          </svg>
+        </div>
+        <h3 class="feature-title">Interactive Games</h3>
+        <p class="feature-text">Fun educational games that adapt to your child's learning style and pace.</p>
+        <img id="game-character" class="character" src="/api/placeholder/100/100" alt="Game character" />
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5b3dc9" width="80" height="80">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h1.5v3l2-3h1.7l-2 3 2 3h-1.7l-2-3v3H12V5zM7 7.25h2.5V6.5H7V5h4v3.75H8.5v.75H11V11H7V7.25zM19 13l-6 6-4-4-4 4v-2.5l4-4 4 4 6-6V13z"></path>
+          </svg>
+        </div>
+        <h3 class="feature-title">Progress Tracking</h3>
+        <p class="feature-text">See your child's growth with easy-to-understand visual reports.</p>
+        <img id="progress-character" class="character" src="/api/placeholder/90/90" alt="Progress character" />
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5b3dc9" width="80" height="80">
+            <path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"></path>
+          </svg>
+        </div>
+        <h3 class="feature-title">Personalized Learning</h3>
+        <p class="feature-text">Activities that adjust to your child's unique learning style.</p>
+        <img id="learn-character" class="character" src="/api/placeholder/100/100" alt="Learning character" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create confetti effect
+    function createConfetti() {
+      const colors = ['#ff9800', '#4caf50', '#2196f3', '#9c27b0', '#ffeb3b'];
+      const confettiCount = 50;
+      
+      for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.classList.add('confetti');
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          document.body.appendChild(confetti);
+          
+          // Remove confetti after animation
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }, i * 50);
+      }
+    }
+
+    // Trigger confetti when Start Learning button is clicked
+    document.querySelector('.start-button').addEventListener('click', createConfetti);
+    
+    // Make hero characters interactive
+    const characters = document.querySelectorAll('.character');
+    characters.forEach(character => {
+      character.addEventListener('mouseover', function() {
+        this.style.transform = 'scale(1.2)';
+      });
+      character.addEventListener('mouseout', function() {
+        this.style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>

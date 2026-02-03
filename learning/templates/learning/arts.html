@@ -1,0 +1,1635 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magical Art Adventure: Arts & Crafts for Kids</title>
+    <style>
+      body {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        background-color: #f0f8ff;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        margin-left: 150px;
+      }
+
+      header {
+        background: linear-gradient(to left, #9c27b0, #e91e63);
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 98%;
+        margin-left: 100px;
+      }
+
+      h1 {
+        color: white;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .sidebar {
+        width: 240px;
+        background: linear-gradient(360deg, #9c27b0, #e91e63);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        flex-direction: column;
+        position: fixed;
+        height: 100vh;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 20px 0;
+      }
+
+      .logo-container {
+        padding: 0 24px 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2a4b8d;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #28a4c9;
+        margin-left: 2px;
+      }
+      .logo-text {
+        color: white;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .nav-menu {
+        margin-top: 24px;
+        flex-grow: 1;
+      }
+
+      .nav-list {
+        list-style: none;
+        padding: 0 12px;
+      }
+
+      .nav-item {
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        background-color: #f0f7ff;
+        color: #2a4b8d;
+      }
+
+      .nav-link.active {
+        background-color: #e4f0ff;
+        color: #2a4b8d;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .nav-link.active .nav-icon svg {
+        stroke: #2a4b8d;
+      }
+
+      .intro {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-left: 150px;
+      }
+
+      .activities {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        margin-left: 130px;
+      }
+
+      .activity-card {
+        width: 300px;
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .activity-card:hover {
+        transform: translateY(-10px);
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 30px;
+        background: linear-gradient(180deg, #87ceeb 0%, #ffa07a 100%);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: fixed;
+        padding: 0.75rem 1.25rem;
+        top: 0;
+        right: 0;
+        left: 250px; /* Match sidebar width */
+        height: 70px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z'%3E%3C/path%3E%3C/svg%3E");
+        z-index: 99;
+        width: auto;
+        transition: var(--transition);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin: 0;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 16px;
+        background: rgba(124, 77, 255, 0.1);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .user-profile:hover {
+        background: rgba(124, 77, 255, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .avatar {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 14px;
+      }
+
+      .user-role {
+        font-size: 12px;
+        color: #718096;
+      }
+
+      .user-profile a {
+        color: #e53e3e;
+        text-decoration: none;
+        font-size: 12px;
+        margin-left: 10px;
+        transition: color 0.3s ease;
+      }
+
+      .user-profile a:hover {
+        color: #c53030;
+      }
+
+      .activity-card h2 {
+        color: #ff5e62;
+        font-size: 1.5em;
+        text-align: center;
+        margin-top: 0;
+      }
+
+      .activity-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+
+      .activity-content {
+        display: none;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        margin-top: 15px;
+      }
+
+      .activity-content.show {
+        display: block;
+      }
+
+      .steps {
+        padding-left: 20px;
+      }
+
+      .steps li {
+        margin-bottom: 10px;
+      }
+
+      .back-to-top {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #ff9966;
+        color: white;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-to-top:hover {
+        background-color: #ff5e62;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .control-btn {
+        padding: 8px 15px;
+        background-color: #6a5acd;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        font-size: 1em;
+      }
+
+      .control-btn:hover {
+        background-color: #483d8b;
+      }
+
+      .achievement {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #ffff88;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .achievement h2 {
+        color: #ff5e62;
+      }
+
+      .achievement-stars {
+        font-size: 2em;
+        color: gold;
+        margin: 10px 0;
+      }
+
+      .text-to-speech {
+        display: block;
+        margin: 10px auto;
+        padding: 8px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+
+      .text-to-speech:hover {
+        background-color: #45a049;
+      }
+
+      .progress-tracker {
+        background-color: white;
+        border-radius: 15px;
+        padding: 15px;
+        margin-top: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-left: 100px;
+      }
+
+      .progress-bar {
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        margin: 15px 0;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, #ff9966, #ff5e62);
+        transition: width 0.5s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .color-palette {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .color {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .color:hover {
+        transform: scale(1.2);
+      }
+
+      #drawing-canvas {
+        border: 3px dashed #ff9966;
+        border-radius: 10px;
+        background-color: white;
+        cursor: crosshair;
+        margin: 20px auto;
+        display: block;
+      }
+
+      .canvas-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      #clear-canvas {
+        padding: 8px 15px;
+        background-color: #ff5e62;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        margin-top: 10px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #ff9966;
+        color: white;
+        border-radius: 15px;
+        margin-top: 30px;
+      }
+
+      @media (max-width: 768px) {
+        .activities {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .activity-card {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img
+              src="{% static 'images/Giggles logo.png' %}"
+              alt="Giggles Logo"
+            />
+          </div>
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'lessons' %}" class="nav-link active">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div id="timerDisplay"></div>
+      <script src="{% static 'js/timer.js' %}"></script>
+    </div>
+
+    <div class="container">
+      <header>
+        <h1>🎨 Magical Art Adventure</h1>
+        <p style="color: white; font-size: 1.3em">
+          A fun journey through art for young explorers!
+        </p>
+      </header>
+
+      <div class="intro">
+        <p>
+          Welcome to our <strong>Magical Art Adventure</strong>! Let's explore
+          different ways to make art together. Click on any activity card to
+          start your creative journey!
+        </p>
+        <button
+          class="text-to-speech"
+          onclick="speakText('Welcome to our Magical Art Adventure! Let us explore different ways to make art together. Click on any activity card to start your creative journey!')"
+        >
+          Listen 🔊
+        </button>
+      </div>
+
+      <div class="activities">
+        <div class="activity-card" onclick="toggleActivity('drawing')">
+          <h2>Drawing & Painting 🖌️</h2>
+          <img
+            src="{% static 'images\girl-painting-paper-studio.jpg' %}"
+            alt="Drawing and Painting"
+          />
+          <p>Let's learn fun ways to draw and paint!</p>
+          <button
+            class="text-to-speech"
+            onclick="speakText('Let us learn fun ways to draw and paint!', event)"
+          >
+            Listen 🔊
+          </button>
+
+          <div id="drawing-activity" class="activity-content">
+            <h3>Rainbow Finger Painting</h3>
+            <p>We'll use our fingers to create colorful masterpieces!</p>
+
+            <h4>What You Need:</h4>
+            <ul>
+              <li>Finger paints (non-toxic)</li>
+              <li>Paper</li>
+              <li>Wet wipes for clean-up</li>
+            </ul>
+
+            <h4>Steps:</h4>
+            <ol class="steps">
+              <li>Put a small amount of each color on your paper</li>
+              <li>Use your fingers to mix and spread the paint</li>
+              <li>Create shapes, lines, or whatever you imagine!</li>
+              <li>Let it dry when you're done</li>
+            </ol>
+
+            <div class="canvas-container">
+              <h4>Try Drawing Here:</h4>
+              <canvas id="drawing-canvas" width="280" height="200"></canvas>
+              <div class="color-palette">
+                <div
+                  class="color"
+                  style="background-color: red"
+                  onclick="setColor('red')"
+                ></div>
+                <div
+                  class="color"
+                  style="background-color: orange"
+                  onclick="setColor('orange')"
+                ></div>
+                <div
+                  class="color"
+                  style="background-color: yellow"
+                  onclick="setColor('yellow')"
+                ></div>
+                <div
+                  class="color"
+                  style="background-color: green"
+                  onclick="setColor('green')"
+                ></div>
+                <div
+                  class="color"
+                  style="background-color: blue"
+                  onclick="setColor('blue')"
+                ></div>
+                <div
+                  class="color"
+                  style="background-color: purple"
+                  onclick="setColor('purple')"
+                ></div>
+              </div>
+              <button id="clear-canvas">Clear Drawing</button>
+            </div>
+
+            <div class="controls">
+              <button class="control-btn" onclick="completeActivity('drawing')">
+                I finished this! ✓
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card" onclick="toggleActivity('sculpture')">
+          <h2>Sculpture & 3D Art 🏺</h2>
+          <img
+            src="{% static 'images\playdough-art-with-farm-animals.jpg' %}"
+            alt="Sculpture and 3D Art"
+          />
+          <p>Create art that pops out and has shape!</p>
+          <button
+            class="text-to-speech"
+            onclick="speakText('Create art that pops out and has shape!', event)"
+          >
+            Listen 🔊
+          </button>
+
+          <div id="sculpture-activity" class="activity-content">
+            <h3>Magical Play Dough Creatures</h3>
+            <p>Let's shape colorful play dough into fun creatures!</p>
+
+            <h4>What You Need:</h4>
+            <ul>
+              <li>Play dough in different colors</li>
+              <li>Plastic tools (optional)</li>
+              <li>Small decorations like beads (supervision needed)</li>
+            </ul>
+
+            <h4>Steps:</h4>
+            <ol class="steps">
+              <li>Roll play dough into balls for the body</li>
+              <li>Add smaller balls for heads</li>
+              <li>Make thin snakes for arms and legs</li>
+              <li>Add details like eyes and mouth</li>
+              <li>Give your creature a name!</li>
+            </ol>
+
+            <div class="controls">
+              <button
+                class="control-btn"
+                onclick="completeActivity('sculpture')"
+              >
+                I finished this! ✓
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card" onclick="toggleActivity('textile')">
+          <h2>Textile & Fiber Arts 🧶</h2>
+          <img
+            src="{% static 'images\cute-plush-toy-made-from-crochet.jpg' %}"
+            alt="Textile and Fiber Arts"
+          />
+          <p>Make art with fabric, yarn, and string!</p>
+          <button
+            class="text-to-speech"
+            onclick="speakText('Make art with fabric, yarn, and string!', event)"
+          >
+            Listen 🔊
+          </button>
+
+          <div id="textile-activity" class="activity-content">
+            <h3>Paper Plate Weaving</h3>
+            <p>We'll learn to weave colorful yarn patterns!</p>
+
+            <h4>What You Need:</h4>
+            <ul>
+              <li>Paper plate</li>
+              <li>Scissors (with adult help)</li>
+              <li>Colorful yarn</li>
+              <li>Tape</li>
+            </ul>
+
+            <h4>Steps:</h4>
+            <ol class="steps">
+              <li>Cut small slits around the edge of the paper plate</li>
+              <li>Tape one end of yarn to the back of the plate</li>
+              <li>Weave the yarn over and under through the slits</li>
+              <li>Change colors if you want!</li>
+              <li>Tape the end when you're done</li>
+            </ol>
+
+            <div class="controls">
+              <button class="control-btn" onclick="completeActivity('textile')">
+                I finished this! ✓
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card" onclick="toggleActivity('history')">
+          <h2>Art History & Appreciation 🖼️</h2>
+          <img
+            src="{% static 'images\woman-watching-statues.jpg' %}"
+            alt="Art History and Appreciation"
+          />
+          <p>Learn about famous art and artists!</p>
+          <button
+            class="text-to-speech"
+            onclick="speakText('Learn about famous art and artists!', event)"
+          >
+            Listen 🔊
+          </button>
+
+          <div id="history-activity" class="activity-content">
+            <h3>Vincent van Gogh's Starry Night</h3>
+            <p>Let's learn about a famous painting with swirly stars!</p>
+
+            <h4>Fun Facts:</h4>
+            <ul>
+              <li>Vincent van Gogh painted "The Starry Night" in 1889</li>
+              <li>He loved using bright colors and swirly lines</li>
+              <li>The painting shows the night sky over a small village</li>
+            </ul>
+
+            <h4>Activity:</h4>
+            <ol class="steps">
+              <li>Look at the painting and find all the swirls</li>
+              <li>Count how many stars you can see</li>
+              <li>Try to make your own swirly sky drawing!</li>
+            </ol>
+
+            <div class="controls">
+              <button class="control-btn" onclick="completeActivity('history')">
+                I finished this! ✓
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card" onclick="toggleActivity('digital')">
+          <h2>Digital Art & Design 💻</h2>
+          <img
+            src="{% static 'images\digital-art.png' %}"
+            alt="Digital Art and Design"
+          />
+          <p>Create art using technology!</p>
+          <button
+            class="text-to-speech"
+            onclick="speakText('Create art using technology!', event)"
+          >
+            Listen 🔊
+          </button>
+
+          <div id="digital-activity" class="activity-content">
+            <h3>Shape Art</h3>
+            <p>Let's make art by arranging different shapes!</p>
+
+            <div
+              id="shape-canvas"
+              style="
+                width: 280px;
+                height: 200px;
+                background-color: white;
+                border: 3px dashed #ff9966;
+                border-radius: 10px;
+                margin: 20px auto;
+                position: relative;
+              "
+            ></div>
+
+            <div style="text-align: center; margin: 15px 0">
+              <button
+                onclick="addShape('circle')"
+                style="
+                  margin: 5px;
+                  padding: 8px;
+                  background-color: #ff9966;
+                  color: white;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                "
+              >
+                Add Circle
+              </button>
+              <button
+                onclick="addShape('square')"
+                style="
+                  margin: 5px;
+                  padding: 8px;
+                  background-color: #ff5e62;
+                  color: white;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                "
+              >
+                Add Square
+              </button>
+              <button
+                onclick="addShape('triangle')"
+                style="
+                  margin: 5px;
+                  padding: 8px;
+                  background-color: #6a5acd;
+                  color: white;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                "
+              >
+                Add Triangle
+              </button>
+              <button
+                onclick="clearShapes()"
+                style="
+                  margin: 5px;
+                  padding: 8px;
+                  background-color: #333;
+                  color: white;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                "
+              >
+                Clear All
+              </button>
+            </div>
+
+            <h4>How to Play:</h4>
+            <ol class="steps">
+              <li>Click the buttons to add different shapes</li>
+              <li>Try to create a picture or pattern</li>
+              <li>Clear and start again if you want!</li>
+            </ol>
+
+            <div class="controls">
+              <button class="control-btn" onclick="completeActivity('digital')">
+                I finished this! ✓
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-card" onclick="toggleActivity('cultural')">
+          <h2>Cultural Crafts 🌍</h2>
+          <img
+            src="{% static 'images\culture.jfif' %}"
+            alt="Cultural and Traditional Crafts"
+          />
+          <p>Discover art from around the world!</p>
+          <button
+            class="text-to-speech"
+            onclick="speakText('Discover art from around the world!', event)"
+          >
+            Listen 🔊
+          </button>
+
+          <div id="cultural-activity" class="activity-content">
+            <h3>Paper Japanese Fan</h3>
+            <p>Let's make a beautiful folded fan!</p>
+
+            <h4>What You Need:</h4>
+            <ul>
+              <li>Paper (colorful or white)</li>
+              <li>Crayons or markers</li>
+              <li>Scissors (with adult help)</li>
+              <li>Popsicle stick (optional)</li>
+            </ul>
+
+            <h4>Steps:</h4>
+            <ol class="steps">
+              <li>Fold your paper back and forth like an accordion</li>
+              <li>Pinch one end together (this will be the handle)</li>
+              <li>Secure the handle with tape or glue</li>
+              <li>Open the fan and decorate with colors!</li>
+              <li>Optional: Glue a popsicle stick to the handle</li>
+            </ol>
+
+            <div class="controls">
+              <button
+                class="control-btn"
+                onclick="completeActivity('cultural')"
+              >
+                I finished this! ✓
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-tracker">
+        <h2>Your Art Journey Progress</h2>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill">0%</div>
+        </div>
+        <p id="progress-text">Complete activities to track your progress!</p>
+      </div>
+
+      <div class="achievement" id="achievement">
+        <h2>Amazing Job, Art Explorer!</h2>
+        <div class="achievement-stars">⭐⭐⭐</div>
+        <p>You've completed all activities in this Magical Art Adventure!</p>
+        <p>You are now officially a Master Art Explorer!</p>
+      </div>
+
+      <a href="#" class="back-to-top">Back to Top ↑</a>
+    </div>
+
+    <script>
+      // Updated JavaScript for arts.html with Django backend integration
+
+      // Track completed activities and timing
+      const activities = [
+        "drawing",
+        "sculpture",
+        "textile",
+        "history",
+        "digital",
+        "cultural",
+      ];
+      const completedActivities = new Set();
+      let currentColor = "black";
+      let isDrawing = false;
+      let activityStartTime = null;
+      let currentActivity = null;
+
+      // CSRF token for Django requests
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getCookie("csrftoken");
+
+      // Load user progress when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadUserProgress();
+      });
+
+      // Load user's existing progress from Django backend
+      async function loadUserProgress() {
+        try {
+          const response = await fetch("/api/progress-data/", {
+            method: "GET",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.activities) {
+            data.activities.forEach((activity) => {
+              if (activity.status === "completed") {
+                completedActivities.add(activity.slug);
+
+                // Visual indication of completed activities
+                const activityCard = document.querySelector(
+                  `[onclick="toggleActivity('${activity.slug}')"]`
+                );
+                if (activityCard) {
+                  activityCard.style.border = "3px solid #4CAF50";
+                  activityCard.style.backgroundColor = "#f0fff0";
+                }
+              }
+            });
+
+            // Update progress bar with real data
+            updateProgressFromData(data);
+          }
+        } catch (error) {
+          console.error("Error loading progress:", error);
+        }
+      }
+
+      // Update progress display with loaded data
+      function updateProgressFromData(data) {
+        const progress =
+          (data.subject_progress.total_completed / activities.length) * 100;
+        document.getElementById("progress-fill").style.width = `${progress}%`;
+        document.getElementById("progress-fill").textContent = `${Math.round(
+          progress
+        )}%`;
+
+        const progressText = document.getElementById("progress-text");
+        if (data.subject_progress.total_completed === 0) {
+          progressText.textContent =
+            "Complete activities to track your progress!";
+        } else if (
+          data.subject_progress.total_completed === activities.length
+        ) {
+          progressText.textContent =
+            "You completed all activities! Amazing job!";
+          document.getElementById("achievement").style.display = "block";
+        } else {
+          progressText.textContent = `You've completed ${data.subject_progress.total_completed} out of ${activities.length} activities!`;
+        }
+      }
+
+      // Enhanced toggle activity with progress tracking
+      async function toggleActivity(activity) {
+        const activityElement = document.getElementById(`${activity}-activity`);
+
+        // Close all other activities
+        activities.forEach((a) => {
+          if (a !== activity) {
+            document.getElementById(`${a}-activity`).classList.remove("show");
+          }
+        });
+
+        // Toggle the selected activity
+        const isOpening = !activityElement.classList.contains("show");
+        activityElement.classList.toggle("show");
+
+        if (isOpening) {
+          // Start tracking this activity
+          currentActivity = activity;
+          activityStartTime = Date.now();
+
+          // Notify backend that activity started
+          await startActivityTracking(activity);
+
+          // Speak the activity title when opened
+          const title = activityElement.querySelector("h3").textContent;
+          const description = activityElement.querySelector("p").textContent;
+          speakText(`${title}. ${description}`);
+        } else {
+          // Stop tracking when closing
+          currentActivity = null;
+          activityStartTime = null;
+        }
+      }
+
+      // Notify Django backend that activity started
+      async function startActivityTracking(activitySlug) {
+        try {
+          const response = await fetch("/api/start-activity/", {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              activity_slug: activitySlug,
+            }),
+          });
+
+          const data = await response.json();
+          if (!data.success) {
+            console.error("Failed to start activity tracking:", data.error);
+          }
+        } catch (error) {
+          console.error("Error starting activity tracking:", error);
+        }
+      }
+
+      // Enhanced complete activity with Django integration
+      async function completeActivity(activity) {
+        const timeSpent = activityStartTime
+          ? (Date.now() - activityStartTime) / 1000
+          : 0;
+        const score = calculateActivityScore(activity, timeSpent);
+
+        try {
+          const response = await fetch("/api/complete-activity/", {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              activity_slug: activity,
+              score: score,
+              time_spent: timeSpent,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            completedActivities.add(activity);
+
+            // Visual feedback for completion
+            const activityCard = document.querySelector(
+              `[onclick="toggleActivity('${activity}')"]`
+            );
+            if (activityCard) {
+              activityCard.style.border = "3px solid #4CAF50";
+              activityCard.style.backgroundColor = "#f0fff0";
+            }
+
+            // Update progress display
+            updateProgress();
+
+            // Show completion message with score
+            alert(
+              `Great job completing the ${
+                activity.charAt(0).toUpperCase() + activity.slice(1)
+              } activity! 🎉\nScore: ${data.new_score}/100`
+            );
+
+            // Show new badges if earned
+            if (data.new_badges && data.new_badges.length > 0) {
+              showBadgeNotification(data.new_badges);
+            }
+
+            // Check if all activities are complete
+            if (data.total_completed === activities.length) {
+              document.getElementById("achievement").style.display = "block";
+              speakText(
+                "Amazing job! You have completed all activities in this Magical Art Adventure! You are now officially a Master Art Explorer!"
+              );
+            }
+          } else {
+            console.error("Failed to complete activity:", data.error);
+          }
+        } catch (error) {
+          console.error("Error completing activity:", error);
+          // Fallback to original behavior
+          completedActivities.add(activity);
+          updateProgress();
+          alert(
+            `Great job completing the ${
+              activity.charAt(0).toUpperCase() + activity.slice(1)
+            } activity! 🎉`
+          );
+        }
+      }
+
+      // Calculate score based on activity type and performance
+      function calculateActivityScore(activity, timeSpent) {
+        let baseScore = 100;
+
+        switch (activity) {
+          case "drawing":
+            // Score based on colors used and time spent
+            const colorsUsed = getColorsUsedInDrawing();
+            return Math.min(
+              100,
+              60 + colorsUsed.length * 8 + Math.min(20, timeSpent / 30)
+            );
+
+          case "digital":
+            // Score based on shapes created
+            const shapesCreated = getShapesCreated();
+            return Math.min(100, 50 + shapesCreated * 10);
+
+          default:
+            // Time-based scoring for other activities
+            const timeBonus = Math.max(0, 30 - Math.min(30, timeSpent / 60));
+            return Math.min(100, baseScore - timeBonus);
+        }
+      }
+
+      // Get colors used in drawing canvas
+      function getColorsUsedInDrawing() {
+        // This would track colors used during drawing
+        // For demo purposes, return a sample array
+        return ["red", "blue", "green"]; // Replace with actual color tracking
+      }
+
+      // Get number of shapes created in digital art
+      function getShapesCreated() {
+        const shapeCanvas = document.getElementById("shape-canvas");
+        return shapeCanvas ? shapeCanvas.children.length : 0;
+      }
+
+      // Enhanced drawing save functionality
+      async function saveDrawingToBackend() {
+        if (!currentActivity || currentActivity !== "drawing") return;
+
+        const canvas = document.getElementById("drawing-canvas");
+        const canvasData = canvas.toDataURL(); // Convert canvas to base64
+        const colorsUsed = getColorsUsedInDrawing();
+        const drawingTime = activityStartTime
+          ? (Date.now() - activityStartTime) / 1000
+          : 0;
+
+        try {
+          const response = await fetch("/api/save-drawing/", {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": csrftoken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              canvas_data: canvasData,
+              colors_used: colorsUsed,
+              drawing_time: drawingTime,
+            }),
+          });
+
+          const data = await response.json();
+          if (data.success) {
+            console.log("Drawing saved with ID:", data.drawing_id);
+            showNotification("Your amazing artwork has been saved! 🎨");
+          } else {
+            console.error("Failed to save drawing:", data.error);
+          }
+        } catch (error) {
+          console.error("Error saving drawing:", error);
+        }
+      }
+
+      // Show badge notification when new badges are earned
+      function showBadgeNotification(badges) {
+        const notification = document.createElement("div");
+        notification.className = "badge-notification";
+        notification.innerHTML = `
+        <div class="badge-popup">
+            <h3>🏆 New Badge${badges.length > 1 ? "s" : ""} Earned!</h3>
+            ${badges
+              .map(
+                (badge) => `
+                <div class="badge-item">
+                    <span class="badge-icon">${badge.icon}</span>
+                    <div>
+                        <strong>${badge.name}</strong>
+                        <p>${badge.description}</p>
+                    </div>
+                </div>
+            `
+              )
+              .join("")}
+            <button onclick="closeBadgeNotification()" class="close-btn">Awesome!</button>
+        </div>
+    `;
+
+        document.body.appendChild(notification);
+
+        // Auto-close after 5 seconds
+        setTimeout(() => {
+          closeBadgeNotification();
+        }, 5000);
+      }
+
+      // Close badge notification
+      function closeBadgeNotification() {
+        const notification = document.querySelector(".badge-notification");
+        if (notification) {
+          notification.remove();
+        }
+      }
+
+      // Show general notifications
+      function showNotification(message, type = "success") {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+          notification.classList.add("fade-out");
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Original progress update function (fallback)
+      function updateProgress() {
+        const progress = (completedActivities.size / activities.length) * 100;
+        document.getElementById("progress-fill").style.width = `${progress}%`;
+        document.getElementById("progress-fill").textContent = `${Math.round(
+          progress
+        )}%`;
+
+        const progressText = document.getElementById("progress-text");
+        if (completedActivities.size === 0) {
+          progressText.textContent =
+            "Complete activities to track your progress!";
+        } else if (completedActivities.size === activities.length) {
+          progressText.textContent =
+            "You completed all activities! Amazing job!";
+          document.getElementById("achievement").style.display = "block";
+        } else {
+          progressText.textContent = `You've completed ${completedActivities.size} out of ${activities.length} activities!`;
+        }
+      }
+
+      // Text-to-speech functionality
+      function speakText(text) {
+        if ("speechSynthesis" in window) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.rate = 0.8;
+          utterance.pitch = 1.2;
+          speechSynthesis.speak(utterance);
+        }
+      }
+
+      // Drawing Canvas Functions
+      function changeColor(color) {
+        currentColor = color;
+        const colorButtons = document.querySelectorAll(".color-btn");
+        colorButtons.forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+      }
+
+      function clearCanvas() {
+        const canvas = document.getElementById("drawing-canvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function saveDrawing() {
+        const canvas = document.getElementById("drawing-canvas");
+        const link = document.createElement("a");
+        link.download = "my-artwork.png";
+        link.href = canvas.toDataURL();
+        link.click();
+
+        // Also save to backend
+        saveDrawingToBackend();
+      }
+
+      // Canvas drawing event listeners
+      document.addEventListener("DOMContentLoaded", function () {
+        const canvas = document.getElementById("drawing-canvas");
+        if (canvas) {
+          const ctx = canvas.getContext("2d");
+
+          canvas.addEventListener("mousedown", startDrawing);
+          canvas.addEventListener("mousemove", draw);
+          canvas.addEventListener("mouseup", stopDrawing);
+          canvas.addEventListener("mouseout", stopDrawing);
+
+          // Touch events for mobile
+          canvas.addEventListener("touchstart", handleTouch);
+          canvas.addEventListener("touchmove", handleTouch);
+          canvas.addEventListener("touchend", stopDrawing);
+
+          function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+          }
+
+          function draw(e) {
+            if (!isDrawing) return;
+
+            ctx.lineWidth = 3;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = currentColor;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+          }
+
+          function stopDrawing() {
+            if (isDrawing) {
+              isDrawing = false;
+              ctx.beginPath();
+            }
+          }
+
+          function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(
+              e.type === "touchstart"
+                ? "mousedown"
+                : e.type === "touchmove"
+                ? "mousemove"
+                : "mouseup",
+              {
+                clientX: touch.clientX,
+                clientY: touch.clientY,
+              }
+            );
+            canvas.dispatchEvent(mouseEvent);
+          }
+        }
+      });
+
+      // Digital Art Functions
+      function addShape(shape) {
+        const canvas = document.getElementById("shape-canvas");
+        const shapeElement = document.createElement("div");
+        shapeElement.className = `shape ${shape}`;
+        shapeElement.style.left = Math.random() * 300 + "px";
+        shapeElement.style.top = Math.random() * 200 + "px";
+        shapeElement.draggable = true;
+
+        // Make shapes draggable
+        shapeElement.addEventListener("dragstart", function (e) {
+          e.dataTransfer.setData("text/plain", "");
+        });
+
+        canvas.appendChild(shapeElement);
+      }
+
+      function clearShapes() {
+        const canvas = document.getElementById("shape-canvas");
+        canvas.innerHTML = "";
+      }
+
+      // Quiz Functions for History Activity
+      function checkAnswer(questionNum, selectedAnswer) {
+        const correctAnswers = {
+          1: "b", // Cave paintings
+          2: "a", // Leonardo da Vinci
+          3: "c", // Vincent van Gogh
+        };
+
+        const isCorrect = correctAnswers[questionNum] === selectedAnswer;
+        const resultElement = document.getElementById(`result${questionNum}`);
+
+        if (isCorrect) {
+          resultElement.textContent = "✅ Correct! Great job!";
+          resultElement.style.color = "green";
+        } else {
+          resultElement.textContent = "❌ Try again!";
+          resultElement.style.color = "red";
+        }
+
+        // Disable all buttons for this question
+        const buttons = document.querySelectorAll(
+          `#question${questionNum} button`
+        );
+        buttons.forEach((btn) => (btn.disabled = true));
+
+        return isCorrect;
+      }
+
+      // Cultural Art Gallery Functions
+      let currentArtIndex = 0;
+      const artworks = [
+        {
+          title: "African Masks",
+          description: "Traditional masks used in ceremonies",
+        },
+        { title: "Japanese Origami", description: "The art of paper folding" },
+        {
+          title: "Indian Rangoli",
+          description: "Decorative floor art patterns",
+        },
+        {
+          title: "Mexican Pottery",
+          description: "Colorful ceramic traditions",
+        },
+      ];
+
+      function nextArtwork() {
+        currentArtIndex = (currentArtIndex + 1) % artworks.length;
+        updateArtworkDisplay();
+      }
+
+      function prevArtwork() {
+        currentArtIndex =
+          (currentArtIndex - 1 + artworks.length) % artworks.length;
+        updateArtworkDisplay();
+      }
+
+      function updateArtworkDisplay() {
+        const artwork = artworks[currentArtIndex];
+        document.getElementById("artwork-title").textContent = artwork.title;
+        document.getElementById("artwork-description").textContent =
+          artwork.description;
+        document.getElementById("artwork-counter").textContent = `${
+          currentArtIndex + 1
+        } / ${artworks.length}`;
+      }
+
+      // Sculpture Builder Functions
+      let sculptureElements = [];
+
+      function addSculptureElement(element) {
+        sculptureElements.push(element);
+        updateSculptureDisplay();
+      }
+
+      function clearSculpture() {
+        sculptureElements = [];
+        updateSculptureDisplay();
+      }
+
+      function updateSculptureDisplay() {
+        const display = document.getElementById("sculpture-display");
+        display.innerHTML = sculptureElements
+          .map(
+            (element) =>
+              `<div class="sculpture-piece ${element}">${element}</div>`
+          )
+          .join("");
+      }
+
+      // Textile Pattern Functions
+      let currentPattern = [];
+
+      function addToPattern(element) {
+        currentPattern.push(element);
+        updatePatternDisplay();
+      }
+
+      function clearPattern() {
+        currentPattern = [];
+        updatePatternDisplay();
+      }
+
+      function updatePatternDisplay() {
+        const display = document.getElementById("pattern-display");
+        display.innerHTML = currentPattern
+          .map((element) => `<span class="pattern-element">${element}</span>`)
+          .join(" ");
+      }
+
+      // Auto-save progress every 30 seconds
+      setInterval(async function () {
+        if (currentActivity && activityStartTime) {
+          try {
+            await fetch("/api/save-progress/", {
+              method: "POST",
+              headers: {
+                "X-CSRFToken": csrftoken,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                activity_slug: currentActivity,
+                time_spent: (Date.now() - activityStartTime) / 1000,
+                progress_data: {
+                  completed_activities: Array.from(completedActivities),
+                  current_activity: currentActivity,
+                },
+              }),
+            });
+          } catch (error) {
+            console.error("Error auto-saving progress:", error);
+          }
+        }
+      }, 30000);
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", function (e) {
+        if (e.ctrlKey || e.metaKey) {
+          switch (e.key) {
+            case "s":
+              e.preventDefault();
+              if (currentActivity === "drawing") {
+                saveDrawing();
+              }
+              break;
+            case "z":
+              e.preventDefault();
+              if (currentActivity === "drawing") {
+                // Undo functionality could be implemented here
+                console.log("Undo action");
+              }
+              break;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

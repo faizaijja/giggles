@@ -1,0 +1,1992 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/giggles.css' %}" />
+    <title>Weather & Seasons Math Adventure</title>
+    <style>
+      /* Global Styles */
+      * {
+        box-sizing: border-box;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(180deg, #87ceeb 0%, #ffa07a 100%);
+        color: #333;
+        min-height: 100vh;
+        transition: background 1.5s ease;
+        overflow-x: hidden;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+      }
+
+      .logo-icon img {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        margin-right: 15px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      }
+
+      .logo-text {
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(45deg, #fff, #f8f9fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        position: relative;
+        margin-left: 250px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        text-align: center;
+        color: #2c3e50;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-top: 30px;
+      }
+
+      /* Weather Effects */
+      .cloud {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: float 60s infinite linear;
+      }
+
+      .cloud1 {
+        width: 100px;
+        height: 50px;
+        top: 60px;
+        left: -100px;
+      }
+
+      .cloud2 {
+        width: 150px;
+        height: 70px;
+        top: 120px;
+        left: -30px;
+        animation-delay: 20s;
+      }
+
+      .sun {
+        position: absolute;
+        top: 60px;
+        right: 330px;
+        width: 80px;
+        height: 80px;
+        background: radial-gradient(circle, #ffd700 30%, #ffa500 100%);
+        border-radius: 50%;
+        box-shadow: 0 0 40px 15px rgba(255, 215, 0, 0.7);
+        animation: pulse 3s infinite alternate;
+      }
+
+      .rainbow {
+        position: absolute;
+        width: 200px;
+        height: 100px;
+        top: 80%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 100px 100px 0 0;
+        background: linear-gradient(
+          180deg,
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          indigo,
+          violet
+        );
+        opacity: 0.5;
+        display: none;
+      }
+
+      /* Header                */
+      /* --------------------- */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 30px;
+        background: linear-gradient(180deg, #87ceeb 0%, #ffa07a 100%);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: fixed;
+        padding: 0.75rem 1.25rem;
+        top: 0;
+        right: 0;
+        left: 250px; /* Match sidebar width */
+        height: 70px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z'%3E%3C/path%3E%3C/svg%3E");
+        z-index: 99;
+        width: auto;
+        transition: var(--transition);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        margin: 0;
+      }
+
+      .header:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .main-content-maths {
+        margin-left: 80px;
+        margin-top: 120px;
+      }
+      /* Navigation */
+      .topic-nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 30px;
+        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .topic-button {
+        padding: 12px 18px;
+        background: linear-gradient(145deg, #ffffff, #e6e6e6);
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1),
+          -4px -4px 8px rgba(255, 255, 255, 0.5);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .topic-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2),
+          -5px -5px 10px rgba(255, 255, 255, 0.7);
+      }
+
+      .topic-button:active {
+        transform: translateY(0);
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.1),
+          inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+      }
+
+      /* Topic icon styles */
+      .topic-button::before {
+        content: "";
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        vertical-align: middle;
+      }
+
+      .topic-button[data-topic="numbers"]::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFD700'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12,2 a10,10 0 0 1 0,20 a10,10 0 0 1 0,-20' fill='%23FFD700'/%3E%3C/svg%3E");
+      }
+
+      .topic-button[data-topic="algebra"]::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238BC4FC'%3E%3Cpath d='M4,12 a8,4 0 1 0 16,0 a8,4 0 1 0 -16,0' fill='%238BC4FC'/%3E%3C/svg%3E");
+      }
+
+      .topic-button[data-topic="geometry"]::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2391E291'%3E%3Cpath d='M12,3 L3,18 L21,18 Z' fill='%2391E291'/%3E%3C/svg%3E");
+      }
+
+      .topic-button[data-topic="measurement"]::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFB6C1'%3E%3Cpath d='M4,12 L20,12 M4,8 L10,8 M4,16 L10,16' stroke='%23FFB6C1' stroke-width='2'/%3E%3C/svg%3E");
+      }
+
+      .topic-button[data-topic="problem-solving"]::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D8BFD8'%3E%3Cpath d='M12,2 A10,10 0 0 1 12,22 A10,10 0 0 1 12,2 M12,6 L12,14 M12,16 L12,18' stroke='%23D8BFD8' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      }
+
+      .topic-button[data-topic="communication"]::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFA07A'%3E%3Cpath d='M4,4 H20 V16 H6 L4,18 Z' fill='%23FFA07A'/%3E%3C/svg%3E");
+      }
+
+      /* Content Sections */
+      .content-section {
+        display: none;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 0.5s forwards;
+        margin-bottom: 30px;
+      }
+
+      .content-section.active {
+        display: block;
+      }
+
+      /* Learning Cards */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+        perspective: 1000px;
+      }
+
+      .card {
+        width: 300px;
+        height: 200px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+
+      .card.flipped {
+        transform: rotateY(180deg);
+      }
+
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-front {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: #2c3e50;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .card-back {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        color: #2c3e50;
+        transform: rotateY(180deg);
+        font-size: 1.2rem;
+      }
+
+      /* Interactive Elements */
+      .interactive-area {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .problem-container {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .options-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .option-button {
+        padding: 10px 20px;
+        background-color: #fff;
+        border: 2px solid #3498db;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .option-button:hover {
+        transform: scale(1.05);
+        background-color: #f0f8ff;
+      }
+
+      .option-button.correct {
+        background-color: #72c07d;
+        color: white;
+      }
+
+      .option-button.incorrect {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .feedback {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.2rem;
+        display: none;
+      }
+
+      .progress-container {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .progress-track {
+        height: 20px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #a8edea, #fed6e3);
+        transition: width 0.3s ease;
+      }
+
+      .progress-plants {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+
+      .plant {
+        width: 40px;
+        height: 60px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 60'%3E%3Crect x='18' y='30' width='4' height='30' fill='%23795548'/%3E%3Ccircle cx='20' cy='15' r='15' fill='%239CCC65' opacity='0.2'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        transform-origin: bottom center;
+        transform: scale(0.6);
+        transition: transform 0.5s ease;
+      }
+
+      .plant.growing {
+        transform: scale(1);
+      }
+
+      /* Utility Styles */
+      .hidden {
+        display: none;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s forwards;
+      }
+
+      .hint-button {
+        display: block;
+        margin: 20px auto;
+        padding: 8px 16px;
+        background-color: #f0ad4e;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .hint-button:hover {
+        background-color: #ec971f;
+      }
+
+      .next-button {
+        display: none;
+        margin: 20px auto;
+        padding: 12px 24px;
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .next-button:hover {
+        background-color: #4cae4c;
+      }
+
+      /* Season-specific styles */
+      .spring {
+        background: linear-gradient(180deg, #b2e2f2 0%, #c9f4c3 100%);
+      }
+
+      .summer {
+        background: linear-gradient(180deg, #87ceeb 0%, #ffeb99 100%);
+      }
+
+      .fall {
+        background: linear-gradient(180deg, #ffa07a 0%, #e9967a 100%);
+      }
+
+      .winter {
+        background: linear-gradient(180deg, #c9dcea 0%, #f0f8ff 100%);
+      }
+
+      /* Animations */
+      @keyframes float {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        50% {
+          transform: translateX(calc(100vw + 150px)) translateY(20px);
+        }
+        100% {
+          transform: translateX(calc(200vw + 150px)) translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        from {
+          transform: scale(1);
+          box-shadow: 0 0 30px 10px rgba(255, 215, 0, 0.7);
+        }
+        to {
+          transform: scale(1.1);
+          box-shadow: 0 0 40px 20px rgba(255, 215, 0, 0.9);
+        }
+      }
+
+      /* Accessibility Features */
+      .accessibility-controls {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+      }
+
+      .font-size-button {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-left: 10px;
+        color: #333;
+      }
+
+      .high-contrast-toggle {
+        padding: 5px 10px;
+        background-color: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      .high-contrast-mode {
+        background: white !important;
+        color: black !important;
+      }
+
+      .high-contrast-mode .content-section {
+        background-color: white;
+        border: 2px solid black;
+      }
+
+      .high-contrast-mode .topic-button {
+        background: white;
+        color: black;
+        border: 2px solid black;
+      }
+
+      .text-to-speech-button {
+        padding: 5px 10px;
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      /* Media Queries for Responsive Design */
+      @media (max-width: 768px) {
+        .card {
+          width: 250px;
+          height: 180px;
+        }
+
+        .topic-button {
+          margin-bottom: 10px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .topic-button {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+
+        .option-button {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        h2 {
+          font-size: 1.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="spring">
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="lessons.html" class="nav-link active">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="main-content-maths">
+        <!-- Weather Elements -->
+        <div class="sun"></div>
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="rainbow"></div>
+
+        <!-- Accessibility Controls -->
+        <div class="accessibility-controls">
+          <button class="font-size-button" onclick="changeFontSize(1)">
+            A+
+          </button>
+          <button class="font-size-button" onclick="changeFontSize(-1)">
+            A-
+          </button>
+          <button class="high-contrast-toggle" onclick="toggleHighContrast()">
+            High Contrast
+          </button>
+          <button class="text-to-speech-button" onclick="toggleTextToSpeech()">
+            <span class="tts-icon">🔊</span>
+          </button>
+        </div>
+
+        <div class="topic-nav">
+          <button
+            class="topic-button"
+            data-topic="numbers"
+            onclick="showTopic('numbers')"
+          >
+            Number Sense
+          </button>
+          <button
+            class="topic-button"
+            data-topic="algebra"
+            onclick="showTopic('algebra')"
+          >
+            Algebraic Thinking
+          </button>
+          <button
+            class="topic-button"
+            data-topic="geometry"
+            onclick="showTopic('geometry')"
+          >
+            Geometry
+          </button>
+          <button
+            class="topic-button"
+            data-topic="measurement"
+            onclick="showTopic('measurement')"
+          >
+            Measurement
+          </button>
+          <button
+            class="topic-button"
+            data-topic="problem-solving"
+            onclick="showTopic('problem-solving')"
+          >
+            Problem Solving
+          </button>
+          <button
+            class="topic-button"
+            data-topic="communication"
+            onclick="showTopic('communication')"
+          >
+            Math Communication
+          </button>
+        </div>
+
+        <!-- Number Sense Section -->
+        <section id="numbers-section" class="content-section">
+          <h2>Spring Number Adventure</h2>
+          <p>
+            Welcome to spring! Let's count and add raindrops to help our garden
+            grow.
+          </p>
+
+          <div class="card-container">
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>How many raindrops?</p>
+                <div style="display: flex; justify-content: center; gap: 5px">
+                  💧💧💧 + 💧💧 = ?
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>3 + 2 = 5 raindrops</p>
+                <p>We count 5 raindrops total!</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Count the flowers</p>
+                <div style="display: flex; justify-content: center; gap: 5px">
+                  🌸🌸🌸🌸🌸🌸🌸
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>7 flowers!</p>
+                <p>Try counting in groups: 5 + 2 = 7</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Take away sunlight</p>
+                <div style="display: flex; justify-content: center; gap: 5px">
+                  ☀️☀️☀️☀️☀️ - ☀️☀️ = ?
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>5 - 2 = 3 suns</p>
+                <p>We have 3 suns left!</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-area">
+            <h3>Let's Practice!</h3>
+            <div class="problem-container" id="numbers-problem">
+              If 4 raindrops fall and then 3 more raindrops fall, how many
+              raindrops fall altogether?
+            </div>
+
+            <div class="options-container" id="numbers-options">
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                6
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, true)">
+                7
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                8
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                5
+              </button>
+            </div>
+
+            <div class="feedback" id="numbers-feedback"></div>
+            <button class="hint-button" onclick="showHint('numbers')">
+              Need a Hint?
+            </button>
+            <button
+              class="next-button"
+              id="numbers-next"
+              onclick="nextProblem('numbers')"
+            >
+              Next Problem
+            </button>
+
+            <div class="progress-container">
+              <p>Your garden is growing with each correct answer!</p>
+              <div class="progress-track">
+                <div class="progress-bar" id="numbers-progress"></div>
+              </div>
+              <div class="progress-plants">
+                <div class="plant" id="plant1"></div>
+                <div class="plant" id="plant2"></div>
+                <div class="plant" id="plant3"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Algebraic Thinking Section -->
+        <section id="algebra-section" class="content-section">
+          <h2>Summer Pattern Challenge</h2>
+          <p>
+            The summer sun is shining! Let's find patterns in the clouds and
+            lightning.
+          </p>
+
+          <div class="card-container">
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>What comes next?</p>
+                <div style="display: flex; justify-content: center; gap: 5px">
+                  ☁️ ⛅ ☀️ ☁️ ⛅ ?
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>☀️ comes next!</p>
+                <p>The pattern is: cloud, partly cloudy, sun</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Fill in the blank</p>
+                <div style="display: flex; justify-content: center; gap: 5px">
+                  2, 4, 6, 8, ?
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>10 comes next!</p>
+                <p>We're counting by 2s (even numbers)</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Balance the equation</p>
+                <div style="display: flex; justify-content: center; gap: 5px">
+                  3 + ? = 7
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>3 + 4 = 7</p>
+                <p>We need 4 more to get to 7</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-area">
+            <h3>Let's Practice!</h3>
+            <div class="problem-container" id="algebra-problem">
+              What number is missing? 5, 10, 15, ___, 25
+            </div>
+
+            <div class="options-container" id="algebra-options">
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                18
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, true)">
+                20
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                22
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                16
+              </button>
+            </div>
+
+            <div class="feedback" id="algebra-feedback"></div>
+            <button class="hint-button" onclick="showHint('algebra')">
+              Need a Hint?
+            </button>
+            <button
+              class="next-button"
+              id="algebra-next"
+              onclick="nextProblem('algebra')"
+            >
+              Next Problem
+            </button>
+
+            <div class="progress-container">
+              <p>Watch the summer sun rise with each correct answer!</p>
+              <div class="progress-track">
+                <div class="progress-bar" id="algebra-progress"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Geometry Section -->
+        <section id="geometry-section" class="content-section">
+          <h2>Fall Shape Explorer</h2>
+          <p>
+            As leaves change color in fall, let's explore different shapes all
+            around us!
+          </p>
+
+          <div class="card-container">
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>How many sides?</p>
+                <div style="font-size: 2.5rem; text-align: center">△</div>
+              </div>
+              <div class="card-face card-back">
+                <p>3 sides!</p>
+                <p>A triangle has 3 sides and 3 corners</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Which is round?</p>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    gap: 15px;
+                    font-size: 2rem;
+                  "
+                >
+                  □ ○ △
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>○ is round!</p>
+                <p>A circle has no corners</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Count the corners</p>
+                <div style="font-size: 2.5rem; text-align: center">□</div>
+              </div>
+              <div class="card-face card-back">
+                <p>4 corners!</p>
+                <p>A square has 4 equal sides and 4 corners</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-area">
+            <h3>Let's Practice!</h3>
+            <div class="problem-container" id="geometry-problem">
+              Which shape has 5 sides?
+            </div>
+
+            <div class="options-container" id="geometry-options">
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                Triangle
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                Square
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, true)">
+                Pentagon
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                Rectangle
+              </button>
+            </div>
+
+            <div class="feedback" id="geometry-feedback"></div>
+            <button class="hint-button" onclick="showHint('geometry')">
+              Need a Hint?
+            </button>
+            <button
+              class="next-button"
+              id="geometry-next"
+              onclick="nextProblem('geometry')"
+            >
+              Next Problem
+            </button>
+
+            <div class="progress-container">
+              <p>Watch the fall leaves change with each correct answer!</p>
+              <div class="progress-track">
+                <div class="progress-bar" id="geometry-progress"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Measurement Section -->
+        <section id="measurement-section" class="content-section">
+          <h2>Winter Measuring Magic</h2>
+          <p>
+            In winter, we can measure snow, temperature, and time. Let's
+            explore!
+          </p>
+
+          <div class="card-container">
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Which is taller?</p>
+                <div
+                  style="
+                    display: flex;
+                    align-items: flex-end;
+                    justify-content: center;
+                    gap: 20px;
+                  "
+                >
+                  <div
+                    style="height: 60px; width: 20px; background-color: #87ceeb"
+                  ></div>
+                  <div
+                    style="height: 40px; width: 20px; background-color: #ffa07a"
+                  ></div>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>The blue one is taller!</p>
+                <p>We can compare heights by looking</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>How many inches?</p>
+                <div style="text-align: center">
+                  <div
+                    style="
+                      display: inline-block;
+                      width: 200px;
+                      height: 20px;
+                      background-color: #333;
+                      position: relative;
+                    "
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        top: -10px;
+                        left: 0;
+                        width: 2px;
+                        height: 10px;
+                        background-color: #333;
+                      "
+                    >
+                      0
+                    </div>
+                    <div
+                      style="
+                        position: absolute;
+                        top: -10px;
+                        left: 50px;
+                        width: 2px;
+                        height: 10px;
+                        background-color: #333;
+                      "
+                    >
+                      1
+                    </div>
+                    <div
+                      style="
+                        position: absolute;
+                        top: -10px;
+                        left: 100px;
+                        width: 2px;
+                        height: 10px;
+                        background-color: #333;
+                      "
+                    >
+                      2
+                    </div>
+                    <div
+                      style="
+                        position: absolute;
+                        top: -10px;
+                        left: 150px;
+                        width: 2px;
+                        height: 10px;
+                        background-color: #333;
+                      "
+                    >
+                      3
+                    </div>
+                    <div
+                      style="
+                        position: absolute;
+                        top: -10px;
+                        left: 200px;
+                        width: 2px;
+                        height: 10px;
+                        background-color: #333;
+                      "
+                    >
+                      4
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      width: 150px;
+                      height: 15px;
+                      background-color: #4caf50;
+                      margin: 5px auto 0;
+                    "
+                  ></div>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>3 inches!</p>
+                <p>We can use a ruler to measure length</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>What time is it?</p>
+                <div style="font-size: 2.5rem; text-align: center">🕙</div>
+              </div>
+              <div class="card-face card-back">
+                <p>10 o'clock!</p>
+                <p>We can tell time by looking at the clock hands</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-area">
+            <h3>Let's Practice!</h3>
+            <div class="problem-container" id="measurement-problem">
+              If a snowman is 5 feet tall and a snow fort is 3 feet tall, how
+              much taller is the snowman?
+            </div>
+
+            <div class="options-container" id="measurement-options">
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                1 foot
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, true)">
+                2 feet
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                8 feet
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                3 feet
+              </button>
+            </div>
+
+            <div class="feedback" id="measurement-feedback"></div>
+            <button class="hint-button" onclick="showHint('measurement')">
+              Need a Hint?
+            </button>
+            <button
+              class="next-button"
+              id="measurement-next"
+              onclick="nextProblem('measurement')"
+            >
+              Next Problem
+            </button>
+
+            <div class="progress-container">
+              <p>Watch the snowflakes fall with each correct answer!</p>
+              <div class="progress-track">
+                <div class="progress-bar" id="measurement-progress"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Problem Solving Section -->
+        <section id="problem-solving-section" class="content-section">
+          <h2>Year-Round Problem Solvers</h2>
+          <p>
+            Use your math skills to solve these weather and season problems!
+          </p>
+
+          <div class="card-container">
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Spring Garden Problem</p>
+                <div style="text-align: center">
+                  <p>
+                    I planted 6 flowers. 2 didn't grow. How many flowers are in
+                    my garden?
+                  </p>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>4 flowers!</p>
+                <p>6 - 2 = 4</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Summer Beach Problem</p>
+                <div style="text-align: center">
+                  <p>
+                    I found 3 shells. My friend found 5 shells. How many shells
+                    altogether?
+                  </p>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>8 shells!</p>
+                <p>3 + 5 = 8</p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Fall Apple Problem</p>
+                <div style="text-align: center">
+                  <p>
+                    I have 10 apples. I eat 1 apple each day. How many days
+                    until all apples are gone?
+                  </p>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>10 days!</p>
+                <p>1 apple per day for 10 days = 10 apples</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-area">
+            <h3>Let's Practice!</h3>
+            <div class="problem-container" id="problem-solving-problem">
+              If there are 8 rainy days in spring and 3 rainy days in summer,
+              how many more rainy days are there in spring?
+            </div>
+
+            <div class="options-container" id="problem-solving-options">
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                11
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, true)">
+                5
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                3
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                2
+              </button>
+            </div>
+
+            <div class="feedback" id="problem-solving-feedback"></div>
+            <button class="hint-button" onclick="showHint('problem-solving')">
+              Need a Hint?
+            </button>
+            <button
+              class="next-button"
+              id="problem-solving-next"
+              onclick="nextProblem('problem-solving')"
+            >
+              Next Problem
+            </button>
+
+            <div class="progress-container">
+              <p>Solve problems to complete your weather chart!</p>
+              <div class="progress-track">
+                <div class="progress-bar" id="problem-solving-progress"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Math Communication Section -->
+        <section id="communication-section" class="content-section">
+          <h2>Talk About Math</h2>
+          <p>
+            Let's practice explaining our math thinking using weather and
+            seasons!
+          </p>
+
+          <div class="card-container">
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Explain Your Answer</p>
+                <div style="text-align: center">
+                  <p>How do you know that 4 + 5 = 9?</p>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>
+                  "I can count 4 fingers, then count 5 more fingers, and I get 9
+                  fingers altogether."
+                </p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Use Math Words</p>
+                <div style="text-align: center">
+                  <p>Describe how to compare these snowballs.</p>
+                  <div
+                    style="display: flex; justify-content: center; gap: 20px"
+                  >
+                    <div
+                      style="
+                        width: 30px;
+                        height: 30px;
+                        background-color: #fff;
+                        border-radius: 50%;
+                      "
+                    ></div>
+                    <div
+                      style="
+                        width: 50px;
+                        height: 50px;
+                        background-color: #fff;
+                        border-radius: 50%;
+                      "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>
+                  "The snowball on the right is larger than the snowball on the
+                  left. It has a greater diameter."
+                </p>
+              </div>
+            </div>
+
+            <div class="card" onclick="flipCard(this)">
+              <div class="card-face card-front">
+                <p>Show Your Work</p>
+                <div style="text-align: center">
+                  <p>How would you solve 12 - 7?</p>
+                </div>
+              </div>
+              <div class="card-face card-back">
+                <p>
+                  "I can start at 12 and count back 7. 12, 11, 10, 9, 8, 7, 6,
+                  5. Or I can think 12 - 2 = 10, then 10 - 5 = 5."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="interactive-area">
+            <h3>Let's Practice!</h3>
+            <div class="problem-container" id="communication-problem">
+              Explain how you would find the answer to this problem: If it snows
+              3 inches on Monday and 4 inches on Tuesday, how many inches of
+              snow fell in total?
+            </div>
+
+            <div class="options-container" id="communication-options">
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                I would add 3 + 3 = 6.
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, true)">
+                I would add the inches from both days: 3 inches + 4 inches = 7
+                inches of snow in total.
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                I would count 4 fingers.
+              </button>
+              <button class="option-button" onclick="checkAnswer(this, false)">
+                I would subtract 3 - 4 = -1.
+              </button>
+            </div>
+
+            <div class="feedback" id="communication-feedback"></div>
+            <button class="hint-button" onclick="showHint('communication')">
+              Need a Hint?
+            </button>
+            <button
+              class="next-button"
+              id="communication-next"
+              onclick="nextProblem('communication')"
+            >
+              Next Problem
+            </button>
+
+            <div class="progress-container">
+              <p>Share your math thinking with each correct answer!</p>
+              <div class="progress-track">
+                <div class="progress-bar" id="communication-progress"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="header">
+        <h1>Math Journey</h1>
+        <div class="header-actions">
+          <div class="notification-bell-container">
+            <div class="notification-bell" id="notification-bell">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notification-count"></span>
+            </div>
+
+            <!-- Dropdown for notifications -->
+            <div class="notifications-dropdown">
+              <div class="notifications-header">
+                <h4>Notifications</h4>
+                <a href="#" class="mark-all-read">Mark all as read</a>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item">
+                  <div class="notification-icon"></div>
+                  <div class="notification-content">
+                    <p></p>
+                    <span class="notification-time"></span>
+                  </div>
+                </div>
+                <div class="no-notifications">
+                  <p>No notifications yet</p>
+                </div>
+              </div>
+              <div class="notifications-footer">
+                <a href="notifications.php">View all notifications</a>
+              </div>
+            </div>
+          </div>
+          <div class="user-profile">
+            <div class="avatar">
+              <span class="avatar-initial">F</span>
+            </div>
+            <div class="user-info">
+              <span class="user-name">Faiza</span>
+              <span class="user-role">Student</span>
+            </div>
+            <button class="logout-button">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Current season tracker
+      let currentSeason = "spring";
+      let fontSizeLevel = 0;
+      let isHighContrast = false;
+      let isTTSEnabled = false;
+      let synth = window.speechSynthesis;
+      let currentTopic = "";
+      let scores = {
+        numbers: 0,
+        algebra: 0,
+        geometry: 0,
+        measurement: 0,
+        "problem-solving": 0,
+        communication: 0,
+      };
+      let problemIndex = {
+        numbers: 0,
+        algebra: 0,
+        geometry: 0,
+        measurement: 0,
+        "problem-solving": 0,
+        communication: 0,
+      };
+
+      // Problems by topic
+      const problems = {
+        numbers: [
+          {
+            question:
+              "If 4 raindrops fall and then 3 more raindrops fall, how many raindrops fall altogether?",
+            options: ["6", "7", "8", "5"],
+            answer: 1,
+            hint: "Add the first number of raindrops to the second number.",
+          },
+          {
+            question:
+              "If you see 8 clouds and 3 clouds float away, how many clouds are left?",
+            options: ["11", "5", "6", "3"],
+            answer: 1,
+            hint: "Subtract the clouds that floated away from the total.",
+          },
+          {
+            question:
+              "If you count 2 rainbows on Monday, 1 on Tuesday, and 2 on Wednesday, how many rainbows have you seen?",
+            options: ["3", "4", "5", "6"],
+            answer: 2,
+            hint: "Add all the rainbows together: 2 + 1 + 2 = ?",
+          },
+        ],
+        algebra: [
+          {
+            question: "What number is missing? 5, 10, 15, ___, 25",
+            options: ["18", "20", "22", "16"],
+            answer: 1,
+            hint: "We're counting by 5s. Add 5 to 15.",
+          },
+          {
+            question: "What comes next in the pattern? ☀️, ☁️, ☀️, ☁️, ☀️, ?",
+            options: ["☀️", "☁️", "🌧️", "🌈"],
+            answer: 1,
+            hint: "The pattern alternates between sun and cloud.",
+          },
+          {
+            question: "If ☀️ + ☀️ = 10, and ☀️ + ☁️ = 7, what does ☁️ equal?",
+            options: ["3", "4", "5", "7"],
+            answer: 0,
+            hint: "If ☀️ + ☀️ = 10, then ☀️ = 5. Now solve for ☁️.",
+          },
+        ],
+        geometry: [
+          {
+            question: "Which shape has 5 sides?",
+            options: ["Triangle", "Square", "Pentagon", "Rectangle"],
+            answer: 2,
+            hint: "A pentagon is a shape with 5 sides.",
+          },
+          {
+            question: "Which shape has no corners?",
+            options: ["Triangle", "Square", "Circle", "Rectangle"],
+            answer: 2,
+            hint: "A round shape has no corners or vertices.",
+          },
+          {
+            question: "How many corners does a cube have?",
+            options: ["4", "6", "8", "12"],
+            answer: 2,
+            hint: "A cube is a 3D shape with square faces.",
+          },
+        ],
+        measurement: [
+          {
+            question:
+              "If a snowman is 5 feet tall and a snow fort is 3 feet tall, how much taller is the snowman?",
+            options: ["1 foot", "2 feet", "8 feet", "3 feet"],
+            answer: 1,
+            hint: "Subtract the height of the snow fort from the height of the snowman.",
+          },
+          {
+            question:
+              "If the temperature was 52°F in the morning and dropped 8°F by night, what is the new temperature?",
+            options: ["40°F", "44°F", "48°F", "60°F"],
+            answer: 1,
+            hint: "Subtract the temperature drop from the morning temperature.",
+          },
+          {
+            question:
+              "If it takes 15 minutes for snow to melt and 30 minutes for ice to melt, how much longer does it take for ice to melt?",
+            options: ["15 minutes", "30 minutes", "45 minutes", "5 minutes"],
+            answer: 0,
+            hint: "Subtract the shorter time from the longer time.",
+          },
+        ],
+        "problem-solving": [
+          {
+            question:
+              "If there are 8 rainy days in spring and 3 rainy days in summer, how many more rainy days are there in spring?",
+            options: ["11", "5", "3", "2"],
+            answer: 1,
+            hint: "Find the difference between the number of rainy days in spring and summer.",
+          },
+          {
+            question:
+              "If each tree loses 10 leaves per day in fall, how many leaves will 3 trees lose in 2 days?",
+            options: ["20", "30", "50", "60"],
+            answer: 3,
+            hint: "Multiply the leaves per tree per day by the number of trees and days.",
+          },
+          {
+            question:
+              "If you build 2 snowmen that each use 3 snowballs, how many snowballs do you need in total?",
+            options: ["5", "6", "8", "9"],
+            answer: 1,
+            hint: "Multiply the number of snowballs per snowman by the number of snowmen.",
+          },
+        ],
+        communication: [
+          {
+            question:
+              "Explain how you would find the answer to this problem: If it snows 3 inches on Monday and 4 inches on Tuesday, how many inches of snow fell in total?",
+            options: [
+              "I would add 3 + 3 = 6.",
+              "I would add the inches from both days: 3 inches + 4 inches = 7 inches of snow in total.",
+              "I would count 4 fingers.",
+              "I would subtract 3 - 4 = -1.",
+            ],
+            answer: 1,
+            hint: "Think about what operation you need to find the total amount of snow.",
+          },
+          {
+            question:
+              "How would you explain to a friend why 8 - 3 = 5 using a weather example?",
+            options: [
+              "I don't know.",
+              "If I see 8 clouds and 3 disappear, there are 5 clouds left in the sky.",
+              "Because 5 + 3 = 8.",
+              "By counting to 5.",
+            ],
+            answer: 1,
+            hint: "Use a weather example that involves taking away or removing something.",
+          },
+          {
+            question:
+              "How would you show your work for this problem: If there were 4 seasons in a year and each season has 3 months, how many months are there in total?",
+            options: [
+              "4 + 3 = 7 months",
+              "I would add 3 four times: 3 + 3 + 3 + 3 = 12 months",
+              "4 × 4 = 16 months",
+              "3 × 3 = 9 months",
+            ],
+            answer: 1,
+            hint: "Think about how to find the total of equal groups.",
+          },
+        ],
+      };
+
+      // Initialize on load
+      window.onload = function () {
+        // Show the default topic (numbers)
+        showTopic("numbers");
+        updateSeasonStyle();
+      };
+
+      // Show selected topic
+      function showTopic(topic) {
+        // Hide all sections
+        const sections = document.querySelectorAll(".content-section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Show selected section
+        document.getElementById(`${topic}-section`).classList.add("active");
+        currentTopic = topic;
+
+        // Change season based on topic
+        if (topic === "numbers") {
+          changeSeason("spring");
+        } else if (topic === "algebra") {
+          changeSeason("summer");
+        } else if (topic === "geometry") {
+          changeSeason("fall");
+        } else if (topic === "measurement") {
+          changeSeason("winter");
+        }
+
+        // If TTS is enabled, read the topic heading
+        if (isTTSEnabled) {
+          const heading = document.querySelector(
+            `#${topic}-section h2`
+          ).textContent;
+          speakText(heading);
+        }
+      }
+
+      // Change the season and update visuals
+      function changeSeason(season) {
+        currentSeason = season;
+        updateSeasonStyle();
+      }
+
+      // Update seasonal styling
+      function updateSeasonStyle() {
+        document.body.className = currentSeason;
+        if (isHighContrast) {
+          document.body.classList.add("high-contrast-mode");
+        }
+
+        // Show/hide seasonal elements
+        const sun = document.querySelector(".sun");
+        const rainbow = document.querySelector(".rainbow");
+
+        if (currentSeason === "spring") {
+          rainbow.style.display = "block";
+          sun.style.opacity = "0.7";
+        } else if (currentSeason === "summer") {
+          rainbow.style.display = "none";
+          sun.style.opacity = "1";
+        } else if (currentSeason === "fall") {
+          rainbow.style.display = "none";
+          sun.style.opacity = "0.5";
+        } else if (currentSeason === "winter") {
+          rainbow.style.display = "none";
+          sun.style.opacity = "0.3";
+        }
+      }
+
+      // Card flip functionality
+      function flipCard(card) {
+        card.classList.toggle("flipped");
+
+        // If TTS is enabled, read the card content
+        if (isTTSEnabled) {
+          setTimeout(() => {
+            let textToRead;
+            if (card.classList.contains("flipped")) {
+              textToRead = card.querySelector(".card-back").textContent;
+            } else {
+              textToRead = card.querySelector(".card-front").textContent;
+            }
+            speakText(textToRead);
+          }, 400); // Wait for the flip animation to complete
+        }
+      }
+
+      // Check answer and provide feedback
+      function checkAnswer(button, isCorrect) {
+        // Get all option buttons in this section
+        const options = button.parentNode.querySelectorAll(".option-button");
+
+        // Disable all options
+        options.forEach((opt) => {
+          opt.disabled = true;
+        });
+
+        // Mark selected option as correct or incorrect
+        if (isCorrect) {
+          button.classList.add("correct");
+          displayFeedback(`Great job! That's correct!`, "correct");
+          updateProgress(currentTopic, true);
+
+          // Show next button
+          document.getElementById(`${currentTopic}-next`).style.display =
+            "block";
+        } else {
+          button.classList.add("incorrect");
+          displayFeedback(`Try again! That's not quite right.`, "incorrect");
+        }
+
+        // If TTS is enabled, read the feedback
+        if (isTTSEnabled) {
+          speakText(
+            document.getElementById(`${currentTopic}-feedback`).textContent
+          );
+        }
+      }
+
+      // Display feedback message
+      function displayFeedback(message, type) {
+        const feedback = document.getElementById(`${currentTopic}-feedback`);
+        feedback.textContent = message;
+        feedback.style.display = "block";
+
+        if (type === "correct") {
+          feedback.style.backgroundColor = "#d4edda";
+          feedback.style.color = "#155724";
+        } else {
+          feedback.style.backgroundColor = "#f8d7da";
+          feedback.style.color = "#721c24";
+        }
+      }
+
+      // Show hint
+      function showHint(topic) {
+        const currentProblem = problems[topic][problemIndex[topic]];
+        displayFeedback(`Hint: ${currentProblem.hint}`, "hint");
+
+        // If TTS is enabled, read the hint
+        if (isTTSEnabled) {
+          speakText(`Hint: ${currentProblem.hint}`);
+        }
+      }
+
+      // Load next problem
+      function nextProblem(topic) {
+        // Increment problem index
+        problemIndex[topic] =
+          (problemIndex[topic] + 1) % problems[topic].length;
+
+        // Get new problem
+        const problem = problems[topic][problemIndex[topic]];
+
+        // Update problem text
+        document.getElementById(`${topic}-problem`).textContent =
+          problem.question;
+
+        // Update options
+        const optionsContainer = document.getElementById(`${topic}-options`);
+        optionsContainer.innerHTML = "";
+
+        problem.options.forEach((option, index) => {
+          const button = document.createElement("button");
+          button.className = "option-button";
+          button.textContent = option;
+          button.onclick = function () {
+            checkAnswer(this, index === problem.answer);
+          };
+          optionsContainer.appendChild(button);
+        });
+
+        // Hide feedback and next button
+        document.getElementById(`${topic}-feedback`).style.display = "none";
+        document.getElementById(`${topic}-next`).style.display = "none";
+
+        // If TTS is enabled, read the new problem
+        if (isTTSEnabled) {
+          speakText(problem.question);
+        }
+      }
+
+      function saveProgressToBackend(topic, score) {
+        fetch("/save-progress/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"), // ensure you include csrf token
+          },
+          body: JSON.stringify({
+            topic: topic,
+            score: score,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Progress saved:", data.message);
+          });
+      }
+
+      // Helper to get CSRF token from cookies
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      // Update progress bar and visuals
+      function updateProgress(topic, isCorrect) {
+        if (isCorrect) {
+          scores[topic]++;
+
+          // Update progress bar
+          const progressBar = document.getElementById(`${topic}-progress`);
+          const percentage = (scores[topic] / 5) * 100;
+          progressBar.style.width = `${Math.min(percentage, 100)}%`;
+
+          // Update plants (only for numbers section)
+          if (topic === "numbers") {
+            if (scores[topic] >= 1) {
+              document.getElementById("plant1").classList.add("growing");
+            }
+            if (scores[topic] >= 3) {
+              document.getElementById("plant2").classList.add("growing");
+            }
+            if (scores[topic] >= 5) {
+              document.getElementById("plant3").classList.add("growing");
+            }
+          }
+        }
+      }
+      saveProgressToBackend(currentTopic, scores[currentTopic]);
+
+      // Font size adjustment
+      function changeFontSize(change) {
+        fontSizeLevel += change;
+        const html = document.documentElement;
+        const baseSize = 16; // Base font size in pixels
+        const newSize = baseSize + fontSizeLevel * 2;
+        html.style.fontSize = `${newSize}px`;
+      }
+
+      // Toggle high contrast mode
+      function toggleHighContrast() {
+        isHighContrast = !isHighContrast;
+        if (isHighContrast) {
+          document.body.classList.add("high-contrast-mode");
+        } else {
+          document.body.classList.remove("high-contrast-mode");
+        }
+      }
+
+      // Toggle text-to-speech
+      function toggleTextToSpeech() {
+        isTTSEnabled = !isTTSEnabled;
+        const ttsButton = document.querySelector(".text-to-speech-button");
+
+        if (isTTSEnabled) {
+          ttsButton.style.backgroundColor = "#2e7d32";
+          speakText("Text to speech is now enabled.");
+        } else {
+          ttsButton.style.backgroundColor = "#4a90e2";
+          if (synth.speaking) {
+            synth.cancel();
+          }
+        }
+      }
+
+      // Speak text using the Web Speech API
+      function speakText(text) {
+        if (isTTSEnabled && "speechSynthesis" in window) {
+          // Cancel any ongoing speech
+          if (synth.speaking) {
+            synth.cancel();
+          }
+
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.rate = 0.9; // Slightly slower rate for children
+          utterance.pitch = 1.1; // Slightly higher pitch
+          synth.speak(utterance);
+        }
+      }
+    </script>
+  </body>
+</html>

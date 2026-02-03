@@ -1,0 +1,2309 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/giggles.css' %}" />
+    <title>Rwanda Safari Adventure</title>
+    <style>
+      body {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        background: linear-gradient(135deg, #f8f4ff 0%, #ede7f6 100%);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%239575cd' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM22 63c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm68 0c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM45 22c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm-45 70c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM83 11c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-42 20c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zm12 64c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z'%3E%3C/path%3E%3C/svg%3E");
+        margin: 0;
+        padding: 0;
+        color: #4a4a4a;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .main-info {
+        width: 100%;
+        height: 100vh;
+        margin-left: 100px;
+        margin-top: 80px;
+      }
+      .safari-border {
+        border: 8px solid transparent;
+        border-image: linear-gradient(45deg, #9575cd, #7e57c2, orangered) 1;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 30px;
+        background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+      }
+
+      .treehouse {
+        background: linear-gradient(135deg, #7e57c2 0%, #9575cd 100%);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 6px 20px rgba(126, 87, 194, 0.3);
+        color: white;
+        position: relative;
+      }
+
+      .treehouse:before {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 15px;
+        background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
+        border-radius: 0 0 10px 10px;
+      }
+
+      .subject-icon {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+        vertical-align: middle;
+        background: linear-gradient(135deg, #ba68c8 0%, #ab47bc 100%);
+        border-radius: 50%;
+        padding: 10px;
+        box-shadow: 0 4px 12px rgba(186, 104, 200, 0.4);
+      }
+
+      .subject-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .subject-title {
+        font-size: 1.8em;
+        margin: 0;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .trail {
+        height: 50px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath stroke='%239575cd' stroke-width='6' fill='none' stroke-dasharray='10,15' d='M10 50 Q 25 25, 50 50 T 90 50' /%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        background-size: contain;
+        margin: 15px 0;
+      }
+
+      .activity-box {
+        background: linear-gradient(135deg, #e1bee7 0%, #f3e5f5 100%);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(149, 117, 205, 0.2);
+        border-left: 6px solid #9575cd;
+        color: #4a4a4a;
+      }
+
+      .progress-container {
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        margin: 20px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          #ba68c8 25%,
+          #ab47bc 25%,
+          #ab47bc 50%,
+          #ba68c8 50%,
+          #ba68c8 75%,
+          #ab47bc 75%,
+          #ab47bc
+        );
+        background-size: 40px 40px;
+        border-radius: 15px;
+        width: 0;
+        transition: width 1s ease;
+        position: relative;
+      }
+
+      .progress-bar:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='20' cy='50' r='3' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='40' cy='50' r='3' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='60' cy='50' r='3' fill='%23ffffff' fill-opacity='0.5'/%3E%3Ccircle cx='80' cy='50' r='3' fill='%23ffffff' fill-opacity='0.5'/%3E%3C/svg%3E");
+        background-size: 100px 100%;
+      }
+
+      .animal-tracker {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%239575cd'/%3E%3Ccircle cx='30' cy='30' r='10' fill='%23ffffff'/%3E%3Ccircle cx='70' cy='30' r='10' fill='%23ffffff'/%3E%3Cpath d='M30 70 Q 50 85, 70 70' stroke='%23ffffff' stroke-width='5' fill='none'/%3E%3C/svg%3E");
+        background-size: contain;
+        transform: translateX(-50%);
+        transition: left 1s ease;
+      }
+
+      .map-container {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 15px;
+        margin: 20px 0;
+        box-shadow: 0 6px 20px rgba(149, 117, 205, 0.3);
+      }
+
+      .rwanda-map {
+        width: 100%;
+        height: 100%;
+      }
+
+      .map-pin {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        transform: translate(-50%, -100%);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .map-pin:hover {
+        transform: translate(-50%, -100%) scale(1.2);
+      }
+
+      .map-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(225, 190, 231, 0.95) 0%,
+          rgba(243, 229, 245, 0.95) 100%
+        );
+        padding: 15px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        color: #4a4a4a;
+      }
+
+      .map-container:hover .map-info {
+        transform: translateY(0);
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .tab {
+        padding: 12px 20px;
+        background: linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%);
+        color: white;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .tab:hover {
+        background: linear-gradient(135deg, #ba68c8 0%, #ab47bc 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(186, 104, 200, 0.4);
+      }
+
+      .tab.active {
+        background: linear-gradient(135deg, #9575cd 0%, #7e57c2 100%);
+        box-shadow: 0 4px 15px rgba(149, 117, 205, 0.5);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .gallery-item {
+        flex: 1 0 200px;
+        height: 200px;
+        background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(149, 117, 205, 0.2);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(149, 117, 205, 0.3);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 70%;
+        object-fit: cover;
+      }
+
+      .gallery-caption {
+        padding: 10px;
+        background: linear-gradient(
+          135deg,
+          rgba(186, 104, 200, 0.9) 0%,
+          rgba(171, 71, 188, 0.9) 100%
+        );
+        color: white;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9em;
+      }
+
+      .quiz-container {
+        margin-top: 30px;
+      }
+
+      .quiz-question {
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      .quiz-option {
+        display: block;
+        padding: 12px 15px;
+        margin: 8px 0;
+        background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .quiz-option:hover {
+        background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .quiz-option.selected {
+        background: linear-gradient(135deg, #9575cd 0%, #7e57c2 100%);
+        color: white;
+        border-color: #673ab7;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #9575cd 0%, #7e57c2 100%);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1em;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(149, 117, 205, 0.3);
+      }
+
+      .button:hover {
+        background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(149, 117, 205, 0.4);
+      }
+
+      .animal-icon {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        background: linear-gradient(135deg, #7e57c2 0%, #673ab7 100%);
+        color: white;
+        border-radius: 15px;
+        margin-top: 30px;
+        box-shadow: 0 6px 20px rgba(126, 87, 194, 0.3);
+      }
+
+      /* Settings Panel */
+      .settings-panel {
+        background: linear-gradient(135deg, #f8f4ff 0%, #f3e5f5 100%);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(149, 117, 205, 0.15);
+        border: 1px solid rgba(149, 117, 205, 0.2);
+      }
+
+      .settings-panel h3 {
+        color: #7e57c2;
+        margin-bottom: 15px;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        margin-right: 10px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background: linear-gradient(135deg, #9575cd 0%, #7e57c2 100%);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+
+      .settings-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        color: #4a4a4a;
+      }
+
+      /* Word Cards for Language Learning */
+      .word-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .word-card {
+        background: linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        min-width: 120px;
+        box-shadow: 0 4px 12px rgba(206, 147, 216, 0.3);
+        transition: transform 0.3s ease;
+      }
+
+      .word-card:hover {
+        transform: rotateY(180deg);
+      }
+
+      .rwandan-word {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .english-meaning {
+        font-size: 0.9em;
+        opacity: 0.9;
+      }
+
+      /* Business Simulator Styles */
+      .business-selector {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .business-btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+      }
+
+      .business-btn.active {
+        background: linear-gradient(135deg, #673ab7 0%, #5e35b1 100%);
+      }
+
+      .business-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 15px 0;
+      }
+
+      .action-btn {
+        padding: 8px 16px;
+        font-size: 0.85em;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .business-stats {
+        background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+
+      .business-stats p {
+        margin: 5px 0;
+        font-weight: bold;
+        color: #7e57c2;
+      }
+
+      /* Header Styles */
+      .header {
+        background: linear-gradient(360deg, #9c27b0, #e91e63);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 6px 20px rgba(126, 87, 194, 0.3);
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 2.5em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .header p {
+        margin: 5px 0 0 0;
+        opacity: 0.9;
+      }
+
+      .search-container {
+        text-align: center;
+      }
+
+      .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+      }
+
+      .notification-bell-container {
+        position: relative;
+      }
+
+      .notification-bell {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .notification-bell:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .notification-bell svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #ba68c8 0%, #ab47bc 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .user-name {
+        font-weight: bold;
+      }
+
+      .user-role {
+        font-size: 0.8em;
+        opacity: 0.8;
+      }
+
+      .logout-button {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        padding: 8px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .logout-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .logout-button svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 100%;
+          height: auto;
+          position: relative;
+        }
+
+        .container {
+          margin-left: 0;
+          padding: 20px;
+        }
+
+        .subject-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .subject-icon {
+          margin-right: 0;
+          margin-bottom: 10px;
+        }
+
+        .tab {
+          padding: 8px 12px;
+          font-size: 0.9em;
+        }
+
+        .gallery-item {
+          flex: 1 0 150px;
+        }
+
+        .business-actions {
+          flex-direction: column;
+        }
+
+        .action-btn {
+          min-width: auto;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .header-actions {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .container {
+          margin-left: 250px;
+          padding: 20px;
+        }
+      }
+
+      /* Accessibility features */
+      .high-contrast {
+        filter: contrast(1.5);
+      }
+
+      .large-text {
+        font-size: 1.2em;
+      }
+
+      /* Celebration animation for correct answers */
+      @keyframes celebrate {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .celebrate {
+        animation: celebrate 0.5s ease-in-out;
+      }
+
+      /* Additional activity styles */
+      .time-period {
+        background: linear-gradient(135deg, #f8f4ff 0%, #f3e5f5 100%);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border-left: 4px solid #9575cd;
+      }
+
+      .time-travel-result {
+        margin-top: 15px;
+        padding: 15px;
+        background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+        border-radius: 8px;
+        color: white;
+      }
+
+      .practice-area {
+        background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .practice-area input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ce93d8;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-family: inherit;
+      }
+
+      .practice-area input:focus {
+        outline: none;
+        border-color: #9575cd;
+        box-shadow: 0 0 0 3px rgba(149, 117, 205, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img
+              src="{% static 'images/Giggles logo.png' %}"
+              alt="Giggles Logo"
+            />
+          </div>
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="lessons.html" class="nav-link active">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div id="timerDisplay"></div>
+      <script src="{% static 'js/timer.js' %}"></script>
+    </div>
+
+    <div class="container">
+      <div class="main-info">
+        <div class="settings-panel">
+          <h3>Learning Safari Settings 🛠️</h3>
+          <div class="settings-option">
+            <label class="switch">
+              <input type="checkbox" id="high-contrast-toggle" />
+              <span class="slider"></span>
+            </label>
+            <span>High Contrast Mode</span>
+          </div>
+          <div class="settings-option">
+            <label class="switch">
+              <input type="checkbox" id="large-text-toggle" />
+              <span class="slider"></span>
+            </label>
+            <span>Large Text Mode</span>
+          </div>
+          <div class="settings-option">
+            <label class="switch">
+              <input type="checkbox" id="read-aloud-toggle" />
+              <span class="slider"></span>
+            </label>
+            <span>Enable Read Aloud</span>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" data-tab="history">
+            <svg
+              class="animal-icon"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            History
+          </div>
+
+          <div class="tab" data-tab="geography">
+            <svg
+              class="animal-icon"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            Geography
+          </div>
+
+          <div class="tab" data-tab="culture">
+            <svg
+              class="animal-icon"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            Culture
+          </div>
+
+          <div class="tab" data-tab="citizenship">
+            <svg
+              class="animal-icon"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            Citizenship
+          </div>
+
+          <div class="tab" data-tab="economics">
+            <svg
+              class="animal-icon"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            Economics
+          </div>
+
+          <div class="tab" data-tab="quiz">
+            <svg
+              class="animal-icon"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            ></svg>
+            Quiz
+          </div>
+        </div>
+
+        <div class="tab-content active" id="history">
+          <div class="treehouse">
+            <div class="subject-header">
+              <svg
+                class="subject-icon"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect x="20" y="30" width="60" height="50" fill="#CD853F" />
+                <polygon points="10,30 50,10 90,30" fill="#A0522D" />
+                <rect x="40" y="60" width="20" height="20" fill="#8B4513" />
+              </svg>
+              <h2 class="subject-title">History Treehouse: Rwanda's Story</h2>
+            </div>
+
+            <div class="activity-box">
+              <h3>⏰ Time Safari: Rwanda's Past</h3>
+              <p>
+                Rwanda has a fascinating history! Let's travel back in time to
+                learn about this beautiful country.
+              </p>
+
+              <ul>
+                <li><strong>1884-1919:</strong> Germany controlled Rwanda</li>
+                <li><strong>1919-1962:</strong> Belgium controlled Rwanda</li>
+                <li>
+                  <strong>July 1, 1962:</strong> Rwanda gained independence!
+                </li>
+                <li>
+                  <strong>1994:</strong> A very sad time called the genocide
+                  against the tutsi happened
+                </li>
+                <li>
+                  <strong>Since 1994:</strong> Rwanda has been rebuilding and
+                  growing stronger
+                </li>
+              </ul>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>Important people in Rwanda's history</h3>
+              <p>Some important people in Rwanda's history:</p>
+
+              <div class="gallery">
+                <div class="gallery-item">
+                  <img
+                    src="{% static 'images/King-rwabugiri.jfif' %}"
+                    alt="King Kigeli IV"
+                  />
+                  <div class="gallery-caption">
+                    King Kigeli IV Rwabugiri - Notable King of Rwanda
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <img
+                    src="{% static '\images\kagame.jfif' %}"
+                    alt="President Paul Kagame"
+                  />
+                  <div class="gallery-caption">
+                    President Paul Kagame - Leader since 2000
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <img
+                    src="{% static '\images\fossey.jfif' %}"
+                    alt="Dian Fossey"
+                  />
+                  <div class="gallery-caption">
+                    Dian Fossey - Protected mountain gorillas
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>History Activity: Time Travel Journal</h3>
+              <p>
+                Imagine you could travel back in time to visit Rwanda in
+                different periods. What would you see?
+              </p>
+
+              <div id="history-activity">
+                <div class="time-period">
+                  <h4>Kingdom of Rwanda (1600s)</h4>
+                  <p>A strong kingdom ruled by kings called Mwamis.</p>
+                  <button class="button time-travel-btn" data-period="kingdom">
+                    Time Travel Here
+                  </button>
+                  <div
+                    class="time-travel-result"
+                    id="kingdom-result"
+                    style="display: none"
+                  >
+                    <p>
+                      You see the Mwami (king) in his royal court. People are
+                      bringing gifts and cattle. Music and dancing are
+                      happening!
+                    </p>
+                    <img
+                      src="/api/placeholder/400/200"
+                      alt="Kingdom of Rwanda visualization"
+                    />
+                  </div>
+                </div>
+
+                <div class="time-period">
+                  <h4>Independence Day (July 1, 1962)</h4>
+                  <p>Rwanda becomes an independent country!</p>
+                  <button
+                    class="button time-travel-btn"
+                    data-period="independence"
+                  >
+                    Time Travel Here
+                  </button>
+                  <div
+                    class="time-travel-result"
+                    id="independence-result"
+                    style="display: none"
+                  >
+                    <p>
+                      You see people celebrating in the streets! The new Rwandan
+                      flag is being raised. Everyone is happy and excited for
+                      their new country.
+                    </p>
+                    <img
+                      src="/api/placeholder/400/200"
+                      alt="Independence Day visualization"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tabs">
+              <div class="tab active" data-tab="geography">
+                <svg
+                  class="animal-icon"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                ></svg>
+                Next >> Geography
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="geography">
+          <div class="treehouse">
+            <div class="subject-header">
+              <svg
+                class="subject-icon"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="50" cy="50" r="40" fill="#4CAF50" />
+                <path
+                  d="M30,50 Q50,20 70,50 T110,50"
+                  fill="none"
+                  stroke="#1B5E20"
+                  stroke-width="3"
+                />
+                <circle cx="50" cy="50" r="10" fill="#1B5E20" />
+              </svg>
+              <h2 class="subject-title">Geography Treehouse: Rwanda's Land</h2>
+            </div>
+
+            <div class="activity-box">
+              <h3>Safari Map: Where is Rwanda?</h3>
+              <p>
+                Rwanda is a small country in East Africa, just south of the
+                Equator.
+              </p>
+
+              <div class="map-container">
+                <svg
+                  class="rwanda-map"
+                  viewBox="0 0 800 600"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <!-- Africa outline -->
+                  <path
+                    d="M200,100 Q300,50 400,100 T600,150 T700,300 T600,500 T400,550 T200,450 T150,300 T200,100"
+                    fill="#f5d76e"
+                    stroke="#000"
+                    stroke-width="2"
+                  />
+
+                  <!-- Rwanda highlight -->
+                  <circle
+                    cx="400"
+                    cy="300"
+                    r="20"
+                    fill="#8bc34a"
+                    stroke="#558b2f"
+                    stroke-width="3"
+                  />
+
+                  <!-- Neighboring countries -->
+                  <text x="370" y="260" font-size="12">Uganda</text>
+                  <text x="420" y="300" font-size="12">Tanzania</text>
+                  <text x="350" y="320" font-size="12">Burundi</text>
+                  <text x="320" y="290" font-size="12">DRC</text>
+
+                  <!-- Rwanda label -->
+                  <text x="385" y="300" font-size="10" fill="#fff">Rwanda</text>
+
+                  <!-- Compass -->
+                  <!-- Equator line -->
+                  <line
+                    x1="100"
+                    y1="200"
+                    x2="700"
+                    y2="200"
+                    stroke="#ff6b6b"
+                    stroke-width="2"
+                    stroke-dasharray="5,5"
+                  />
+                  <text x="710" y="200" font-size="12" fill="#ff6b6b">
+                    Equator
+                  </text>
+                </svg>
+
+                <div class="map-pin" style="top: 40%; left: 50%">
+                  <svg viewBox="0 0 100 100" width="30" height="30">
+                    <path
+                      d="M50,10 C33.4,10 20,23.4 20,40 C20,66 50,90 50,90 C50,90 80,66 80,40 C80,23.4 66.6,10 50,10 Z"
+                      fill="#e53935"
+                    />
+                    <circle cx="50" cy="40" r="15" fill="#ffcdd2" />
+                  </svg>
+                </div>
+
+                <div class="map-info">
+                  <h4>Rwanda Facts</h4>
+                  <ul>
+                    <li>Capital: Kigali</li>
+                    <li>
+                      Size: 26,338 square kilometers (about the size of
+                      Maryland)
+                    </li>
+                    <li>Population: About 13 million people</li>
+                    <li>Nickname: "Land of a Thousand Hills"</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>Amazing Landscapes of Rwanda</h3>
+              <p>
+                Rwanda has beautiful and diverse landscapes! Let's explore them:
+              </p>
+
+              <div class="gallery">
+                <div class="gallery-item">
+                  <img
+                    src="{% static '\images\volcanoes-park.jfif' %}"
+                    alt="Volcanoes National Park"
+                  />
+                  <div class="gallery-caption">
+                    Volcanoes National Park - Mountain gorillas live here!
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <img
+                    src="{% static '\images\lake-kivu.jfif' %}"
+                    alt="Lake Kivu"
+                  />
+                  <div class="gallery-caption">
+                    Lake Kivu - One of Africa's Great Lakes
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <img
+                    src="{% static '\images\nyungwe-forest.jfif' %}"
+                    alt="Nyungwe Forest"
+                  />
+                  <div class="gallery-caption">
+                    Nyungwe Forest - Home to many monkeys and birds
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <img
+                    src="{% static '\images\hills.jfif' %}"
+                    alt="Rolling Hills"
+                  />
+                  <div class="gallery-caption">
+                    Rolling Hills - Why Rwanda is called "Land of a Thousand
+                    Hills"
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>🦍 Climate Explorer</h3>
+              <p>
+                Rwanda has a mild climate year-round because it's high up
+                (elevation). The average temperature is around 70°F (21°C).
+              </p>
+
+              <div class="climate-chart">
+                <h4>Seasons in Rwanda</h4>
+                <ul>
+                  <li><strong>Long Rainy Season:</strong> March to May</li>
+                  <li><strong>Long Dry Season:</strong> June to September</li>
+                  <li>
+                    <strong>Short Rainy Season:</strong> October to November
+                  </li>
+                  <li>
+                    <strong>Short Dry Season:</strong> December to February
+                  </li>
+                </ul>
+
+                <div class="weather-activity">
+                  <p>
+                    What would you pack for a trip to Rwanda? Select the right
+                    items for each season!
+                  </p>
+                  <div class="season-selector">
+                    <button class="button season-btn active" data-season="dry">
+                      Dry Season
+                    </button>
+                    <button class="button season-btn" data-season="rainy">
+                      Rainy Season
+                    </button>
+                  </div>
+
+                  <div class="packing-options">
+                    <div class="packing-item" data-good-for="both">
+                      <img
+                        src="{% static 'images\tshirts.jfif' %}"
+                        alt="T-shirts"
+                      />
+                      <p>T-shirts</p>
+                    </div>
+                    <div class="packing-item" data-good-for="rainy">
+                      <img
+                        src="{% static 'images\rain-jacket.jfif' %}"
+                        alt="Rain jacket"
+                      />
+                      <p>Rain jacket</p>
+                    </div>
+                    <div class="packing-item" data-good-for="dry">
+                      <img
+                        src="{% static 'images\sun-hat.jfif' %}"
+                        alt="Sun hat"
+                      />
+                      <p>Sun hat</p>
+                    </div>
+                    <div class="packing-item" data-good-for="both">
+                      <img
+                        src="{% static 'images\hiking-boots.jfif' %}"
+                        alt="Hiking boots"
+                      />
+                      <p>Hiking boots</p>
+                    </div>
+                    <div class="packing-item" data-good-for="rainy">
+                      <img
+                        src="{% static 'images\umbrella.png' %}"
+                        alt="Umbrella"
+                      />
+                      <p>Umbrella</p>
+                    </div>
+                  </div>
+
+                  <div class="packing-result">
+                    <p>Drop your items here!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab active" data-tab="culture">
+                <svg
+                  class="animal-icon"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                ></svg>
+                Next >> Culture
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="culture">
+          <div class="treehouse">
+            <div class="subject-header">
+              <svg
+                class="subject-icon"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="50" cy="50" r="40" fill="#9C27B0" />
+                <path
+                  d="M30,60 Q50,80 70,60"
+                  stroke="#fff"
+                  stroke-width="5"
+                  fill="none"
+                />
+                <circle cx="35" cy="40" r="5" fill="#fff" />
+                <circle cx="65" cy="40" r="5" fill="#fff" />
+                <path
+                  d="M30,20 Q50,10 70,20"
+                  stroke="#fff"
+                  stroke-width="5"
+                  fill="none"
+                />
+              </svg>
+              <h2 class="subject-title">
+                Culture Treehouse: Rwandan Traditions
+              </h2>
+            </div>
+
+            <div class="activity-box">
+              <h3>🦊 Language Explorer</h3>
+              <p>
+                The official languages of Rwanda are Kinyarwanda, English,
+                French, and Swahili.
+              </p>
+
+              <div class="language-learning">
+                <h4>Learn some Kinyarwanda words!</h4>
+                <div class="word-cards">
+                  <div class="word-card">
+                    <p class="rwandan-word">Muraho</p>
+                    <p class="english-meaning">Hello</p>
+                  </div>
+                  <div class="word-card">
+                    <p class="rwandan-word">Amakuru</p>
+                    <p class="english-meaning">How are you?</p>
+                  </div>
+                  <div class="word-card">
+                    <p class="rwandan-word">Yego</p>
+                    <p class="english-meaning">Yes</p>
+                  </div>
+                  <div class="word-card">
+                    <p class="rwandan-word">Oya</p>
+                    <p class="english-meaning">No</p>
+                  </div>
+                  <div class="word-card">
+                    <p class="rwandan-word">Murakoze</p>
+                    <p class="english-meaning">Thank you</p>
+                  </div>
+                </div>
+
+                <div class="practice-area">
+                  <h4>Practice Time!</h4>
+                  <p>How would you say "Hello, how are you?" in Kinyarwanda?</p>
+                  <input
+                    type="text"
+                    id="language-practice"
+                    placeholder="Type your answer here"
+                  />
+                  <button class="button" id="check-language">
+                    Check Answer
+                  </button>
+                  <p id="language-feedback"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>🐒 Music and Dance</h3>
+              <p>
+                Rwandan traditional music and dance are very important parts of
+                the culture!
+              </p>
+
+              <div class="gallery">
+                <div class="gallery-item">
+                  <img
+                    src="{% static 'images\intore-dancers.jfif' %}"
+                    alt="Intore Dancers"
+                  />
+                  <div class="gallery-caption">
+                    Intore Dancers - Traditional warriors dance
+                  </div>
+                </div>
+                <div class="gallery-item">
+                  <img src="/api/placeholder/200/140" alt="Drums" />
+                  <div class="gallery-caption">Ingoma - Traditional drums</div>
+                </div>
+                <div class="gallery-item">
+                  <img src="/api/placeholder/200/140" alt="Amakondera" />
+                  <div class="gallery-caption">
+                    Amakondera - Long horns used in ceremonies
+                  </div>
+                </div>
+              </div>
+
+              <div class="dance-activity">
+                <h4>Learn Intore Dance Moves!</h4>
+                <p>
+                  Follow along with these basic steps of the Intore warrior
+                  dance:
+                </p>
+
+                <div class="dance-steps">
+                  <div class="dance-step">
+                    <img src="/api/placeholder/100/100" alt="Step 1" />
+                    <p>1. Stand tall with arms raised</p>
+                  </div>
+                  <div class="dance-step">
+                    <img src="/api/placeholder/100/100" alt="Step 2" />
+                    <p>2. Jump high with legs straight</p>
+                  </div>
+                  <div class="dance-step">
+                    <img src="/api/placeholder/100/100" alt="Step 3" />
+                    <p>3. Stomp feet and bend knees</p>
+                  </div>
+                  <div class="dance-step">
+                    <img src="/api/placeholder/100/100" alt="Step 4" />
+                    <p>4. Shake shoulders rapidly</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>🐆 Food Safari</h3>
+              <p>Let's explore delicious Rwandan foods!</p>
+
+              <div class="food-explorer">
+                <div class="gallery">
+                  <div class="gallery-item">
+                    <img
+                      src="{% static 'images/irish-potatoes.jfif' %}"
+                      alt="Ugali"
+                    />
+                    <div class="gallery-caption">
+                      Ugali - A staple food made from corn flour
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="{% static 'images/isombe.jfif' %}" alt="Isombe" />
+                    <div class="gallery-caption">
+                      Isombe - Cassava leaves with eggplant and spices
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="{% static 'images/brochettes.jfif' %}"
+                      alt="Brochettes"
+                    />
+                    <div class="gallery-caption">
+                      Brochettes - Grilled meat skewers
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="{% static 'images/rwanda-tea.jfif' %}"
+                      alt="Rwandan Tea"
+                    />
+                    <div class="gallery-caption">
+                      Rwandan Tea - Famous export grown on hillsides
+                    </div>
+                  </div>
+                </div>
+
+                <div class="recipe-activity">
+                  <h4>Make Rwandan Banana Bread!</h4>
+                  <p>
+                    Rwanda grows many types of bananas. Try this simple recipe:
+                  </p>
+
+                  <div class="recipe">
+                    <h5>Ingredients:</h5>
+                    <ul>
+                      <li>3 ripe bananas</li>
+                      <li>2 cups flour</li>
+                      <li>1/2 cup sugar</li>
+                      <li>1/4 cup oil</li>
+                      <li>2 eggs</li>
+                      <li>1 teaspoon baking soda</li>
+                      <li>Pinch of salt</li>
+                    </ul>
+
+                    <h5>Instructions:</h5>
+                    <ol>
+                      <li>Mash bananas in a bowl</li>
+                      <li>Mix in eggs, oil, and sugar</li>
+                      <li>Add flour, baking soda, and salt</li>
+                      <li>Pour into a greased pan</li>
+                      <li>Bake at 350°F (175°C) for 45-50 minutes</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab active" data-tab="citizenship">
+                <svg
+                  class="animal-icon"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                ></svg>
+                Next >> Citizenship
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="citizenship">
+          <div class="treehouse">
+            <div class="subject-header">
+              <svg
+                class="subject-icon"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="50" cy="50" r="40" fill="#3F51B5" />
+                <polygon
+                  points="50,20 60,40 80,40 65,55 70,75 50,65 30,75 35,55 20,40 40,40"
+                  fill="#FFC107"
+                />
+              </svg>
+              <h2 class="subject-title">
+                Citizenship Treehouse: Living Together
+              </h2>
+            </div>
+
+            <div class="activity-box">
+              <h3>🐢 Unity and Reconciliation</h3>
+              <p>
+                After the sad events of 1994, Rwanda has been working hard to
+                build peace and unity among all its people.
+              </p>
+
+              <div class="unity-activities">
+                <h4>Community Projects</h4>
+                <p>
+                  In Rwanda, people work together on community projects called
+                  "Umuganda" on the last Saturday of each month. Everyone helps
+                  improve their neighborhoods!
+                </p>
+
+                <div class="umuganda-activity">
+                  <h5>Design Your Own Umuganda Project</h5>
+                  <p>What community project would you like to organize?</p>
+
+                  <div class="project-options">
+                    <div class="project-option">
+                      <img
+                        src="{% static 'images/kids-tree.jfif' %}"
+                        alt="Plant Trees"
+                      />
+                      <p>Plant Trees</p>
+                    </div>
+                    <div class="project-option">
+                      <img
+                        src="{% static 'images/cleaning-park.jfif' %}"
+                        alt="Clean Park"
+                      />
+                      <p>Clean Park</p>
+                    </div>
+                    <div class="project-option">
+                      <img
+                        src="{% static 'images/paint-school.jfif' %}"
+                        alt="Paint School"
+                      />
+                      <p>Paint School</p>
+                    </div>
+                    <div class="project-option">
+                      <img
+                        src="{% static 'images/build-houses.jfif' %}"
+                        alt="Build Houses"
+                      />
+                      <p>Build Houses</p>
+                    </div>
+                  </div>
+
+                  <div class="project-planner">
+                    <h5>Project Planner</h5>
+                    <div class="form-group">
+                      <label>Project Name:</label>
+                      <input type="text" id="project-name" />
+                    </div>
+                    <div class="form-group">
+                      <label>Materials Needed:</label>
+                      <input type="text" id="project-materials" />
+                    </div>
+                    <div class="form-group">
+                      <label>How It Helps the Community:</label>
+                      <textarea id="project-benefits"></textarea>
+                    </div>
+                    <button class="button" id="save-project">
+                      Save Project
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>Leadership Values</h3>
+              <p>
+                Rwanda has strong values that guide how people live together.
+              </p>
+
+              <div class="values-explorer">
+                <h4>Core Rwandan Values</h4>
+                <ul>
+                  <li><strong>Agaciro</strong> - Self-respect and dignity</li>
+                  <li><strong>Ubunyangamugayo</strong> - Integrity</li>
+                  <li><strong>Ubupfura</strong> - Honesty</li>
+                  <li><strong>Ubumuntu</strong> - Humanity and kindness</li>
+                  <li><strong>Gukunda Igihugu</strong> - Patriotism</li>
+                </ul>
+
+                <div class="values-activity">
+                  <h4>Values in Action</h4>
+                  <p>Match each situation with the value it shows:</p>
+
+                  <div class="matching-activity">
+                    <div class="situation" data-value="Agaciro">
+                      <p>Amahoro stands up against bullying at school</p>
+                    </div>
+                    <div class="situation" data-value="Ubumuntu">
+                      <p>
+                        Mutesi shares her lunch with a classmate who forgot
+                        theirs
+                      </p>
+                    </div>
+                    <div class="situation" data-value="Ubupfura">
+                      <p>
+                        Kwizera returns extra change that a shopkeeper gave by
+                        mistake
+                      </p>
+                    </div>
+                    <div class="situation" data-value="Gukunda Igihugu">
+                      <p>Jean helps clean up trash in the national park</p>
+                    </div>
+
+                    <div class="value-targets">
+                      <div class="value-target" data-value="Agaciro">
+                        Agaciro
+                      </div>
+                      <div class="value-target" data-value="Ubumuntu">
+                        Ubumuntu
+                      </div>
+                      <div class="value-target" data-value="Ubupfura">
+                        Ubupfura
+                      </div>
+                      <div class="value-target" data-value="Gukunda Igihugu">
+                        Gukunda Igihugu
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab active" data-tab="geography">
+                <svg
+                  class="animal-icon"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                ></svg>
+                Next >> Economics
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="economics">
+          <div class="treehouse">
+            <div class="subject-header">
+              <svg
+                class="subject-icon"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="50" cy="50" r="40" fill="#4CAF50" />
+                <text
+                  x="35"
+                  y="65"
+                  font-family="Arial"
+                  font-size="40"
+                  fill="#fff"
+                >
+                  F
+                </text>
+                <text
+                  x="55"
+                  y="45"
+                  font-family="Arial"
+                  font-size="20"
+                  fill="#fff"
+                >
+                  Rw
+                </text>
+              </svg>
+              <h2 class="subject-title">
+                Economics Treehouse: Rwanda's Growth
+              </h2>
+            </div>
+
+            <div class="activity-box">
+              <h3>🐘 Resources Safari</h3>
+              <p>Rwanda has many natural resources and growing industries!</p>
+
+              <div class="resources-explorer">
+                <h4>Rwanda's Important Products</h4>
+
+                <div class="gallery">
+                  <div class="gallery-item">
+                    <img
+                      src="{% static 'images/rwanda-coffee.jfif' %}"
+                      alt="Coffee"
+                    />
+                    <div class="gallery-caption">
+                      Coffee - Rwanda's #1 export
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="{% static 'images/tea-plant.jfif' %}" alt="Tea" />
+                    <div class="gallery-caption">
+                      Tea - Grown on beautiful hillsides
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="{% static 'images/gorilla-trekking.jfif' %}"
+                      alt="Tourism"
+                    />
+                    <div class="gallery-caption">
+                      Tourism - Especially gorilla trekking
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img
+                      src="{% static 'images/rwanda-tech.jfif' %}"
+                      alt="Technology"
+                    />
+                    <div class="gallery-caption">
+                      Technology - Rwanda is becoming a tech hub
+                    </div>
+                  </div>
+                </div>
+
+                <div class="resource-activity">
+                  <h4>Run Your Own Rwandan Business!</h4>
+                  <p>Choose a business to start and help it grow:</p>
+
+                  <div class="business-selector">
+                    <button
+                      class="button business-btn active"
+                      data-business="coffee"
+                    >
+                      Coffee Farm
+                    </button>
+                    <button class="button business-btn" data-business="tourism">
+                      Tourism Company
+                    </button>
+                    <button class="button business-btn" data-business="tech">
+                      Tech Startup
+                    </button>
+                  </div>
+
+                  <div class="business-simulator" id="coffee-business">
+                    <h5>Your Coffee Farm</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar" style="width: 10%"></div>
+                      <div class="animal-tracker" style="left: 10%"></div>
+                    </div>
+                    <p>Farm Growth: <span class="growth-value">10%</span></p>
+
+                    <div class="business-actions">
+                      <button class="button action-btn" data-action="plant">
+                        Plant More Trees
+                      </button>
+                      <button class="button action-btn" data-action="water">
+                        Water Plants
+                      </button>
+                      <button class="button action-btn" data-action="harvest">
+                        Harvest Coffee
+                      </button>
+                      <button class="button action-btn" data-action="sell">
+                        Sell Coffee
+                      </button>
+                    </div>
+
+                    <div class="business-stats">
+                      <p>
+                        Money: <span class="money-value">100</span> Rwandan
+                        Francs
+                      </p>
+                      <p>
+                        Coffee Beans: <span class="product-value">0</span> kg
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="business-simulator"
+                    id="tourism-business"
+                    style="display: none"
+                  >
+                    <h5>Your Tourism Company</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar" style="width: 10%"></div>
+                      <div class="animal-tracker" style="left: 10%"></div>
+                    </div>
+                    <p>
+                      Business Growth: <span class="growth-value">10%</span>
+                    </p>
+
+                    <div class="business-actions">
+                      <button class="button action-btn" data-action="advertise">
+                        Advertise Tours
+                      </button>
+                      <button class="button action-btn" data-action="guide">
+                        Hire Guides
+                      </button>
+                      <button class="button action-btn" data-action="tour">
+                        Run Tours
+                      </button>
+                      <button class="button action-btn" data-action="expand">
+                        Expand Business
+                      </button>
+                    </div>
+
+                    <div class="business-stats">
+                      <p>
+                        Money: <span class="money-value">100</span> Rwandan
+                        Francs
+                      </p>
+                      <p>Tourists: <span class="product-value">0</span></p>
+                    </div>
+                  </div>
+
+                  <div
+                    class="business-simulator"
+                    id="tech-business"
+                    style="display: none"
+                  >
+                    <h5>Your Tech Startup</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar" style="width: 10%"></div>
+                      <div class="animal-tracker" style="left: 10%"></div>
+                    </div>
+                    <p>Company Growth: <span class="growth-value">10%</span></p>
+
+                    <div class="business-actions">
+                      <button class="button action-btn" data-action="code">
+                        Write Code
+                      </button>
+                      <button class="button action-btn" data-action="hire">
+                        Hire Developers
+                      </button>
+                      <button class="button action-btn" data-action="app">
+                        Launch App
+                      </button>
+                      <button class="button action-btn" data-action="upgrade">
+                        Upgrade Technology
+                      </button>
+                    </div>
+
+                    <div class="business-stats">
+                      <p>
+                        Money: <span class="money-value">100</span> Rwandan
+                        Francs
+                      </p>
+                      <p>Users: <span class="product-value">0</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="trail"></div>
+
+            <div class="activity-box">
+              <h3>🦓 Rwanda Vision 2050</h3>
+              <p>
+                Rwanda has a plan called "Vision 2050" to become a high-income
+                country with good quality of life for all people.
+              </p>
+
+              <div class="vision-explorer">
+                <h4>Goals for Rwanda's Future</h4>
+                <ul>
+                  <li>High quality of life for all Rwandans</li>
+                  <li>Modern infrastructure and cities</li>
+                  <li>Strong service sector economy</li>
+                  <li>Regional trade and tourism hub</li>
+                  <li>Knowledge-based society</li>
+                </ul>
+
+                <div class="vision-activity">
+                  <h4>Design the Future</h4>
+                  <p>
+                    How would you help Rwanda reach these goals? Draw your idea!
+                  </p>
+
+                  <div class="drawing-area">
+                    <canvas
+                      id="vision-canvas"
+                      width="500"
+                      height="300"
+                    ></canvas>
+                    <div class="drawing-tools">
+                      <button class="button tool-btn" data-tool="pencil">
+                        Pencil
+                      </button>
+                      <button class="button tool-btn" data-tool="eraser">
+                        Eraser
+                      </button>
+                      <input type="color" id="color-picker" value="#000000" />
+                      <button class="button" id="clear-canvas">Clear</button>
+                      <button class="button" id="save-drawing">
+                        Save My Vision
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tabs">
+              <div class="tab active" data-tab="quiz">
+                <svg
+                  class="animal-icon"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                ></svg>
+                Next >> Quiz Time
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="quiz">
+          <h2>Safari Quiz Challenge 🐘</h2>
+          <p>Test what you've learned about Rwanda!</p>
+
+          <div class="quiz-container">
+            <div class="quiz-question">
+              <p>1. What is the capital city of Rwanda?</p>
+              <div class="quiz-option" data-correct="true">Kigali</div>
+              <div class="quiz-option">Butare</div>
+              <div class="quiz-option">Gisenyi</div>
+              <div class="quiz-option">Kibuye</div>
+            </div>
+
+            <div class="quiz-question">
+              <p>2. Why is Rwanda called "Land of a Thousand Hills"?</p>
+              <div class="quiz-option">It has exactly 1,000 hills</div>
+              <div class="quiz-option" data-correct="true">
+                It has many hills throughout the country
+              </div>
+              <div class="quiz-option">Hills are sacred in Rwandan culture</div>
+              <div class="quiz-option">Its flag has hills on it</div>
+            </div>
+
+            <div class="quiz-question">
+              <p>3. What animal is Rwanda famous for protecting?</p>
+              <div class="quiz-option">Lions</div>
+              <div class="quiz-option">Zebras</div>
+              <div class="quiz-option" data-correct="true">
+                Mountain Gorillas
+              </div>
+              <div class="quiz-option">Elephants</div>
+            </div>
+
+            <div class="quiz-question">
+              <p>4. What is Rwanda's most valuable export?</p>
+              <div class="quiz-option">Diamonds</div>
+              <div class="quiz-option" data-correct="true">Coffee</div>
+              <div class="quiz-option">Gold</div>
+              <div class="quiz-option">Oil</div>
+            </div>
+
+            <div class="quiz-question">
+              <p>5. What does "Umuganda" mean in Rwanda?</p>
+              <div class="quiz-option">National holiday</div>
+              <div class="quiz-option">Traditional dance</div>
+              <div class="quiz-option" data-correct="true">Community work</div>
+              <div class="quiz-option">Family dinner</div>
+            </div>
+
+            <button class="button" id="check-quiz">Check Answers</button>
+            <div id="quiz-results"></div>
+          </div>
+
+          <div class="tabs">
+            <div class="tab active" data-tab="history">
+              <svg
+                class="animal-icon"
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+              ></svg>
+              Take the lessons again
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--------------header------------->
+      <div class="header">
+        <div class="search-container">
+          <h1>Rwanda Adventure</h1>
+          <p>Explore the land of a thousand hills at your own pace!!</p>
+        </div>
+        <div class="header-actions">
+          <div class="notification-bell-container">
+            <div class="notification-bell" id="notification-bell">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notification-count"></span>
+            </div>
+
+            <!-- Dropdown for notifications -->
+            <div class="notifications-dropdown">
+              <div class="notifications-header">
+                <h4>Notifications</h4>
+                <a href="#" class="mark-all-read">Mark all as read</a>
+              </div>
+              <div class="notifications-list">
+                <div class="notification-item">
+                  <div class="notification-icon"></div>
+                  <div class="notification-content">
+                    <p></p>
+                    <span class="notification-time"></span>
+                  </div>
+                </div>
+                <div class="no-notifications">
+                  <p>No notifications yet</p>
+                </div>
+              </div>
+              <div class="notifications-footer">
+                <a href="notifications.php">View all notifications</a>
+              </div>
+            </div>
+          </div>
+          <div class="user-profile">
+            <div class="avatar">
+              <span class="avatar-initial">F</span>
+            </div>
+            <div class="user-info">
+              <span class="user-name">Faiza</span>
+              <span class="user-role">Student</span>
+            </div>
+            <button class="logout-button">
+              <svg viewBox="0 0 24 24">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Enhanced quiz functionality with progress tracking
+      document.addEventListener("DOMContentLoaded", function () {
+        const checkQuizBtn = document.getElementById("check-quiz");
+        const quizResults = document.getElementById("quiz-results");
+        let startTime = new Date();
+        let selectedAnswers = {};
+
+        // Add click handlers to quiz options
+        document.querySelectorAll(".quiz-option").forEach((option) => {
+          option.addEventListener("click", function () {
+            // Remove previous selection in this question
+            const question = this.closest(".quiz-question");
+            question.querySelectorAll(".quiz-option").forEach((opt) => {
+              opt.classList.remove("selected");
+            });
+
+            // Add selection to clicked option
+            this.classList.add("selected");
+
+            // Store the answer
+            const questionIndex =
+              Array.from(document.querySelectorAll(".quiz-question")).indexOf(
+                question
+              ) + 1;
+            selectedAnswers[questionIndex.toString()] = this.textContent.trim();
+          });
+        });
+
+        checkQuizBtn.addEventListener("click", function () {
+          const endTime = new Date();
+          const timeTaken = Math.floor((endTime - startTime) / 1000); // seconds
+
+          // Check if all questions are answered
+          const totalQuestions =
+            document.querySelectorAll(".quiz-question").length;
+          if (Object.keys(selectedAnswers).length < totalQuestions) {
+            alert("Please answer all questions before submitting.");
+            return;
+          }
+
+          // Calculate score locally for immediate feedback
+          let score = 0;
+          document
+            .querySelectorAll(".quiz-question")
+            .forEach((question, index) => {
+              const correctOption = question.querySelector(
+                '[data-correct="true"]'
+              );
+              const selectedOption = question.querySelector(
+                ".quiz-option.selected"
+              );
+
+              if (selectedOption) {
+                if (selectedOption === correctOption) {
+                  selectedOption.classList.add("correct");
+                  score++;
+                } else {
+                  selectedOption.classList.add("incorrect");
+                  correctOption.classList.add("show-correct");
+                }
+              }
+            });
+
+          const percentage = Math.round((score / totalQuestions) * 100);
+          const passed = percentage >= 70; // Assuming 70% is passing
+
+          // Display results
+          quizResults.innerHTML = `
+            <div class="quiz-result">
+                <h3>Quiz Complete! 🎉</h3>
+                <p><strong>Score: ${score}/${totalQuestions} (${percentage}%)</strong></p>
+                <p class="${passed ? "success" : "failure"}">
+                    ${
+                      passed
+                        ? "✅ Congratulations! You passed!"
+                        : "❌ Keep studying and try again!"
+                    }
+                </p>
+                <p><small>Time taken: ${Math.floor(timeTaken / 60)}:${(
+            timeTaken % 60
+          )
+            .toString()
+            .padStart(2, "0")}</small></p>
+            </div>
+        `;
+
+          // Submit to Django backend
+          submitQuizToBackend(selectedAnswers, timeTaken);
+
+          // Disable the button
+          checkQuizBtn.disabled = true;
+          checkQuizBtn.textContent = "Quiz Completed";
+        });
+
+        function submitQuizToBackend(answers, timeTaken) {
+          const quizId =
+            document.querySelector("[data-quiz-id]")?.dataset.quizId;
+
+          if (!quizId) {
+            console.error("Quiz ID not found");
+            return;
+          }
+
+          fetch("/submit-quiz/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+              quiz_id: quizId,
+              answers: answers,
+              time_taken: timeTaken,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                console.log("Quiz submitted successfully:", data);
+                // Optionally update UI with server response
+                updateProgressIndicator(data);
+              } else {
+                console.error("Quiz submission failed:", data.error);
+              }
+            })
+            .catch((error) => {
+              console.error("Error submitting quiz:", error);
+            });
+        }
+
+        function updateProgressIndicator(data) {
+          // Update any progress indicators on the page
+          const progressIndicator = document.querySelector(
+            ".progress-indicator"
+          );
+          if (progressIndicator) {
+            progressIndicator.innerHTML = `
+                <div class="progress-summary">
+                    <span class="badge ${data.passed ? "success" : "warning"}">
+                        Latest Score: ${data.percentage}%
+                    </span>
+                </div>
+            `;
+          }
+        }
+
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(
+                  cookie.substring(name.length + 1)
+                );
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+      });
+
+      // Tab functionality
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Remove active class from all tabs and content
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((content) => content.classList.remove("active"));
+
+          // Add active class to clicked tab
+          tab.classList.add("active");
+
+          // Show corresponding content
+          const tabId = tab.getAttribute("data-tab");
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // Accessibility toggles
+      document
+        .getElementById("high-contrast-toggle")
+        .addEventListener("change", function () {
+          document.body.classList.toggle("high-contrast", this.checked);
+        });
+
+      document
+        .getElementById("large-text-toggle")
+        .addEventListener("change", function () {
+          document.body.classList.toggle("large-text", this.checked);
+        });
+
+      // Time travel buttons in history section
+      document.querySelectorAll(".time-travel-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const period = btn.getAttribute("data-period");
+          const resultDiv = document.getElementById(`${period}-result`);
+
+          // Toggle
+        });
+      });
+    </script>
+  </body>
+</html>

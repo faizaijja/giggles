@@ -1,0 +1,152 @@
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="600" y="30" text-anchor="middle" font-size="24" font-weight="bold" fill="#2c3e50">Kids Learning System - Flow Chart</text>
+  
+  <!-- User Registration/Login -->
+  <rect x="50" y="80" width="120" height="60" rx="30" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+  <text x="110" y="100" text-anchor="middle" font-size="12" fill="white">User</text>
+  <text x="110" y="115" text-anchor="middle" font-size="12" fill="white">Registration</text>
+  <text x="110" y="130" text-anchor="middle" font-size="12" fill="white">/ Login</text>
+  
+  <!-- Create Student Profile -->
+  <rect x="220" y="80" width="120" height="60" rx="10" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+  <text x="280" y="100" text-anchor="middle" font-size="12" fill="white">Create Student</text>
+  <text x="280" y="115" text-anchor="middle" font-size="12" fill="white">Profile</text>
+  <text x="280" y="130" text-anchor="middle" font-size="12" fill="white">(Age, Grade)</text>
+  
+  <!-- Browse Courses -->
+  <rect x="390" y="80" width="120" height="60" rx="10" fill="#27ae60" stroke="#2c3e50" stroke-width="2"/>
+  <text x="450" y="100" text-anchor="middle" font-size="12" fill="white">Browse</text>
+  <text x="450" y="115" text-anchor="middle" font-size="12" fill="white">Available</text>
+  <text x="450" y="130" text-anchor="middle" font-size="12" fill="white">Courses</text>
+  
+  <!-- Select Course -->
+  <rect x="560" y="80" width="120" height="60" rx="10" fill="#8e44ad" stroke="#2c3e50" stroke-width="2"/>
+  <text x="620" y="100" text-anchor="middle" font-size="12" fill="white">Select</text>
+  <text x="620" y="115" text-anchor="middle" font-size="12" fill="white">Course</text>
+  <text x="620" y="130" text-anchor="middle" font-size="12" fill="white">& Start</text>
+  
+  <!-- Start Lesson -->
+  <rect x="730" y="80" width="120" height="60" rx="10" fill="#9b59b6" stroke="#2c3e50" stroke-width="2"/>
+  <text x="790" y="100" text-anchor="middle" font-size="12" fill="white">Start</text>
+  <text x="790" y="115" text-anchor="middle" font-size="12" fill="white">Lesson</text>
+  
+  <!-- Complete Lesson -->
+  <rect x="900" y="80" width="120" height="60" rx="10" fill="#1abc9c" stroke="#2c3e50" stroke-width="2"/>
+  <text x="960" y="100" text-anchor="middle" font-size="12" fill="white">Complete</text>
+  <text x="960" y="115" text-anchor="middle" font-size="12" fill="white">Lesson</text>
+  <text x="960" y="130" text-anchor="middle" font-size="12" fill="white">Activities</text>
+  
+  <!-- Take Assessment -->
+  <rect x="730" y="200" width="120" height="60" rx="10" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+  <text x="790" y="220" text-anchor="middle" font-size="12" fill="white">Take</text>
+  <text x="790" y="235" text-anchor="middle" font-size="12" fill="white">Assessment</text>
+  <text x="790" y="250" text-anchor="middle" font-size="12" fill="white">Quiz</text>
+  
+  <!-- Assessment Decision -->
+  <polygon points="620,320 680,300 680,340 620,360 560,340 560,300" fill="#f1c40f" stroke="#2c3e50" stroke-width="2"/>
+  <text x="620" y="325" text-anchor="middle" font-size="11" fill="black">Pass</text>
+  <text x="620" y="340" text-anchor="middle" font-size="11" fill="black">Assessment?</text>
+  
+  <!-- Update Progress -->
+  <rect x="390" y="200" width="120" height="60" rx="10" fill="#e67e22" stroke="#2c3e50" stroke-width="2"/>
+  <text x="450" y="220" text-anchor="middle" font-size="12" fill="white">Update</text>
+  <text x="450" y="235" text-anchor="middle" font-size="12" fill="white">Progress</text>
+  <text x="450" y="250" text-anchor="middle" font-size="12" fill="white">& Scores</text>
+  
+  <!-- Retry Lesson -->
+  <rect x="730" y="400" width="120" height="60" rx="10" fill="#e74c3c" stroke="#2c3e50" stroke-width="2"/>
+  <text x="790" y="420" text-anchor="middle" font-size="12" fill="white">Retry</text>
+  <text x="790" y="435" text-anchor="middle" font-size="12" fill="white">Lesson</text>
+  <text x="790" y="450" text-anchor="middle" font-size="12" fill="white">/ Study More</text>
+  
+  <!-- Course Complete Decision -->
+  <polygon points="280,320 340,300 340,340 280,360 220,340 220,300" fill="#2ecc71" stroke="#2c3e50" stroke-width="2"/>
+  <text x="280" y="325" text-anchor="middle" font-size="11" fill="black">Course</text>
+  <text x="280" y="340" text-anchor="middle" font-size="11" fill="black">Complete?</text>
+  
+  <!-- Award Badge -->
+  <rect x="50" y="200" width="120" height="60" rx="10" fill="#f39c12" stroke="#2c3e50" stroke-width="2"/>
+  <text x="110" y="220" text-anchor="middle" font-size="12" fill="white">Award</text>
+  <text x="110" y="235" text-anchor="middle" font-size="12" fill="white">Badge</text>
+  <text x="110" y="250" text-anchor="middle" font-size="12" fill="white">& Certificate</text>
+  
+  <!-- Continue Learning -->
+  <rect x="50" y="400" width="120" height="60" rx="10" fill="#3498db" stroke="#2c3e50" stroke-width="2"/>
+  <text x="110" y="420" text-anchor="middle" font-size="12" fill="white">Continue</text>
+  <text x="110" y="435" text-anchor="middle" font-size="12" fill="white">Learning</text>
+  <text x="110" y="450" text-anchor="middle" font-size="12" fill="white">New Course</text>
+  
+  <!-- Arrows -->
+  <!-- Main flow -->
+  <path d="M 170 110 L 210 110" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 340 110 L 380 110" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 510 110 L 550 110" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 680 110 L 720 110" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 850 110 L 890 110" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- To assessment -->
+  <path d="M 790 140 L 790 190" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Assessment to decision -->
+  <path d="M 790 260 L 790 280 L 680 280 L 680 300" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Pass to progress -->
+  <path d="M 560 330 L 510 330 L 510 230 L 510 230" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="530" y="325" font-size="10" fill="#27ae60">Yes</text>
+  
+  <!-- Fail to retry -->
+  <path d="M 680 330 L 790 330 L 790 390" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="720" y="325" font-size="10" fill="#e74c3c">No</text>
+  
+  <!-- Progress to course decision -->
+  <path d="M 390 230 L 340 230 L 340 300" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Course complete to badge -->
+  <path d="M 220 330 L 170 330 L 170 230 L 170 230" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="190" y="325" font-size="10" fill="#27ae60">Yes</text>
+  
+  <!-- Continue course -->
+  <path d="M 340 330 L 450 330 L 450 380 L 790 380 L 790 80" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <text x="360" y="325" font-size="10" fill="#e74c3c">No</text>
+  
+  <!-- Retry back to lesson -->
+  <path d="M 730 430 L 600 430 L 600 480 L 960 480 L 960 140" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  
+  <!-- Badge to continue -->
+  <path d="M 110 260 L 110 390" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Continue back to browse -->
+  <path d="M 50 430 L 20 430 L 20 50 L 450 50 L 450 70" stroke="#2c3e50" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <!-- Legend -->
+  <rect x="50" y="520" width="300" height="160" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1" rx="5"/>
+  <text x="200" y="540" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Legend</text>
+  
+  <rect x="60" y="550" width="20" height="15" rx="7" fill="#3498db"/>
+  <text x="90" y="562" font-size="12" fill="#2c3e50">Start/End Process</text>
+  
+  <rect x="60" y="570" width="20" height="15" rx="2" fill="#e74c3c"/>
+  <text x="90" y="582" font-size="12" fill="#2c3e50">Process/Activity</text>
+  
+  <polygon points="80,595 90,590 90,600 80,605 70,600 70,590" fill="#f1c40f"/>
+  <text x="100" y="602" font-size="12" fill="#2c3e50">Decision Point</text>
+  
+  <line x1="60" y1="615" x2="80" y2="615" stroke="#2c3e50" stroke-width="2"/>
+  <polygon points="80,612 85,615 80,618" fill="#2c3e50"/>
+  <text x="90" y="620" font-size="12" fill="#2c3e50">Process Flow</text>
+  
+  <line x1="60" y1="635" x2="80" y2="635" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,5"/>
+  <polygon points="80,632 85,635 80,638" fill="#2c3e50"/>
+  <text x="90" y="640" font-size="12" fill="#2c3e50">Return/Loop Flow</text>
+  
+  <text x="60" y="665" font-size="11" fill="#7f8c8d">Solid lines: Forward progression</text>
+  <text x="60" y="680" font-size="11" fill="#7f8c8d">Dashed lines: Retry/Continue loops</text>
+</svg>

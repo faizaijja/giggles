@@ -1,0 +1,24 @@
+# Additional requirements for the learning app
+# Add these to your main requirements.txt file
+
+# Core Django packages (if not already included)
+Django>=4.2.0
+django-extensions>=3.2.0
+
+# For API functionality (optional)
+djangorestframework>=3.14.0
+django-cors-headers>=4.0.0
+
+# For better admin interface (optional)
+django-admin-interface>=0.19.0
+
+# For file handling and media (optional)
+Pillow>=9.0.0
+
+# For development and testing (optional)
+django-debug-toolbar>=4.0.0
+factory-boy>=3.2.0
+
+# For production (optional)
+gunicorn>=20.1.0
+whitenoise>=6.0.0

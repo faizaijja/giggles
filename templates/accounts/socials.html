@@ -1,0 +1,829 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/giggles.css' %}" />
+    <title>Friendship Academy: Social Skills for Kids</title>
+    <style>
+      header {
+        background-color: white;
+        color: black;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .accessibility-controls {
+        background-color: #e6e6fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+
+      button {
+        background-color: white;
+        color: #5c94e6;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin: 5px;
+        font-family: inherit;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      button:hover {
+        background-color: #4a75b5;
+        transform: scale(1.05);
+      }
+
+      /* Card Grid */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+      }
+
+      .card img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+        border-radius: 10px;
+      }
+
+      .card h2 {
+        color: orange;
+        margin-bottom: 15px;
+      }
+
+      /* Interactive Game Section */
+      .game-section {
+        margin-top: 40px;
+        background-color: #e6e6fa;
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      .scenario-container {
+        display: none;
+        animation: fadeIn 0.5s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .scenario-card {
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .option-btn {
+        text-align: left;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #e6e6fa;
+        border: 2px solid #5c94e6;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+      }
+
+      .option-btn:hover {
+        background-color: #d6d6ff;
+      }
+
+      .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        display: none;
+      }
+
+      .positive {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+      }
+
+      .negative {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+
+      /* Reward System */
+      .reward-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .star {
+        font-size: 2rem;
+        color: #ddd;
+        margin: 0 5px;
+        transition: color 0.3s;
+      }
+
+      .earned {
+        color: gold;
+      }
+
+      /* Media Queries */
+      @media (max-width: 768px) {
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        button {
+          font-size: 1rem;
+          padding: 10px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img
+              src="{% static 'images/Giggles logo.png' %}"
+              alt="Giggles Logo"
+            />
+          </div>
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'lessons' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div id="timerDisplay"></div>
+      <script src="{% static 'js/timer.js' %}"></script>
+    </div>
+
+    <div class="content">
+      <div class="main-content">
+        <header>
+          <h1>Friendship Academy</h1>
+          <p>Learning Social Skills & Good Manners Together!</p>
+        </header>
+
+        <div class="container">
+          <div class="accessibility-controls">
+            <button id="text-enlarge">Make Text Bigger</button>
+            <button id="text-reduce">Make Text Smaller</button>
+            <button id="high-contrast">High Contrast Mode</button>
+            <button id="read-aloud">Read Aloud</button>
+          </div>
+
+          <div class="card-grid">
+            <div class="card">
+              <img
+                src="{% static 'images/handshake-icon-concept-partnership-agreement.jpg' %}"
+                alt="Children greeting each other"
+              />
+              <h2>Meeting New Friends</h2>
+              <p>
+                Learn how to say hello, introduce yourself, and make new
+                friends!
+              </p>
+              <button class="topic-btn" data-topic="greeting">
+                Let's Practice!
+              </button>
+            </div>
+
+            <div class="card">
+              <img
+                src="{% static 'images/kids-taking-turns.jfif' %}"
+                alt="Children taking turns with toys"
+              />
+              <h2>Taking Turns</h2>
+              <p>
+                Discover why sharing and waiting for your turn makes playing
+                more fun!
+              </p>
+              <button class="topic-btn" data-topic="sharing">
+                Let's Practice!
+              </button>
+            </div>
+
+            <div class="card">
+              <img
+                src="{% static 'images/kids-emotions.jfif' %}"
+                height="200"
+                alt="Children expressing feelings"
+              />
+              <h2>Feelings & Emotions</h2>
+              <p>
+                Learn to recognize feelings and talk about them in a good way.
+              </p>
+              <button class="topic-btn" data-topic="emotions">
+                Let's Practice!
+              </button>
+            </div>
+          </div>
+
+          <div class="game-section">
+            <h2>Social Skills Practice Game</h2>
+            <p>Click on a topic above to practice with fun scenarios!</p>
+
+            <!-- Greeting Scenarios -->
+            <div id="greeting-scenarios" class="scenario-container">
+              <div class="scenario-card">
+                <h3>Scenario 1: Meeting Someone New</h3>
+                <p>
+                  You see a new kid at school who looks friendly. What's a good
+                  way to say hello?
+                </p>
+
+                <div class="options">
+                  <button class="option-btn" data-correct="true">
+                    "Hi! My name is [your name]. What's your name?"
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    Don't say anything and just stare at them.
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    "You have to be my friend now!"
+                  </button>
+                </div>
+
+                <div class="feedback positive">
+                  <p>
+                    Great job! Introducing yourself with a smile and asking
+                    their name is a friendly way to meet someone new.
+                  </p>
+                  <button class="next-btn">Next Scenario</button>
+                </div>
+
+                <div class="feedback negative">
+                  <p>
+                    That might not be the best way to make a new friend. Try
+                    introducing yourself with a smile and asking their name.
+                  </p>
+                  <button class="try-again-btn">Try Again</button>
+                </div>
+              </div>
+
+              <div class="scenario-card" style="display: none">
+                <h3>Scenario 2: Joining a Game</h3>
+                <p>
+                  You want to join some kids playing a game at recess. What's a
+                  polite way to ask?
+                </p>
+
+                <div class="options">
+                  <button class="option-btn" data-correct="false">
+                    Just run into their game without asking.
+                  </button>
+                  <button class="option-btn" data-correct="true">
+                    "That looks like fun! Could I please play with you?"
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    "Let me play or I'll tell the teacher!"
+                  </button>
+                </div>
+
+                <div class="feedback positive">
+                  <p>
+                    Excellent choice! Asking politely shows good manners and
+                    respect for others.
+                  </p>
+                  <button class="complete-topic-btn">Complete Topic</button>
+                </div>
+
+                <div class="feedback negative">
+                  <p>
+                    That approach might upset the other kids. Try asking
+                    politely if you can join them.
+                  </p>
+                  <button class="try-again-btn">Try Again</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sharing Scenarios -->
+            <div id="sharing-scenarios" class="scenario-container">
+              <div class="scenario-card">
+                <h3>Scenario 1: Sharing Toys</h3>
+                <p>
+                  Your friend wants to play with your favorite toy. What should
+                  you do?
+                </p>
+
+                <div class="options">
+                  <button class="option-btn" data-correct="false">
+                    Say "No! It's mine!" and hide the toy.
+                  </button>
+                  <button class="option-btn" data-correct="true">
+                    Say "You can have a turn, and then I'll have it back in a
+                    little while."
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    Give them the toy but feel really sad about it.
+                  </button>
+                </div>
+
+                <div class="feedback positive">
+                  <p>
+                    Perfect! Taking turns is a great way to be fair and keep
+                    friendships happy.
+                  </p>
+                  <button class="next-btn">Next Scenario</button>
+                </div>
+
+                <div class="feedback negative">
+                  <p>
+                    That might not be the friendliest choice. Try offering to
+                    take turns instead.
+                  </p>
+                  <button class="try-again-btn">Try Again</button>
+                </div>
+              </div>
+
+              <div class="scenario-card" style="display: none">
+                <h3>Scenario 2: Waiting Your Turn</h3>
+                <p>
+                  You want to use the swing, but another kid is using it. What
+                  do you do?
+                </p>
+
+                <div class="options">
+                  <button class="option-btn" data-correct="false">
+                    Try to push them off so you can have a turn.
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    Stand very close and stare at them until they leave.
+                  </button>
+                  <button class="option-btn" data-correct="true">
+                    Ask politely: "May I have a turn when you're finished,
+                    please?"
+                  </button>
+                </div>
+
+                <div class="feedback positive">
+                  <p>
+                    Great job! Asking politely and waiting your turn shows
+                    patience and respect.
+                  </p>
+                  <button class="complete-topic-btn">Complete Topic</button>
+                </div>
+
+                <div class="feedback negative">
+                  <p>
+                    That might cause problems or hurt feelings. Try asking
+                    politely for a turn when they're done.
+                  </p>
+                  <button class="try-again-btn">Try Again</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Emotions Scenarios -->
+            <div id="emotions-scenarios" class="scenario-container">
+              <div class="scenario-card">
+                <h3>Scenario 1: When You Feel Angry</h3>
+                <p>
+                  Someone accidentally breaks your crayon. You feel angry.
+                  What's a good way to handle it?
+                </p>
+
+                <div class="options">
+                  <button class="option-btn" data-correct="false">
+                    Yell at them and break their crayon too!
+                  </button>
+                  <button class="option-btn" data-correct="true">
+                    Take a deep breath and say "I'm feeling upset because that
+                    was my favorite crayon."
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    Don't say anything but stay angry all day.
+                  </button>
+                </div>
+
+                <div class="feedback positive">
+                  <p>
+                    Excellent! Taking a deep breath and using words to explain
+                    your feelings is a healthy way to handle anger.
+                  </p>
+                  <button class="next-btn">Next Scenario</button>
+                </div>
+
+                <div class="feedback negative">
+                  <p>
+                    That might make the situation worse. Try using your words to
+                    explain how you feel instead.
+                  </p>
+                  <button class="try-again-btn">Try Again</button>
+                </div>
+              </div>
+
+              <div class="scenario-card" style="display: none">
+                <h3>Scenario 2: Understanding Others' Feelings</h3>
+                <p>
+                  Your friend looks sad and is sitting alone. What could you do
+                  to help?
+                </p>
+
+                <div class="options">
+                  <button class="option-btn" data-correct="false">
+                    Ignore them because their feelings aren't your problem.
+                  </button>
+                  <button class="option-btn" data-correct="false">
+                    Tell them to just be happy and stop being sad.
+                  </button>
+                  <button class="option-btn" data-correct="true">
+                    Sit with them and ask "You seem sad. Would you like to talk
+                    about it or play together?"
+                  </button>
+                </div>
+
+                <div class="feedback positive">
+                  <p>
+                    Wonderful! Showing empathy and offering to listen or play
+                    shows you're a caring friend.
+                  </p>
+                  <button class="complete-topic-btn">Complete Topic</button>
+                </div>
+
+                <div class="feedback negative">
+                  <p>
+                    That might not help your friend feel better. Try showing you
+                    care by offering to talk or play.
+                  </p>
+                  <button class="try-again-btn">Try Again</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="reward-container">
+              <h3>Your Progress Stars</h3>
+              <div id="stars">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <div class="footer-container">
+          <div class="footer-content">
+            <div class="footer-col">
+              <h3>Giggles</h3>
+              <p>
+                Making learning fun for children around the world since 2023.
+              </p>
+              <div class="social-links">
+                <div class="social-icon">f</div>
+                <div class="social-icon">t</div>
+                <div class="social-icon">in</div>
+                <div class="social-icon">ig</div>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h3>Company</h3>
+              <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Blog</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h3>Support</h3>
+              <ul class="footer-links">
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Resources</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h3>Legal</h3>
+              <ul class="footer-links">
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">COPPA Compliance</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="copyright">
+            <p>&copy; 2025 Giggles Inc. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!--------------header------------->
+    <div class="header">
+      <div class="search-container"></div>
+      <div class="header-actions">
+        <div class="user-profile">
+          <div class="avatar">
+            <span class="avatar-initial"
+              >{{ user.first_name.0|upper|default:"U" }}</span
+            >
+          </div>
+          <div class="user-info">
+            <span class="user-name"
+              >{{ user.get_full_name|default:user.username }}</span
+            >
+            <span class="user-role">Student</span>
+          </div>
+          <p>Logout</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Accessibility Features
+      const body = document.body;
+      let currentFontSize = 16;
+
+      document
+        .getElementById("text-enlarge")
+        .addEventListener("click", function () {
+          if (currentFontSize < 24) {
+            currentFontSize += 2;
+            body.style.fontSize = currentFontSize + "px";
+          }
+        });
+
+      document
+        .getElementById("text-reduce")
+        .addEventListener("click", function () {
+          if (currentFontSize > 12) {
+            currentFontSize -= 2;
+            body.style.fontSize = currentFontSize + "px";
+          }
+        });
+
+      document
+        .getElementById("high-contrast")
+        .addEventListener("click", function () {
+          body.classList.toggle("high-contrast");
+        });
+
+      document
+        .getElementById("read-aloud")
+        .addEventListener("click", function () {
+          // Check if browser supports speech synthesis
+          if ("speechSynthesis" in window) {
+            const visibleText = Array.from(
+              document.querySelectorAll(
+                '.scenario-container[style*="display: block"] h3, .scenario-container[style*="display: block"] p'
+              )
+            )
+              .filter((el) => el.offsetParent !== null)
+              .map((el) => el.textContent)
+              .join(". ");
+
+            const speech = new SpeechSynthesisUtterance(visibleText);
+            speech.rate = 0.9; // Slightly slower speech rate
+            speech.pitch = 1;
+            window.speechSynthesis.speak(speech);
+          } else {
+            alert("Sorry, your browser doesn't support text-to-speech!");
+          }
+        });
+
+      // Topic selection and scenario management
+      const topicButtons = document.querySelectorAll(".topic-btn");
+      const scenarioContainers = document.querySelectorAll(
+        ".scenario-container"
+      );
+      let completedTopics = 0;
+
+      topicButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const topic = this.getAttribute("data-topic");
+
+          // Hide all scenario containers
+          scenarioContainers.forEach((container) => {
+            container.style.display = "none";
+          });
+
+          // Show the selected topic's scenarios
+          document.getElementById(`${topic}-scenarios`).style.display = "block";
+
+          // Reset scenario view to first one
+          document
+            .querySelectorAll(`#${topic}-scenarios .scenario-card`)
+            .forEach((card, index) => {
+              card.style.display = index === 0 ? "block" : "none";
+            });
+
+          // Hide any feedback that might be showing
+          document.querySelectorAll(".feedback").forEach((feedback) => {
+            feedback.style.display = "none";
+          });
+        });
+      });
+
+      // Option selection
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("option-btn")) {
+          const isCorrect = e.target.getAttribute("data-correct") === "true";
+          const scenarioCard = e.target.closest(".scenario-card");
+
+          // Hide all feedback in this card
+          scenarioCard.querySelectorAll(".feedback").forEach((feedback) => {
+            feedback.style.display = "none";
+          });
+
+          // Show appropriate feedback
+          if (isCorrect) {
+            scenarioCard.querySelector(".feedback.positive").style.display =
+              "block";
+          } else {
+            scenarioCard.querySelector(".feedback.negative").style.display =
+              "block";
+          }
+        }
+      });
+
+      // Next scenario button
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("next-btn")) {
+          const currentScenario = e.target.closest(".scenario-card");
+          const nextScenario = currentScenario.nextElementSibling;
+
+          currentScenario.style.display = "none";
+          nextScenario.style.display = "block";
+        }
+      });
+
+      // Try again button
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("try-again-btn")) {
+          const feedbackDiv = e.target.closest(".feedback");
+          feedbackDiv.style.display = "none";
+        }
+      });
+
+      // Complete topic button
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("complete-topic-btn")) {
+          completedTopics++;
+
+          // Update stars
+          const stars = document.querySelectorAll(".star");
+          for (let i = 0; i < completedTopics && i < stars.length; i++) {
+            stars[i].classList.add("earned");
+          }
+
+          // Hide current scenario container
+          const scenarioContainer = e.target.closest(".scenario-container");
+          scenarioContainer.style.display = "none";
+
+          // Check if all topics are completed
+          if (completedTopics >= 3) {
+            // Display congratulatory message
+            const gameSection = document.querySelector(".game-section");
+            const congratsMessage = document.createElement("div");
+            congratsMessage.innerHTML = `
+                        <div class="scenario-card" style="background-color: #fffacd;">
+                            <h2>🎉 Congratulations! 🎉</h2>
+                            <p>You've completed all the social skills practice scenarios!</p>
+                            <p>You're becoming a friendship expert!</p>
+                        </div>
+                    `;
+            gameSection.appendChild(congratsMessage);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

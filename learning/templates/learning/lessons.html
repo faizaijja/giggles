@@ -1,0 +1,1051 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Lessons Overview</title>
+    <style>
+     * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+
+.main-content {
+    flex-grow: 1;
+    margin-left: 240px; /* Match sidebar width */
+    padding-top: 90px; /* Header height + some padding */
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+}
+
+
+/* Sidebar styling */
+.sidebar {
+  width: 240px;
+  background: linear-gradient(360deg, #9c27b0, #e91e63);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 20px 0;
+}
+.logo-container {
+  padding: 0 24px 24px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2a4b8d;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #28a4c9;
+  margin-left: 2px;
+}
+.logo-text {
+  color: white;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.nav-menu {
+  margin-top: 24px;
+  flex-grow: 1;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0 12px;
+}
+
+.nav-item {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #f0f7ff;
+  color: #2a4b8d;
+}
+
+.nav-link.active {
+  background-color: #e4f0ff;
+  color: #2a4b8d;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.nav-link.active .nav-icon svg {
+  stroke: #2a4b8d;
+}
+
+
+/* Header styling */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 240px; /* Match sidebar width */
+    height: 70px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+/* Notification Bell Container */
+.notification-bell-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Notification Bell */
+.notification-bell {
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-bell svg {
+  width: 24px;
+  height: 24px;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.notification-bell:hover svg {
+  color: #333;
+}
+
+/* Notification Count Badge */
+.notification-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff4b4b;
+  color: white;
+  font-size: 12px;
+  height: 18px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* Notifications Dropdown */
+.notifications-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 320px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 400px;
+  display: none;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+/* Show dropdown when notification bell is clicked */
+.notification-bell-container.active .notifications-dropdown {
+  display: block;
+}
+
+/* Notifications Header */
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.notifications-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mark-all-read {
+  color: #4a90e2;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.mark-all-read:hover {
+  text-decoration: underline;
+}
+
+/* Notifications List */
+.notifications-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Individual Notification Item */
+.notification-item {
+  display: flex;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+  background-color: #f9f9f9;
+}
+
+.notification-item.unread {
+  background-color: #f0f7ff;
+}
+
+.notification-item.unread:hover {
+  background-color: #e6f1ff;
+}
+
+/* Notification Icon */
+.notification-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.notification-icon svg {
+  width: 18px;
+  height: 18px;
+  color: #666;
+}
+
+/* Notification Content */
+.notification-content {
+  flex: 1;
+}
+
+.notification-content p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.notification-time {
+  font-size: 12px;
+  color: #999;
+}
+
+/* No Notifications State */
+.no-notifications {
+  padding: 24px 16px;
+  text-align: center;
+  color: #888;
+}
+
+/* Notifications Footer */
+.notifications-footer {
+  padding: 12px 16px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.notifications-footer a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.notifications-footer a:hover {
+  text-decoration: underline;
+}
+
+.user-profile {
+  margin-top: auto;
+  padding: 16px 24px;
+  border-top: 1px solid #f0f3f7;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #e4f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  overflow: hidden;
+}
+
+.avatar-initial {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f88379;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 14px;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #6b7a99;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f88379;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #f0f7ff;
+  color: #2a4b8d;
+}
+
+.logout-button svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+
+
+/* Cards grid styling */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.search-container{
+    margin-left: 35px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-container {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.card p {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.card-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.card-button {
+    padding: 8px 15px;
+    background: linear-gradient(to left, #9c27b0, #e91e63);
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+    background: linear-gradient(to right, #9c27b0, #e91e63);
+}
+
+.lesson-count {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 800px;
+    position: relative;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #e74c3c;
+}
+
+.modal-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+#modalDetails ul {
+    padding-left: 20px;
+}
+
+#modalDetails li {
+    margin-bottom: 8px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    
+    .header {
+        left: 200px;
+    }
+    
+    .main-content {
+        margin-left: 200px;
+    }
+    
+    .modal-content {
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar {
+        width: 0;
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        width: 200px;
+        transform: translateX(0);
+    }
+    
+    .header {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.footer-container {
+  margin-left: 280px;
+  padding: 80px 0 20px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.footer-col h3 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer-col h3::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary);
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.social-icon:hover {
+  background-color: var(--primary);
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #aaa;
+  font-size: 0.9rem;
+}
+      
+      
+    </style>
+</head>
+<body>
+   
+     <div class="sidebar">
+        <div class="logo-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="{% static 'images/Giggles logo.png' %}" alt="Giggles Logo">
+                </div>
+                <div class="logo-text">Giggles<span></span></div>
+            </a>
+        </div>
+        
+        <nav class="nav-menu">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{% url 'index' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"/>
+                                <path d="M9 22V12H15V22"/>
+                            </svg>
+                        </div>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="lessons.html" class="nav-link active">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"/>
+                                <path d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"/>
+                            </svg>
+                        </div>
+                        <span>Lessons</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'socials' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"/>
+                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"/>
+                                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"/>
+                                <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"/>
+                            </svg>
+                        </div>
+                        <span>Social Skills</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'progress' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="18" y1="20" x2="18" y2="10"/>
+                                <line x1="12" y1="20" x2="12" y2="4"/>
+                                <line x1="6" y1="20" x2="6" y2="14"/>
+                                <path d="M3 20H21"/>
+                            </svg>
+                        </div>
+                        <span>Progress</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'settings' %}" class="nav-link">
+                        <div class="nav-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                        </div>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div id="timerDisplay"></div>
+<script src="{% static 'js/timer.js' %}"></script>
+    </div>
+    
+    <div class="content">
+        <div class="main-content">
+
+             <header class="lesson-choice"></header>
+    
+    <main class="cards-container">
+        <!-- Language & Literacy -->
+        <div class="card" data-subject="literacy">
+            <div class="card-img-container">
+                <img src="{% static 'images/english-books-stacks-table-working-space.jpg' %}" alt="Languages & Literacy">
+            </div>
+            <div class="card-content">
+                <span class="card-badge">Core Subject</span>
+                <h2>Languages & Literacy</h2>
+                <p>Develop essential communication skills through reading, writing, speaking and listening activities.</p>
+                <div class="card-footer">
+                    <span class="lesson-count">12 lessons</span>
+                   <a href="{% url 'lesson_view' subject='literacy' %}" class="card-button" target="_blank">Explore</a>
+
+                    </a>
+                   
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mathematics -->
+        <div class="card" data-subject="mathematics">
+            <div class="card-img-container">
+                <img src="{% static 'images/math-colourful-rulers-supplies-calculator.jpg' %}" alt="Mathematics">
+            </div>
+            <div class="card-content">
+                <span class="card-badge">Core Subject</span>
+                <h2>Mathematics</h2>
+                <p>Build strong numerical foundations with engaging lessons on numbers, patterns, shapes and measurements.</p>
+                <div class="card-footer">
+                    <span class="lesson-count">10 lessons</span>
+                    <a href="{% url 'lesson_view' subject='mathematics' %}" class="card-button" target="_blank">Explore</a>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Social Studies -->
+        <div class="card" data-subject="social">
+            <div class="card-img-container">
+                <img src="{% static 'images/top-view-book-with-zebra-figurine-planet-earth-animal-day.jpg' %}" alt="Social Studies">
+            </div>
+            <div class="card-content">
+                <span class="card-badge">Core Subject</span>
+                <h2>Social Studies</h2>
+                <p>Learn about history, geography, cultures and communities to understand our world better.</p>
+                <div class="card-footer">
+                    <span class="lesson-count">8 lessons</span>
+                    <a href="{% url 'lesson_view' subject='social_studies' %}" class="card-button" target="_blank">Explore</a>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Science -->
+        <div class="card" data-subject="science">
+            <div class="card-img-container">
+                <img src="{% static 'images/ai-nuclear-energy-industry-innovation-smart-grid-disruptive-technology.jpg' %}" alt="Science">
+            </div>
+            <div class="card-content">
+                <span class="card-badge">Core Subject</span>
+                <h2>Science</h2>
+                <p>Discover the wonders of the natural world through observation, experimentation and critical thinking.</p>
+                <div class="card-footer">
+                    <span class="lesson-count">9 lessons</span>
+                    <a href="{% url 'lesson_view' subject='science' %}" class="card-button" target="_blank">Explore</a>
+    
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Art & Craft -->
+        <div class="card" data-subject="art">
+            <div class="card-img-container">
+                <img src="{% static 'images/top-view-table-master-with-tools.jpg' %}" alt="Art & Craft">
+            </div>
+            <div class="card-content">
+                <span class="card-badge">Creative Subject</span>
+                <h2>Art & Craft</h2>
+                <p>Express creativity through drawing, painting, sculpture and various artistic techniques.</p>
+                <div class="card-footer">
+                    <span class="lesson-count">6 lessons</span>
+                    <a href="{% url 'lesson_view' subject='arts' %}" class="card-button" target="_blank">Explore</a>
+
+
+                </div>
+            </div>
+        </div>
+        
+        <!-- Music -->
+        <div class="card" data-subject="music">
+            <div class="card-img-container">
+                <img src="{% static 'images/digital-illustration-colorful-music-notes-piano-keyboard-white-background.jpg' %}" alt="Music">
+            </div>
+            <div class="card-content">
+                <span class="card-badge">Creative Subject</span>
+                <h2>Culture</h2>
+                <p>Develop culture appreciation and skills through reading, singing, dancing, playing instruments and understanding rhythm.</p>
+                <div class="card-footer">
+                    <span class="lesson-count">7 lessons</span>
+                    <a href="{% url 'lesson_view' subject='music' %}" class="card-button" target="_blank">
+                        Explore
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal -->
+    <div id="lessonModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img class="modal-img" src="/api/placeholder/400/320" alt="Subject">
+            <h2 id="modalTitle">Subject Title</h2>
+            <p id="modalDescription">Subject description will go here.</p>
+            <div id="modalDetails"></div>
+        </div>
+    </div>
+           
+        </div>
+
+         <footer>
+        <div class="footer-container">
+    
+            <div class="copyright">
+                <p>&copy; 2025 Giggles Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+
+
+    <!--------------header------------->
+    <div class="header">
+        <div class="search-container">
+              <h1>Lessons Overview</h1>
+        <p class="subtitle">Explore our comprehensive curriculum designed for holistic development</p>
+        </div>
+        <div class="header-actions">
+            <div class="notification-bell-container">
+                <div class="notification-bell" id="notification-bell">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-count"></span>
+                </div>
+                
+                <!-- Dropdown for notifications -->
+                <div class="notifications-dropdown">
+                    <div class="notifications-header">
+                        <h4>Notifications</h4>
+                        <a href="#" class="mark-all-read">Mark all as read</a>
+                    </div>
+                    <div class="notifications-list">
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                    </div>
+                                    <div class="notification-content">
+                                        <p></p>
+                                        <span class="notification-time"></span>
+                                    </div>
+                                </div>
+                            <div class="no-notifications">
+                                <p>No notifications yet</p>
+                            </div>
+                    </div>
+                    <div class="notifications-footer">
+                        <a href="notifications.php">View all notifications</a>
+                    </div>
+                </div>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">
+                    <span class="avatar-initial">F</span>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Faiza</span>
+                    <span class="user-role">Student</span>
+                </div>
+                <button class="logout-button">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                </button>
+            </div>
+            </div>
+    </div>
+</div>
+ 
+    <script> 
+        // Modal functionality
+        const modal = document.getElementById('lessonModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalDetails = document.getElementById('modalDetails');
+        const modalImg = document.querySelector('.modal-img');
+        const closeBtn = document.querySelector('.close-modal');
+        
+        // Open modal when card button is clicked
+        const cardButtons = document.querySelectorAll('.card-button');
+        cardButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = button.closest('.card');
+                const subject = card.getAttribute('data-subject');
+                const data = subjectData[subject];
+                
+                modalTitle.textContent = data.title;
+                modalDescription.textContent = data.description;
+                modalDetails.innerHTML = data.details;
+                modalImg.src = card.querySelector('img').src;
+                modalImg.alt = data.title;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Make the entire card clickable
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const subject = card.getAttribute('data-subject');
+                const data = subjectData[subject];
+                
+                modalTitle.textContent = data.title;
+                modalDescription.textContent = data.description;
+                modalDetails.innerHTML = data.details;
+                modalImg.src = card.querySelector('img').src;
+                modalImg.alt = data.title;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close modal functionality
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

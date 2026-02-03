@@ -1,0 +1,422 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giggles - Create an Account</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFD166;
+            --dark: #2C3E50;
+            --light: #F7F9FC;
+            --purple: #FF6B6B;
+            --green: #FF6B6B;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='leafGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a861ff'/%3E%3Cstop offset='100%25' stop-color='%23f94668'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='%23732fb0' opacity='0.8'/%3E%3C!-- Large plants and trees in the background --%3E%3Cpath d='M0,800 C100,700 150,650 200,625 S300,600 350,550 S400,450 450,400 S500,300 550,250 S600,150 650,125 S700,100 800,150 S900,250 950,300 S1000,400 1050,500 S1100,650 1150,700 S1200,750 1200,800 Z' fill='%23500f99' opacity='0.7'/%3E%3Cpath d='M0,800 C50,750 100,700 150,675 S250,625 300,600 S400,550 450,525 S550,475 600,450 S700,400 750,375 S850,325 900,350 S1000,425 1050,500 S1150,650 1200,700 L1200,800 Z' fill='%233d0a70' opacity='0.5'/%3E%3C!-- Jungle leaves and details --%3E%3Cg opacity='0.9'%3E%3Cpath d='M50,200 Q100,150 150,200 T250,200 T350,200 T450,200' stroke='url(%23leafGradient)' stroke-width='20' fill='none'/%3E%3Cpath d='M100,300 Q150,250 200,300 T300,300 T400,300 T500,300' stroke='url(%23leafGradient)' stroke-width='15' fill='none'/%3E%3C/g%3E%3Cg opacity='0.8'%3E%3Cpath d='M700,100 Q750,50 800,100 T900,100 T1000,100 T1100,100' stroke='url(%23leafGradient)' stroke-width='25' fill='none'/%3E%3Cpath d='M650,200 Q700,150 750,200 T850,200 T950,200 T1050,200' stroke='url(%23leafGradient)' stroke-width='18' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            z-index: -1;
+        }
+
+        
+        /* Background elements */
+        .background-decoration {
+            position: absolute;
+            z-index: -1;
+        }
+        
+        .bg-flower-top-left {
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background-color: #FF9EF9;
+            clip-path: circle(50% at 0 0);
+            opacity: 0.7;
+        }
+        
+        .bg-flower-bottom-left {
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background-color: #FF9EF9;
+            clip-path: circle(50% at 0 100%);
+            opacity: 0.7;
+        }
+        
+        .login-container {
+            width: 900px;
+            height: 600px;
+            display: flex;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-form-container {
+            width: 60%;
+            background-color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .image-container {
+            width: 40%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            max-width: 90%;
+            max-height: 90%; 
+            object-fit: contain;
+            z-index: 2;
+        }
+        
+        .cloud {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .cloud-1 {
+            width: 100px;
+            height: 50px;
+            top: 20%;
+            right: 10%;
+        }
+        
+        .cloud-2 {
+            width: 80px;
+            height: 40px;
+            bottom: 30%;
+            left: 10%;
+        }
+        
+        .login-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .user-type {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        
+        .type-option {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .type-option.parent {
+            background-color: #FF9EF9;
+            color: white;
+        }
+        
+        .type-option.learner {
+            background-color: #FF9EF9;
+            color: #888;
+        }
+        
+        .type-option.active {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .type-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .type-icon img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .login-form {
+            width: 100%;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        
+        .dropdown-toggle::after {
+            content: "▼";
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .form-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon .form-control {
+            padding-left: 40px;
+        }
+        
+        .cartoon-character {
+            position: absolute;
+            max-width: 120px;
+            z-index: 3;
+        }
+        
+        .character-1 {
+            bottom: -20px;
+            right: -15px;
+            transform: rotate(10deg);
+        }
+        
+        .character-2 {
+            top: -20px;
+            left: -15px;
+            transform: rotate(-5deg);
+        }
+        
+        @media (max-width: 992px) {
+            .login-container {
+                width: 95%;
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .login-form-container,
+            .image-container {
+                width: 100%;
+            }
+            
+            .image-container {
+                height: 250px;
+                order: -1;
+            }
+        }
+       
+        .sign-up{
+            background-color: #FF9EF9;
+            color:white;
+            border: none;
+            margin-left: 120px;
+            width: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
+            padding: 15px;
+            cursor: pointer;
+        }
+        
+        .sign-up:hover {
+            background-color: #FF6B6B;
+            transition: background-color 0.3s;
+        }
+        
+        .error-message {
+            color: #FF6B6B;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .success-message {
+            color: #4ECDC4;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background decorations -->
+    <div class="background-decoration bg-flower-top-left"></div>
+    <div class="background-decoration bg-flower-bottom-left"></div>
+    
+    <div class="login-container">
+        <div class="login-form-container">
+            <div class="login-header">
+                <h1>Create an Account</h1>
+            </div>
+            
+            <div class="user-type">
+                <div class="type-option parent active">
+                    <div class="type-icon">
+                        <img src="{% static 'images/family_547612.png' %}" alt="Parent Icon">
+                    </div>
+                    <h3>Parent</h3>
+                </div>
+                <div class="type-option learner">
+                    <div class="type-icon">
+                        <img src="{% static 'images/boy_5532541.png' %}" alt="Learner Icon">
+                    </div>
+                    <h3>Learner</h3>
+                </div>
+            </div>
+            
+            <!-- Display form errors -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="{% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form class="login-form" method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                
+                <!-- Hidden field for user type -->
+                <input type="hidden" name="user_type" id="user_type" value="parent">
+                
+                <div class="form-group">
+                    <div class="input-with-icon">
+                        <span class="form-icon"></span>
+                        <input type="email" name="email" class="form-control" placeholder="Enter Email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-with-icon">
+                        <span class="form-icon"></span>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-with-icon">
+                        <span class="form-icon"></span>
+                        <input type="text" name="full_name" class="form-control" placeholder="Enter Full Name" required>
+                    </div>
+                </div>
+
+               <div class="signup-button">
+                <button type="submit" class="sign-up">Sign up</button>
+               </div>
+                
+            </form>
+        </div>
+        
+        <div class="image-container">
+            <!-- Cloud decorations -->
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            
+            <!-- Main character illustration -->
+            <img src="{% static 'images/40486.jpg' %}" alt="Cartoon Girl with Book">
+        </div>
+    </div>
+
+    <script>
+        // Toggle between Parent and Learner
+        const userTypeOptions = document.querySelectorAll('.type-option');
+        const userTypeInput = document.getElementById('user_type');
+        
+        userTypeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                userTypeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                
+                // Update hidden input value
+                if (option.classList.contains('parent')) {
+                    userTypeInput.value = 'parent';
+                    option.style.backgroundColor = '#FF6B6B';
+                    option.style.color = 'white';
+                    document.querySelectorAll('.type-option.learner')[0].style.backgroundColor = '#FF9EF9';
+                    document.querySelectorAll('.type-option.learner')[0].style.color = '#888';
+                } else {
+                    userTypeInput.value = 'learner';
+                    option.style.backgroundColor = '#FF6B6B';
+                    option.style.color = 'white';
+                    document.querySelectorAll('.type-option.parent')[0].style.backgroundColor = '#FF9EF9';
+                    document.querySelectorAll('.type-option.parent')[0].style.color = '#888';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

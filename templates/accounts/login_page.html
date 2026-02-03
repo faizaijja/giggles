@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jungle Login</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("/api/placeholder/1200/800");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='leafGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a861ff'/%3E%3Cstop offset='100%25' stop-color='%23f94668'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='%23732fb0' opacity='0.8'/%3E%3C!-- Large plants and trees in the background --%3E%3Cpath d='M0,800 C100,700 150,650 200,625 S300,600 350,550 S400,450 450,400 S500,300 550,250 S600,150 650,125 S700,100 800,150 S900,250 950,300 S1000,400 1050,500 S1100,650 1150,700 S1200,750 1200,800 Z' fill='%23500f99' opacity='0.7'/%3E%3Cpath d='M0,800 C50,750 100,700 150,675 S250,625 300,600 S400,550 450,525 S550,475 600,450 S700,400 750,375 S850,325 900,350 S1000,425 1050,500 S1150,650 1200,700 L1200,800 Z' fill='%233d0a70' opacity='0.5'/%3E%3C!-- Jungle leaves and details --%3E%3Cg opacity='0.9'%3E%3Cpath d='M50,200 Q100,150 150,200 T250,200 T350,200 T450,200' stroke='url(%23leafGradient)' stroke-width='20' fill='none'/%3E%3Cpath d='M100,300 Q150,250 200,300 T300,300 T400,300 T500,300' stroke='url(%23leafGradient)' stroke-width='15' fill='none'/%3E%3C/g%3E%3Cg opacity='0.8'%3E%3Cpath d='M700,100 Q750,50 800,100 T900,100 T1000,100 T1100,100' stroke='url(%23leafGradient)' stroke-width='25' fill='none'/%3E%3Cpath d='M650,200 Q700,150 750,200 T850,200 T950,200 T1050,200' stroke='url(%23leafGradient)' stroke-width='18' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: cover;
+        z-index: -1;
+      }
+
+      .container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        padding: 40px;
+        width: 400px;
+        max-width: 90%;
+        position: relative;
+        z-index: 1;
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .login-header h1 {
+        color: #f94668;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .login-header p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #a861ff;
+        box-shadow: 0 0 0 2px rgba(168, 97, 255, 0.2);
+      }
+
+      .color-palette {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+
+      .color-option {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: all 0.2s;
+      }
+
+      .color-option:hover {
+        transform: scale(1.1);
+      }
+
+      .color-option.selected {
+        border-color: #000;
+        transform: scale(1.1);
+      }
+
+      .btn {
+        background-color: #a861ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #9547f8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .forgot-password {
+        text-align: center;
+        margin-top: 16px;
+      }
+
+      .forgot-password a {
+        color: #f94668;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .forgot-password a:hover {
+        text-decoration: underline;
+      }
+
+      .leaf {
+        position: absolute;
+        z-index: -1;
+        opacity: 0.7;
+      }
+
+      .leaf-1 {
+        top: -30px;
+        left: -40px;
+        transform: rotate(30deg);
+      }
+
+      .leaf-2 {
+        bottom: -25px;
+        right: -35px;
+        transform: rotate(-20deg);
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Decorative leaves -->
+      <svg
+        class="leaf leaf-1"
+        width="120"
+        height="80"
+        viewBox="0 0 120 80"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M10,40 Q30,0 60,5 T110,40 T60,75 T10,40" fill="#a861ff" />
+      </svg>
+      <svg
+        class="leaf leaf-2"
+        width="100"
+        height="70"
+        viewBox="0 0 100 70"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M5,35 Q25,5 50,10 T95,35 T50,60 T5,35" fill="#f94668" />
+      </svg>
+
+      <div class="login-header">
+        <h1>Welcome to the Jungle</h1>
+        <p>Login to continue your adventure</p>
+      </div>
+
+      <form id="login-form" method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+
+        <div class="forgot-password">
+          <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Color palette selection
+        const colorOptions = document.querySelectorAll(".color-option");
+        let selectedColor = "#a861ff"; // Default color
+
+        colorOptions.forEach((option) => {
+          option.addEventListener("click", function () {
+            // Remove selected class from all options
+            colorOptions.forEach((opt) => opt.classList.remove("selected"));
+
+            // Add selected class to clicked option
+            this.classList.add("selected");
+
+            // Store the selected color
+            selectedColor = this.getAttribute("data-color");
+
+            // Update login button color
+            document.querySelector(".btn").style.backgroundColor =
+              selectedColor;
+          });
+        });
+
+        // Form submission
+        const loginForm = document.getElementById("login-form");
+      });
+    </script>
+  </body>
+</html>

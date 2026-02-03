@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg">
+      <!-- Title -->
+      <text
+        x="700"
+        y="30"
+        text-anchor="middle"
+        font-size="24"
+        font-weight="bold"
+        fill="#2c3e50"
+      >
+        Kids Learning System - Class Diagram
+      </text>
+
+      <!-- User Class -->
+      <rect
+        x="50"
+        y="80"
+        width="200"
+        height="180"
+        fill="#5dade2"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="150"
+        y="100"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        User
+      </text>
+      <line
+        x1="60"
+        y1="110"
+        x2="240"
+        y2="110"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- User Attributes -->
+      <text x="60" y="130" font-size="12" fill="white">- id: Integer (PK)</text>
+      <text x="60" y="145" font-size="12" fill="white">- username: String</text>
+      <text x="60" y="160" font-size="12" fill="white">- email: String</text>
+      <text x="60" y="175" font-size="12" fill="white">- password: String</text>
+      <text x="60" y="190" font-size="12" fill="white">
+        - date_joined: DateTime
+      </text>
+
+      <line
+        x1="60"
+        y1="200"
+        x2="240"
+        y2="200"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- User Methods -->
+      <text x="60" y="215" font-size="12" fill="white">+ register()</text>
+      <text x="60" y="230" font-size="12" fill="white">+ login()</text>
+      <text x="60" y="245" font-size="12" fill="white">+ createProfile()</text>
+
+      <!-- StudentProfile Class -->
+      <rect
+        x="350"
+        y="80"
+        width="200"
+        height="180"
+        fill="#e74c3c"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="450"
+        y="100"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        StudentProfile
+      </text>
+      <line
+        x1="360"
+        y1="110"
+        x2="540"
+        y2="110"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- StudentProfile Attributes -->
+      <text x="360" y="130" font-size="12" fill="white">
+        - id: Integer (PK)
+      </text>
+      <text x="360" y="145" font-size="12" fill="white">
+        - user_id: Integer (FK)
+      </text>
+      <text x="360" y="160" font-size="12" fill="white">- age: Integer</text>
+      <text x="360" y="175" font-size="12" fill="white">
+        - grade_level: String
+      </text>
+      <text x="360" y="190" font-size="12" fill="white">
+        - created_at: DateTime
+      </text>
+
+      <line
+        x1="360"
+        y1="200"
+        x2="540"
+        y2="200"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- StudentProfile Methods -->
+      <text x="360" y="215" font-size="12" fill="white">+ updateProfile()</text>
+      <text x="360" y="230" font-size="12" fill="white">+ getProgress()</text>
+      <text x="360" y="245" font-size="12" fill="white">
+        + enrollInCourse()
+      </text>
+
+      <!-- Course Class -->
+      <rect
+        x="650"
+        y="80"
+        width="200"
+        height="180"
+        fill="#27ae60"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="750"
+        y="100"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        Course
+      </text>
+      <line
+        x1="660"
+        y1="110"
+        x2="840"
+        y2="110"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- Course Attributes -->
+      <text x="660" y="130" font-size="12" fill="white">
+        - id: Integer (PK)
+      </text>
+      <text x="660" y="145" font-size="12" fill="white">- name: String</text>
+      <text x="660" y="160" font-size="12" fill="white">- slug: String</text>
+      <text x="660" y="175" font-size="12" fill="white">
+        - description: Text
+      </text>
+      <text x="660" y="190" font-size="12" fill="white">
+        - created_at: DateTime
+      </text>
+
+      <line
+        x1="660"
+        y1="200"
+        x2="840"
+        y2="200"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- Course Methods -->
+      <text x="660" y="215" font-size="12" fill="white">+ getLessons()</text>
+      <text x="660" y="230" font-size="12" fill="white">
+        + getAssessments()
+      </text>
+      <text x="660" y="245" font-size="12" fill="white">
+        + calculateProgress()
+      </text>
+
+      <!-- Lesson Class -->
+      <rect
+        x="950"
+        y="80"
+        width="200"
+        height="180"
+        fill="#8e44ad"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="1050"
+        y="100"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        Lesson
+      </text>
+      <line
+        x1="960"
+        y1="110"
+        x2="1140"
+        y2="110"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- Lesson Attributes -->
+      <text x="960" y="130" font-size="12" fill="white">
+        - id: Integer (PK)
+      </text>
+      <text x="960" y="145" font-size="12" fill="white">
+        - course_id: Integer (FK)
+      </text>
+      <text x="960" y="160" font-size="12" fill="white">- name: String</text>
+      <text x="960" y="175" font-size="12" fill="white">- slug: String</text>
+      <text x="960" y="190" font-size="12" fill="white">
+        - max_score: Integer
+      </text>
+      <text x="960" y="205" font-size="12" fill="white">
+        - difficulty_level: String
+      </text>
+      <text x="960" y="220" font-size="12" fill="white">
+        - created_at: DateTime
+      </text>
+
+      <line
+        x1="960"
+        y1="230"
+        x2="1140"
+        y2="230"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- Lesson Methods -->
+      <text x="960" y="245" font-size="12" fill="white">+ getContent()</text>
+
+      <!-- Assessment Class -->
+      <rect
+        x="650"
+        y="320"
+        width="200"
+        height="180"
+        fill="#f39c12"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="750"
+        y="340"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        Assessment
+      </text>
+      <line
+        x1="660"
+        y1="350"
+        x2="840"
+        y2="350"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- Assessment Attributes -->
+      <text x="660" y="370" font-size="12" fill="white">
+        - id: Integer (PK)
+      </text>
+      <text x="660" y="385" font-size="12" fill="white">
+        - course_id: Integer (FK)
+      </text>
+      <text x="660" y="400" font-size="12" fill="white">
+        - lesson_id: Integer (FK)
+      </text>
+      <text x="660" y="415" font-size="12" fill="white">- title: String</text>
+      <text x="660" y="430" font-size="12" fill="white">
+        - total_questions: Integer
+      </text>
+      <text x="660" y="445" font-size="12" fill="white">
+        - passing_score: Integer
+      </text>
+
+      <line
+        x1="660"
+        y1="455"
+        x2="840"
+        y2="455"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- Assessment Methods -->
+      <text x="660" y="470" font-size="12" fill="white">+ generateQuiz()</text>
+      <text x="660" y="485" font-size="12" fill="white">
+        + calculateScore()
+      </text>
+
+      <!-- AssessmentAttempt Class -->
+      <rect
+        x="50"
+        y="320"
+        width="200"
+        height="200"
+        fill="#34495e"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="150"
+        y="340"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        AssessmentAttempt
+      </text>
+      <line
+        x1="60"
+        y1="350"
+        x2="240"
+        y2="350"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- AssessmentAttempt Attributes -->
+      <text x="60" y="370" font-size="12" fill="white">- id: Integer (PK)</text>
+      <text x="60" y="385" font-size="12" fill="white">
+        - user_id: Integer (FK)
+      </text>
+      <text x="60" y="400" font-size="12" fill="white">
+        - assessment_id: Integer (FK)
+      </text>
+      <text x="60" y="415" font-size="12" fill="white">- score: Integer</text>
+      <text x="60" y="430" font-size="12" fill="white">
+        - percentage: Float
+      </text>
+      <text x="60" y="445" font-size="12" fill="white">
+        - time_taken: Duration
+      </text>
+      <text x="60" y="460" font-size="12" fill="white">- answers: JSON</text>
+      <text x="60" y="475" font-size="12" fill="white">
+        - completed_at: DateTime
+      </text>
+      <text x="60" y="490" font-size="12" fill="white">- passed: Boolean</text>
+
+      <line
+        x1="60"
+        y1="500"
+        x2="240"
+        y2="500"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- AssessmentAttempt Methods -->
+      <text x="60" y="515" font-size="12" fill="white">+ submitAttempt()</text>
+
+      <!-- StudentProgress Class -->
+      <rect
+        x="350"
+        y="320"
+        width="200"
+        height="200"
+        fill="#1abc9c"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="450"
+        y="340"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        StudentProgress
+      </text>
+      <line
+        x1="360"
+        y1="350"
+        x2="540"
+        y2="350"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- StudentProgress Attributes -->
+      <text x="360" y="370" font-size="12" fill="white">
+        - id: Integer (PK)
+      </text>
+      <text x="360" y="385" font-size="12" fill="white">
+        - student_id: Integer (FK)
+      </text>
+      <text x="360" y="400" font-size="12" fill="white">
+        - lesson_id: Integer (FK)
+      </text>
+      <text x="360" y="415" font-size="12" fill="white">- status: String</text>
+      <text x="360" y="430" font-size="12" fill="white">- score: Integer</text>
+      <text x="360" y="445" font-size="12" fill="white">
+        - attempts: Integer
+      </text>
+      <text x="360" y="460" font-size="12" fill="white">
+        - time_spent: Duration
+      </text>
+      <text x="360" y="475" font-size="12" fill="white">
+        - started_at: DateTime
+      </text>
+      <text x="360" y="490" font-size="12" fill="white">
+        - completed_at: DateTime
+      </text>
+      <text x="360" y="505" font-size="12" fill="white">
+        - last_accessed: DateTime
+      </text>
+
+      <line
+        x1="360"
+        y1="515"
+        x2="540"
+        y2="515"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- CourseProgress Class -->
+      <rect
+        x="950"
+        y="320"
+        width="200"
+        height="200"
+        fill="#e67e22"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <text
+        x="1050"
+        y="340"
+        text-anchor="middle"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+      >
+        CourseProgress
+      </text>
+      <line
+        x1="960"
+        y1="350"
+        x2="1140"
+        y2="350"
+        stroke="white"
+        stroke-width="2"
+      />
+
+      <!-- CourseProgress Attributes -->
+      <text x="960" y="370" font-size="12" fill="white">
+        - id: Integer (PK)
+      </text>
+      <text x="960" y="385" font-size="12" fill="white">
+        - student_id: Integer (FK)
+      </text>
+      <text x="960" y="400" font-size="12" fill="white">
+        - course_id: Integer (FK)
+      </text>
+      <text x="960" y="415" font-size="12" fill="white">
+        - total_lessons_completed: Int
+      </text>
+      <text x="960" y="430" font-size="12" fill="white">
+        - total_score: Integer
+      </text>
+      <text x="960" y="445" font-size="12" fill="white">
+        - average_score: Float
+      </text>
+      <text x="960" y="460" font-size="12" fill="white">- level: String</text>
+      <text x="960" y="475" font-size="12" fill="white">
+        - badges_earned: JSON
+      </text>
+      <text x="960" y="490" font-size="12" fill="white">
+        - last_lesson_date: DateTime
+      </text>
+      <text x="960" y="505" font-size="12" fill="white">
+        - best_assessment_score: Int
+      </text>
+
+      <line
+        x1="960"
+        y1="515"
+        x2="1140"
+        y2="515"
+        stroke="white"
+        stroke-width="1"
+      />
+
+      <!-- CourseProgress Methods -->
+      <text x="960" y="530" font-size="12" fill="white">
+        + updateProgress()
+      </text>
+
+      <!-- Relationships -->
+
+      <!-- User to StudentProfile (1:1) -->
+      <path
+        d="M 250 150 L 350 150"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="290" y="145" font-size="10" fill="#2c3e50">1</text>
+      <text x="340" y="145" font-size="10" fill="#2c3e50">1</text>
+
+      <!-- StudentProfile to CourseProgress (1:M) -->
+      <path
+        d="M 450 260 L 450 300 L 1050 300 L 1050 320"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="455" y="280" font-size="10" fill="#2c3e50">1</text>
+      <text x="1055" y="315" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Course to Lesson (1:M) -->
+      <path
+        d="M 850 150 L 950 150"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="890" y="145" font-size="10" fill="#2c3e50">1</text>
+      <text x="940" y="145" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Course to Assessment (1:M) -->
+      <path
+        d="M 750 260 L 750 320"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="755" y="280" font-size="10" fill="#2c3e50">1</text>
+      <text x="755" y="315" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Lesson to Assessment (1:M) -->
+      <path
+        d="M 1050 260 L 1050 280 L 850 280 L 850 320"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="1055" y="275" font-size="10" fill="#2c3e50">1</text>
+      <text x="855" y="315" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- User to AssessmentAttempt (1:M) -->
+      <path
+        d="M 150 260 L 150 320"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="155" y="280" font-size="10" fill="#2c3e50">1</text>
+      <text x="155" y="315" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Assessment to AssessmentAttempt (1:M) -->
+      <path
+        d="M 650 420 L 250 420"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="630" y="415" font-size="10" fill="#2c3e50">1</text>
+      <text x="270" y="415" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- StudentProfile to StudentProgress (1:M) -->
+      <path
+        d="M 450 260 L 450 320"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="455" y="280" font-size="10" fill="#2c3e50">1</text>
+      <text x="455" y="315" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Lesson to StudentProgress (1:M) -->
+      <path
+        d="M 950 420 L 540 420"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="930" y="415" font-size="10" fill="#2c3e50">1</text>
+      <text x="560" y="415" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Course to CourseProgress (1:M) -->
+      <path
+        d="M 750 260 L 750 280 L 900 280 L 900 420 L 950 420"
+        stroke="#2c3e50"
+        stroke-width="2"
+        fill="none"
+        marker-end="url(#arrowhead)"
+      />
+      <text x="755" y="275" font-size="10" fill="#2c3e50">1</text>
+      <text x="940" y="415" font-size="10" fill="#2c3e50">*</text>
+
+      <!-- Arrow marker definition -->
+      <defs>
+        <marker
+          id="arrowhead"
+          markerWidth="10"
+          markerHeight="7"
+          refX="9"
+          refY="3.5"
+          orient="auto"
+        >
+          <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50" />
+        </marker>
+      </defs>
+
+      <!-- Legend -->
+      <rect
+        x="50"
+        y="580"
+        width="350"
+        height="200"
+        fill="#ecf0f1"
+        stroke="#bdc3c7"
+        stroke-width="1"
+        rx="5"
+      />
+      <text
+        x="225"
+        y="600"
+        text-anchor="middle"
+        font-size="14"
+        font-weight="bold"
+        fill="#2c3e50"
+      >
+        UML Class Diagram Legend
+      </text>
+
+      <!-- Class structure example -->
+      <rect
+        x="60"
+        y="615"
+        width="120"
+        height="80"
+        fill="#5dade2"
+        stroke="#2c3e50"
+        stroke-width="1"
+      />
+      <text
+        x="120"
+        y="630"
+        text-anchor="middle"
+        font-size="12"
+        font-weight="bold"
+        fill="white"
+      >
+        ClassName
+      </text>
+      <line
+        x1="65"
+        y1="635"
+        x2="175"
+        y2="635"
+        stroke="white"
+        stroke-width="1"
+      />
+      <text x="65" y="650" font-size="10" fill="white">- attribute: Type</text>
+      <text x="65" y="665" font-size="10" fill="white">+ attribute: Type</text>
+      <line
+        x1="65"
+        y1="670"
+        x2="175"
+        y2="670"
+        stroke="white"
+        stroke-width="1"
+      />
+      <text x="65" y="685" font-size="10" fill="white">+ method()</text>
+
+      <!-- Symbols explanation -->
+      <text x="200" y="630" font-size="12" fill="#2c3e50">
+        Class Structure:
+      </text>
+      <text x="200" y="645" font-size="10" fill="#2c3e50">
+        - Private attribute
+      </text>
+      <text x="200" y="660" font-size="10" fill="#2c3e50">
+        + Public attribute/method
+      </text>
+      <text x="200" y="675" font-size="10" fill="#2c3e50">
+        PK = Primary Key
+      </text>
+      <text x="200" y="690" font-size="10" fill="#2c3e50">
+        FK = Foreign Key
+      </text>
+
+      <!-- Relationship symbols -->
+      <text x="60" y="715" font-size="12" fill="#2c3e50">Relationships:</text>
+      <line
+        x1="60"
+        y1="725"
+        x2="120"
+        y2="725"
+        stroke="#2c3e50"
+        stroke-width="2"
+      />
+      <polygon points="120,722 125,725 120,728" fill="#2c3e50" />
+      <text x="130" y="730" font-size="10" fill="#2c3e50">Association</text>
+
+      <text x="60" y="745" font-size="10" fill="#2c3e50">1 = One</text>
+      <text x="60" y="760" font-size="10" fill="#2c3e50">
+        * = Many (Zero or more)
+      </text>
+      <text x="60" y="775" font-size="10" fill="#2c3e50">
+        Arrow shows navigation direction
+      </text>
+
+      <!-- Key relationships summary -->
+      <rect
+        x="450"
+        y="580"
+        width="500"
+        height="200"
+        fill="#f8f9fa"
+        stroke="#bdc3c7"
+        stroke-width="1"
+        rx="5"
+      />
+      <text
+        x="700"
+        y="600"
+        text-anchor="middle"
+        font-size="14"
+        font-weight="bold"
+        fill="#2c3e50"
+      >
+        Key Relationships Summary
+      </text>
+
+      <text x="460" y="625" font-size="12" fill="#2c3e50">
+        • User (1) ←→ (1) StudentProfile
+      </text>
+      <text x="460" y="640" font-size="12" fill="#2c3e50">
+        • Course (1) ←→ (*) Lesson
+      </text>
+      <text x="460" y="655" font-size="12" fill="#2c3e50">
+        • Course (1) ←→ (*) Assessment
+      </text>
+      <text x="460" y="670" font-size="12" fill="#2c3e50">
+        • Lesson (1) ←→ (*) Assessment
+      </text>
+      <text x="460" y="685" font-size="12" fill="#2c3e50">
+        • User (1) ←→ (*) AssessmentAttempt
+      </text>
+      <text x="460" y="700" font-size="12" fill="#2c3e50">
+        • Assessment (1) ←→ (*) AssessmentAttempt
+      </text>
+      <text x="460" y="715" font-size="12" fill="#2c3e50">
+        • StudentProfile (1) ←→ (*) StudentProgress
+      </text>
+      <text x="460" y="730" font-size="12" fill="#2c3e50">
+        • Lesson (1) ←→ (*) StudentProgress
+      </text>
+      <text x="460" y="745" font-size="12" fill="#2c3e50">
+        • StudentProfile (1) ←→ (*) CourseProgress
+      </text>
+      <text x="460" y="760" font-size="12" fill="#2c3e50">
+        • Course (1) ←→ (*) CourseProgress
+      </text>
+
+      <!-- Design patterns note -->
+      <text x="460" y="780" font-size="11" fill="#7f8c8d" font-style="italic">
+        This design follows standard ORM patterns with proper
+      </text>
+      <text x="460" y="795" font-size="11" fill="#7f8c8d" font-style="italic">
+        foreign key relationships and separation of concerns.
+      </text>
+    </svg>
+  </body>
+</html>

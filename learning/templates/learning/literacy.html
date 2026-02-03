@@ -1,0 +1,1661 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magical Wizard Academy: Language Arts & Spells</title>
+    <style>
+      :root {
+        --primary-color: #2a1a5e;
+        --secondary-color: #5e3a98;
+        --accent-color: #ffd700;
+        --background-color: #f0f8ff;
+        --text-color: #f8f0ff;
+        --scroll-color: #f0e6c9;
+      }
+
+      body {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23ffffff22"/></svg>');
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        margin-left: 250px;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: linear-gradient(360deg, #9c27b0, #e91e63);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        flex-direction: column;
+        position: fixed;
+        height: 100vh;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 20px 0;
+      }
+
+      .logo-container {
+        padding: 0 24px 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2a4b8d;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #28a4c9;
+        margin-left: 2px;
+      }
+      .logo-text {
+        color: white;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .nav-menu {
+        margin-top: 24px;
+        flex-grow: 1;
+      }
+
+      .nav-list {
+        list-style: none;
+        padding: 0 12px;
+      }
+
+      .nav-item {
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        background-color: #f0f7ff;
+        color: #2a4b8d;
+      }
+
+      .nav-link.active {
+        background-color: #e4f0ff;
+        color: #2a4b8d;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .nav-link.active .nav-icon svg {
+        stroke: #2a4b8d;
+      }
+
+      /* Header                */
+      /* --------------------- */
+      .header-literacy {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 30px;
+        background-color: #f0f8ff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: fixed;
+        padding: 0.75rem 1.25rem;
+        top: 0;
+        right: 0;
+        left: 250px; /* Match sidebar width */
+        height: 70px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z'%3E%3C/path%3E%3C/svg%3E");
+        z-index: 99;
+        width: auto;
+        transition: var(--transition);
+      }
+
+      .header-literacy h1 {
+        font-size: 2.5em;
+        margin: 0;
+      }
+
+      .header-literacy:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .header-actions-literacy {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: rgba(124, 77, 255, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-profile:hover {
+    background: rgba(124, 77, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(124, 77, 255, 0.3);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #718096;
+}
+
+.user-profile a {
+    color: #e53e3e;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.user-profile a:hover {
+    color: #c53030;
+}
+
+      .logout-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f88379;
+        padding: 6px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+      }
+
+      .logout-button:hover {
+        background-color: #f0f7ff;
+        color: #2a4b8d;
+      }
+
+      .logout-button svg {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      header {
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 20px;
+        background: linear-gradient(to left, #9c27b0, #e91e63);
+        border-radius: 15px;
+        border: 3px solid var(--accent-color);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        position: relative;
+        margin-left: 2px;
+        width: 99%;
+        margin-top: 80px;
+      }
+
+      header::before {
+        content: "✨";
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        font-size: 2em;
+      }
+
+      header::after {
+        content: "✨";
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 2em;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin: 0;
+        color: var(--accent-color);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+
+      h2 {
+        color: var(--accent-color);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width: 100%; " viewBox="0 0 300 70" width="100%" height="auto"><path d="M5,5 Q5,35 5,65 L295,65 Q295,35 295,5 L5,5 Z"  fill="%23f0e6c9"  stroke="#a08c5b"  stroke-width="2"/></svg>');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        padding: 15px;
+        color: var(--primary-color);
+        text-align: center;
+        font-size: 1.6em;
+        margin-top: 30px;
+      }
+
+      .spell-section {
+        background-color: var(--secondary-color);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        border: 2px solid var(--accent-color);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .spell-icon {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: middle;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .wand-icon {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L80,80" stroke="%23a08c5b" stroke-width="8" stroke-linecap="round"/><circle cx="15" cy="15" r="10" fill="%23ffd700"/></svg>');
+      }
+
+      .book-icon {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="20" width="80" height="60" fill="%23a08c5b"/><rect x="15" y="25" width="70" height="50" fill="%23f0e6c9"/><path d="M50,25 L50,75" stroke="%23a08c5b" stroke-width="2"/></svg>');
+      }
+
+      .potion-icon {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M40,20 L40,40 L30,50 L30,80 L70,80 L70,50 L60,40 L60,20 Z" fill="%235e3a98" stroke="%23000" stroke-width="2"/><path d="M35,60 Q50,70 65,60" stroke="%23ffd700" stroke-width="3"/></svg>');
+      }
+
+      .crystal-icon {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,15 70,40 60,85 40,85 30,40" fill="%23c095f9" stroke="%235e3a98" stroke-width="2"/></svg>');
+      }
+
+      .scroll-icon {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L80,20 L80,70 Q70,60 50,70 Q30,60 20,70 Z" fill="%23f0e6c9" stroke="%23a08c5b" stroke-width="2"/><path d="M30,30 L70,30 M30,40 L70,40 M30,50 L60,50" stroke="%23a08c5b" stroke-width="2"/></svg>');
+      }
+
+      .spell-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .spell-title h3 {
+        margin: 0;
+        font-size: 1.4em;
+        color: var(--accent-color);
+      }
+
+      .spell-content {
+        background-color: rgba(26, 15, 51, 0.5);
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 1.1em;
+        line-height: 1.5;
+      }
+
+      .mastery-meter {
+        width: 100%;
+        height: 30px;
+        background-color: var(--background-color);
+        border-radius: 15px;
+        margin: 15px 0;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid var(--accent-color);
+      }
+
+      .mastery-meter-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, #5d3fd3, #ffd700);
+        border-radius: 15px;
+        position: relative;
+        transition: width 1.5s ease;
+      }
+
+      .mastery-meter-fill::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="%23ffffff55"/></svg>');
+        animation: sparkle 2s infinite linear;
+      }
+
+      @keyframes sparkle {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 30px 30px;
+        }
+      }
+
+      .spell-activity {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: rgba(94, 58, 152, 0.4);
+        border-radius: 10px;
+        border: 1px dashed var(--accent-color);
+      }
+
+      .spell-activity h4 {
+        color: var(--accent-color);
+        margin-top: 0;
+      }
+
+      button {
+        background-color: var(--primary-color);
+        color: var(--accent-color);
+        border: 2px solid var(--accent-color);
+        border-radius: 10px;
+        padding: 8px 16px;
+        font-family: inherit;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin: 10px 5px;
+      }
+
+      button:hover {
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        box-shadow: 0 0 15px var(--accent-color);
+        transform: scale(1.05);
+      }
+
+      .game-area {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background-color: rgba(26, 15, 51, 0.7);
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .spell-card {
+        display: inline-block;
+        width: 120px;
+        height: 150px;
+        margin: 10px;
+        background-color: #4a2c92;
+        border-radius: 10px;
+        border: 2px solid var(--accent-color);
+        position: relative;
+        cursor: pointer;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
+        vertical-align: top;
+      }
+
+      .card-front,
+      .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .card-back {
+        background-color: #5e3a98;
+        transform: rotateY(180deg);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><text x="20" y="25" font-size="30" text-anchor="middle" fill="%23ffd700">✨</text></svg>');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .card-flipped {
+        transform: rotateY(180deg);
+      }
+
+      #phonicsContainer,
+      #fluencyContainer,
+      #writingContainer,
+      #grammarContainer,
+      #oralContainer,
+      #listeningContainer {
+        display: none;
+      }
+
+      .feedback-message {
+        color: var(--accent-color);
+        font-size: 1.2em;
+        margin: 10px 0;
+        min-height: 30px;
+      }
+
+      .navigation-menu {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .navigation-menu button {
+        margin: 2px;
+      }
+
+      .wizard-tips {
+        background-color: rgba(255, 215, 0, 0.2);
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 20px;
+        border: 1px dashed var(--accent-color);
+      }
+
+      .wizard-tips h4 {
+        color: var(--accent-color);
+        margin-top: 0;
+      }
+
+      .sparkle {
+        display: inline-block;
+        animation: float 2s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      #welcomeContainer {
+        text-align: center;
+        padding: 20px;
+        margin-left: 28px;
+      }
+
+      .wizard-character {
+        width: 150px;
+        height: 200px;
+        margin: 0 auto;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><path d="M50,10 L60,25 L50,40 L40,25 Z" fill="%235e3a98" stroke="%23000" stroke-width="1"/><circle cx="50" cy="50" r="15" fill="%23f8d5b2"/><path d="M35,70 L65,70 L65,100 L35,100 Z" fill="%232a1a5e" stroke="%23000" stroke-width="1"/><path d="M35,70 L65,70 L50,45 Z" fill="%232a1a5e" stroke="%23000" stroke-width="1"/><path d="M40,100 L40,120 M60,100 L60,120" stroke="%232a1a5e" stroke-width="5" stroke-linecap="round"/><circle cx="43" cy="48" r="3" fill="%23000"/><circle cx="57" cy="48" r="3" fill="%23000"/><path d="M45,55 Q50,60 55,55" stroke="%23000" stroke-width="1" fill="none"/><path d="M30,50 L20,60 M70,50 L80,60" stroke="%232a1a5e" stroke-width="3"/></svg>');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .input-area {
+        margin-top: 15px;
+        text-align: center;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid var(--accent-color);
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: inherit;
+        font-size: 1em;
+        width: 80%;
+        max-width: 300px;
+      }
+      .language-container {
+        margin-left: 250px;
+        margin-top: 120px;
+      }
+
+      .word-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 15px 0;
+      }
+
+      .word-box {
+        background-color: #4a2c92;
+        color: var(--text-color);
+        border: 2px solid var(--accent-color);
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 1.1em;
+        cursor: pointer;
+      }
+
+      .word-box:hover {
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+      }
+
+      .sentence-builder {
+        min-height: 50px;
+        background-color: rgba(26, 15, 51, 0.7);
+        border-radius: 10px;
+        padding: 10px;
+        margin: 15px 0;
+        border: 2px dashed var(--accent-color);
+        text-align: center;
+      }
+
+      .chosen-word {
+        display: inline-block;
+        background-color: #5e3a98;
+        color: var(--text-color);
+        border: 1px solid var(--accent-color);
+        border-radius: 5px;
+        padding: 5px 8px;
+        margin: 3px;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          font-size: 14px;
+        }
+
+        h1 {
+          font-size: 1.8em;
+        }
+
+        h2 {
+          font-size: 1.4em;
+        }
+
+        .spell-content {
+          font-size: 1em;
+        }
+
+        .spell-card {
+          width: 100px;
+          height: 130px;
+          margin: 5px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img
+              src="{% static 'images/Giggles logo.png' %}"
+              alt="Giggles Logo"
+            />
+          </div>
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'lessons' %}" class="nav-link active">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+        <div id="timerDisplay"></div>
+<script src="{% static 'js/timer.js' %}"></script>
+    </div>
+    <div class="container">
+      <header>
+        <h2>Welcome, Young Wizard!</h2>
+        <p>Master the ancient arts of language and literacy!</p>
+        <p>
+          I am Professor Spellbound, your guide through the enchanted chambers
+          of language learning. Are you ready to begin your magical journey?
+        </p>
+        <p>
+          Choose one of the spell chambers below to start practicing your
+          magical linguistic powers!
+        </p>
+      </header>
+
+      <div class="main-content">
+        <div id="welcomeContainer">
+          <div class="navigation-menu">
+            <button onclick="showSection('phonicsContainer')">
+              <span class="sparkle">✨</span> Phonics Spells
+            </button>
+            <button onclick="showSection('fluencyContainer')">
+              <span class="sparkle">📚</span> Reading Scrolls
+            </button>
+            <button onclick="showSection('writingContainer')">
+              <span class="sparkle">🖋️</span> Enchanted Writing
+            </button>
+            <button onclick="showSection('grammarContainer')">
+              <span class="sparkle">🧪</span> Grammar Potions
+            </button>
+            <button onclick="showSection('oralContainer')">
+              <span class="sparkle">🔮</span> Speaking Charms
+            </button>
+            <button onclick="showSection('listeningContainer')">
+              <span class="sparkle">👂</span> Listening Crystals
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-literacy">
+        <h1>Literacy</h1>
+        <div class="header-actions-literacy">
+         
+             <div class="user-profile">
+                <div class="avatar">
+                  <span class="avatar-initial"
+                    >{{ user.first_name.0|upper|default:"U" }}</span
+                  >
+                </div>
+                <div class="user-info">
+                  <span class="user-name"
+                    >{{ user.get_full_name|default:user.username }}</span
+                  >
+                </div>
+                
+             <p><a href="{% url 'logout' %}">Logout</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="language-container">
+        <!-- PHONICS SECTION -->
+        <div
+          id="phonicsContainer"
+          class="spell-section"
+          data-section="phonics"
+          data-subject="literacy"
+        >
+          <div class="spell-title">
+            <div class="spell-icon wand-icon"></div>
+            <h3>Phonics Spell Chamber</h3>
+          </div>
+
+          <div class="spell-content">
+            <p>
+              Welcome to the Phonics Spell Chamber! Here you will learn to
+              recognize magical letter patterns and sounds. These are the
+              building blocks of all wizard spells!
+            </p>
+
+            <div class="mastery-meter">
+              <div class="mastery-meter-fill" id="phonicsMeter"></div>
+            </div>
+
+            <div class="spell-activity">
+              <h4>Magical Sound Matching</h4>
+              <p>
+                Match the magical sound with the correct spell card. Find the
+                pairs to unlock your phonics power!
+              </p>
+              <button onclick="startPhonicGame()">Start Spell Training</button>
+
+              <div id="phonicsGameArea" class="game-area">
+                <div id="phonicsCardContainer"></div>
+                <div class="feedback-message" id="phonicsFeedback"></div>
+              </div>
+            </div>
+
+            <div class="wizard-tips">
+              <h4>Wizard Tips</h4>
+              <p>💫 Try saying the sounds out loud as you practice</p>
+              <p>
+                💫 Remember that some letter combinations make special sounds,
+                like 'sh' or 'ch'
+              </p>
+              <p>
+                💫 Practice breaking words into their sound parts to help with
+                reading and spelling
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- READING FLUENCY SECTION -->
+        <div
+          id="fluencyContainer"
+          class="spell-section"
+          data-section="fluency"
+          data-subject="literacy"
+        >
+          <div class="spell-title">
+            <div class="spell-icon book-icon"></div>
+            <h3>Reading Scrolls Chamber</h3>
+          </div>
+
+          <div class="spell-content">
+            <p>
+              Welcome to the Reading Scrolls Chamber! Here you will learn to
+              read ancient magical texts with fluency and understand their
+              hidden meanings.
+            </p>
+
+            <div class="mastery-meter">
+              <div class="mastery-meter-fill" id="fluencyMeter"></div>
+            </div>
+
+            <div class="spell-activity">
+              <h4>Enchanted Story Reading</h4>
+              <p>
+                Read the magical story below. Then answer the questions to show
+                your understanding of the text.
+              </p>
+
+              <div id="storyContainer">
+                <p>The Little Dragon Who Couldn't Fly</p>
+                <p>
+                  Once upon a time, there was a little dragon named Spark. Spark
+                  lived in a cave on top of Windy Mountain. All the other
+                  dragons could fly high in the sky, but Spark couldn't fly at
+                  all.
+                </p>
+                <p>
+                  "Why can't I fly like everyone else?" Spark asked his mother.
+                </p>
+                <p>"Your wings are still growing," she said. "Be patient."</p>
+                <p>
+                  Every day, Spark would go to the edge of the mountain and try
+                  to fly. But he always fell back down. One day, while trying to
+                  fly, Spark saw a baby bird that had fallen from its nest. The
+                  bird was scared.
+                </p>
+                <p>"Don't worry," said Spark. "I'll help you."</p>
+                <p>
+                  Spark carefully picked up the baby bird. Then, without
+                  thinking, he jumped up and... started to fly! His wings
+                  carried him up to the bird's nest where he gently put the baby
+                  bird back.
+                </p>
+                <p>"I did it! I flew!" Spark shouted with joy.</p>
+                <p>
+                  From that day on, Spark could fly just like all the other
+                  dragons. He learned that sometimes helping others gives us the
+                  courage to do things we didn't think we could do.
+                </p>
+              </div>
+
+              <button onclick="showReadingQuestions()">Answer Questions</button>
+
+              <div id="readingQuestionsArea" class="game-area">
+                <div id="questionContainer"></div>
+                <div class="feedback-message" id="readingFeedback"></div>
+              </div>
+            </div>
+
+            <div class="wizard-tips">
+              <h4>Wizard Tips</h4>
+              <p>💫 Read at your own pace - speed will come with practice</p>
+              <p>💫 If you don't know a word, try breaking it into parts</p>
+              <p>💫 Think about what's happening in the story as you read</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WRITING SECTION -->
+        <div
+          id="writingContainer"
+          class="spell-section"
+          data-section="writing"
+          data-subject="literacy"
+        >
+          <div class="spell-title">
+            <div class="spell-icon scroll-icon"></div>
+            <h3>Enchanted Writing Chamber</h3>
+          </div>
+
+          <div class="spell-content">
+            <p>
+              Welcome to the Enchanted Writing Chamber! Here you will learn to
+              craft magical sentences and stories that can transport readers to
+              new worlds.
+            </p>
+
+            <div class="mastery-meter">
+              <div class="mastery-meter-fill" id="writingMeter"></div>
+            </div>
+
+            <div class="spell-activity">
+              <h4>Sentence Crafting Spell</h4>
+              <p>
+                Create magical sentences by selecting words from the magical
+                word cauldron. Try to make sentences that tell a story!
+              </p>
+
+              <div class="word-container" id="wordBank">
+                <!-- Words will be added by JavaScript -->
+              </div>
+
+              <div class="sentence-builder" id="sentenceArea">
+                <p>Your magical sentence will appear here...</p>
+              </div>
+
+              <button onclick="clearSentence()">Clear Spell</button>
+              <button onclick="checkSentence()">Check Spell</button>
+
+              <div class="feedback-message" id="writingFeedback"></div>
+            </div>
+
+            <div class="wizard-tips">
+              <h4>Wizard Tips</h4>
+              <p>
+                💫 Every good sentence needs a subject (who or what) and a verb
+                (action)
+              </p>
+              <p>💫 Add describing words to make your writing more magical</p>
+              <p>
+                💫 Think about the purpose of your writing - are you telling a
+                story, explaining something, or persuading someone?
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRAMMAR SECTION -->
+        <div
+          id="grammarContainer"
+          class="spell-section"
+          data-section="grammar"
+          data-subject="literacy"
+        >
+          <div class="spell-title">
+            <div class="spell-icon potion-icon"></div>
+            <h3>Grammar Potions Lab</h3>
+          </div>
+
+          <div class="spell-content">
+            <p>
+              Welcome to the Grammar Potions Lab! Here you will learn to mix the
+              perfect grammar potions to make your language powerful and clear.
+            </p>
+
+            <div class="mastery-meter">
+              <div class="mastery-meter-fill" id="grammarMeter"></div>
+            </div>
+
+            <div class="spell-activity">
+              <h4>Grammar Potion Mixing</h4>
+              <p>
+                Fix the grammar errors in these magical sentences. Type the
+                correct version in the potion cauldron below.
+              </p>
+
+              <div id="grammarChallengeContainer">
+                <p id="grammarSentence">
+                  The wizard and the apprentice is mixing potions.
+                </p>
+              </div>
+
+              <div class="input-area">
+                <input
+                  type="text"
+                  id="grammarInput"
+                  placeholder="Type the corrected sentence..."
+                />
+                <button onclick="checkGrammar()">Check Potion</button>
+              </div>
+
+              <div class="feedback-message" id="grammarFeedback"></div>
+            </div>
+
+            <div class="wizard-tips">
+              <h4>Wizard Tips</h4>
+              <p>
+                💫 Remember to match singular subjects with singular verbs, and
+                plural subjects with plural verbs
+              </p>
+              <p>
+                💫 Start sentences with capital letters and end with punctuation
+              </p>
+              <p>
+                💫 Look out for tricky words like "their," "there," and
+                "they're"
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORAL PRESENTATION SECTION -->
+        <div
+          id="oralContainer"
+          class="spell-section"
+          data-section="oral"
+          data-subject="literacy"
+        >
+          <div class="spell-title">
+            <div class="spell-icon wand-icon"></div>
+            <h3>Speaking Charms Chamber</h3>
+          </div>
+
+          <div class="spell-content">
+            <p>
+              Welcome to the Speaking Charms Chamber! Here you will learn to
+              cast verbal spells that captivate your audience.
+            </p>
+
+            <div class="mastery-meter">
+              <div class="mastery-meter-fill" id="oralMeter"></div>
+            </div>
+
+            <div class="spell-activity">
+              <h4>Magical Speech Practice</h4>
+              <p>
+                Practice saying these magical tongue twisters out loud. They
+                will help improve your speaking clarity:
+              </p>
+
+              <div id="tongueTwisterContainer">
+                <p>"Six slick, slim, slippery snakes slid slowly southward."</p>
+                <p>
+                  "Wizard Winston wished for windy weather while Witch Wanda
+                  wanted warm water."
+                </p>
+                <p>"Three free fireflies flew freely from frightful flames."</p>
+              </div>
+
+              <button onclick="nextTongueTwister()">New Tongue Twister</button>
+              <button onclick="practiceSpeech()">Practice Speaking</button>
+
+              <div class="feedback-message" id="oralFeedback"></div>
+            </div>
+
+            <div class="wizard-tips">
+              <h4>Wizard Tips</h4>
+              <p>💫 Speak slowly and clearly when presenting</p>
+              <p>
+                💫 Practice in front of a mirror to see how you look when
+                speaking
+              </p>
+              <p>💫 Take deep breaths if you feel nervous</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTENING SECTION -->
+        <div
+          id="listeningContainer"
+          class="spell-section"
+          data-section="listening"
+          data-subject="literacy"
+        >
+          <div class="spell-title">
+            <div class="spell-icon crystal-icon"></div>
+            <h3>Listening Crystals Chamber</h3>
+          </div>
+
+          <div class="spell-content">
+            <p>
+              Welcome to the Listening Crystals Chamber! Here you will train
+              your ears to understand magical messages and respond
+              appropriately.
+            </p>
+
+            <div class="mastery-meter">
+              <div class="mastery-meter-fill" id="listeningMeter"></div>
+            </div>
+
+            <div class="spell-activity">
+              <h4>Crystal Ball Listening Challenge</h4>
+              <p>
+                Read the instructions below and follow them carefully to
+                complete the magic spell:
+              </p>
+
+              <div id="listeningInstructionsContainer">
+                <p>1. Think of your favorite magical creature</p>
+                <p>2. Count to five silently</p>
+                <p>3. Click the purple button</p>
+                <p>4. Type the name of your magical creature in the box</p>
+              </div>
+
+              <div class="input-area">
+                <button style="background-color: red">Red Button</button>
+                <button style="background-color: blue">Blue Button</button>
+                <button style="background-color: purple">Purple Button</button>
+                <input
+                  type="text"
+                  id="listeningInput"
+                  placeholder="Type your answer here..."
+                />
+                <button onclick="checkListening()">Cast Spell</button>
+              </div>
+
+              <div class="feedback-message" id="listeningFeedback"></div>
+            </div>
+
+            <div class="wizard-tips">
+              <h4>Wizard Tips</h4>
+              <p>💫 Pay close attention to all the details when listening</p>
+              <p>💫 Pay close attention to all the details when listening</p>
+              <p>💫 Listen for key information and instructions</p>
+              <p>
+                💫 Practice following multi-step directions to improve your
+                listening skills
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Show selected section and hide others
+      function showSection(sectionId) {
+        const sections = [
+          "phonicsContainer",
+          "fluencyContainer",
+          "writingContainer",
+          "grammarContainer",
+          "oralContainer",
+          "listeningContainer",
+        ];
+
+        sections.forEach((section) => {
+          document.getElementById(section).style.display = "none";
+        });
+
+        document.getElementById(sectionId).style.display = "block";
+        document.getElementById("welcomeContainer").style.display = "none";
+
+        // Animate the mastery meter for the selected section
+        const meterId = sectionId.replace("Container", "Meter");
+        const meter = document.getElementById(meterId);
+        const randomProgress = Math.floor(Math.random() * 70) + 30; // Random value between 30-100%
+        meter.style.width = randomProgress + "%";
+      }
+
+      function sendProgress(sectionId, subjectSlug, status = "in_progress") {
+        fetch("/complete-activity/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: JSON.stringify({
+            activity_slug: sectionId,
+            subject: subjectSlug,
+            status: status,
+            score: 100,
+            time_spent: 30,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log("Progress sent:", sectionId, data);
+            } else {
+              console.error("Failed to send progress:", data.error);
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      function startPhonicGame() {
+        document.getElementById("phonicsGameArea").style.display = "block";
+
+        const sectionDiv = document.querySelector("#phonicsContainer");
+        const sectionId = sectionDiv.getAttribute("data-section");
+        const subjectSlug = sectionDiv.getAttribute("data-subject");
+
+        // Call start-activity
+        fetch(`/lessons/api/start-activity/${subjectSlug}/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: JSON.stringify({ activity_slug: sectionId }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("Activity started:", data))
+          .catch((err) => console.error("Start error:", err));
+      }
+
+      // Phonics Game
+      let flippedCards = [];
+      let matchedPairs = 0;
+      let totalPairs = 4;
+
+      function startPhonicGame() {
+        const gameArea = document.getElementById("phonicsGameArea");
+        gameArea.style.display = "block";
+
+        const cardContainer = document.getElementById("phonicsCardContainer");
+        cardContainer.innerHTML = "";
+        flippedCards = [];
+        matchedPairs = 0;
+
+        const phonicPairs = [
+          { sound: "sh", word: "ship" },
+          { sound: "ch", word: "chair" },
+          { sound: "th", word: "thumb" },
+          { sound: "wh", word: "wheel" },
+        ];
+
+        // Create and shuffle cards
+        let cards = [];
+        phonicPairs.forEach((pair) => {
+          cards.push({ type: "sound", content: pair.sound, match: pair.word });
+          cards.push({ type: "word", content: pair.word, match: pair.sound });
+        });
+
+        // Fisher-Yates shuffle
+        for (let i = cards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+
+        // Create card elements
+        cards.forEach((card, index) => {
+          const cardElement = document.createElement("div");
+          cardElement.className = "spell-card";
+          cardElement.dataset.index = index;
+          cardElement.dataset.content = card.content;
+          cardElement.dataset.match = card.match;
+
+          const cardFront = document.createElement("div");
+          cardFront.className = "card-front";
+          cardFront.textContent = "?";
+
+          const cardBack = document.createElement("div");
+          cardBack.className = "card-back";
+          cardBack.textContent = card.content;
+
+          cardElement.appendChild(cardFront);
+          cardElement.appendChild(cardBack);
+
+          cardElement.addEventListener("click", flipCard);
+          cardContainer.appendChild(cardElement);
+        });
+      }
+
+      function flipCard() {
+        // Prevent flipping more than 2 cards or already flipped card
+        if (
+          flippedCards.length >= 2 ||
+          this.classList.contains("card-flipped")
+        ) {
+          return;
+        }
+
+        this.classList.add("card-flipped");
+        flippedCards.push(this);
+
+        if (flippedCards.length === 2) {
+          setTimeout(checkForMatch, 1000);
+        }
+      }
+
+      function checkForMatch() {
+        const card1 = flippedCards[0];
+        const card2 = flippedCards[1];
+
+        const feedback = document.getElementById("phonicsFeedback");
+
+        if (
+          card1.dataset.content === card2.dataset.match &&
+          card2.dataset.content === card1.dataset.match
+        ) {
+          // Match found
+          card1.removeEventListener("click", flipCard);
+          card2.removeEventListener("click", flipCard);
+          matchedPairs++;
+          feedback.textContent = "✨ Magical match! ✨";
+
+          if (matchedPairs === totalPairs) {
+            feedback.textContent =
+              "🧙‍♂️ Congratulations! You have mastered the phonics spell! 🧙‍♂️";
+          }
+        } else {
+          // No match
+          card1.classList.remove("card-flipped");
+          card2.classList.remove("card-flipped");
+          feedback.textContent = "Try again, young wizard!";
+        }
+
+        flippedCards = [];
+      }
+
+      // Reading Fluency Game
+      const readingQuestions = [
+        {
+          question: "What was Spark's problem?",
+          options: [
+            "He was afraid of heights",
+            "He couldn't fly",
+            "He was too small",
+            "He lived alone",
+          ],
+          correct: 1,
+        },
+        {
+          question: "Who did Spark help?",
+          options: ["His mother", "Another dragon", "A baby bird", "A wizard"],
+          correct: 2,
+        },
+        {
+          question: "How did Spark solve his problem?",
+          options: [
+            "By practicing every day",
+            "By growing bigger wings",
+            "By helping someone else",
+            "By asking for help",
+          ],
+          correct: 2,
+        },
+      ];
+
+      function showReadingQuestions() {
+        const questionsArea = document.getElementById("readingQuestionsArea");
+        questionsArea.style.display = "block";
+
+        const questionContainer = document.getElementById("questionContainer");
+        questionContainer.innerHTML = "";
+
+        readingQuestions.forEach((q, qIndex) => {
+          const questionDiv = document.createElement("div");
+          questionDiv.innerHTML = `<p><strong>Question ${
+            qIndex + 1
+          }:</strong> ${q.question}</p>`;
+
+          const optionsDiv = document.createElement("div");
+          q.options.forEach((option, oIndex) => {
+            const button = document.createElement("button");
+            button.textContent = option;
+            button.dataset.question = qIndex;
+            button.dataset.answer = oIndex;
+            button.addEventListener("click", checkAnswer);
+            optionsDiv.appendChild(button);
+          });
+
+          questionDiv.appendChild(optionsDiv);
+          questionContainer.appendChild(questionDiv);
+        });
+      }
+
+      function checkAnswer() {
+        const questionIndex = this.dataset.question;
+        const selectedAnswer = parseInt(this.dataset.answer);
+        const correctAnswer = readingQuestions[questionIndex].correct;
+
+        const feedback = document.getElementById("readingFeedback");
+
+        if (selectedAnswer === correctAnswer) {
+          feedback.textContent =
+            "🌟 Correct! Your reading comprehension is magical! 🌟";
+        } else {
+          feedback.textContent =
+            "Not quite right. Try reading the story again!";
+        }
+      }
+
+      // Writing Game
+      const wordList = [
+        "wizard",
+        "dragon",
+        "magic",
+        "spell",
+        "potion",
+        "castle",
+        "broom",
+        "wand",
+        "flew",
+        "sparkled",
+        "the",
+        "a",
+        "and",
+        "but",
+        "or",
+        "with",
+        "to",
+        "from",
+        "in",
+        "on",
+        "brave",
+        "mysterious",
+        "ancient",
+        "powerful",
+        "enchanted",
+      ];
+
+      window.onload = function () {
+        // Initialize writing word bank
+        const wordBank = document.getElementById("wordBank");
+        wordList.forEach((word) => {
+          const wordBox = document.createElement("div");
+          wordBox.className = "word-box";
+          wordBox.textContent = word;
+          wordBox.addEventListener("click", addWordToSentence);
+          wordBank.appendChild(wordBox);
+        });
+      };
+
+      let currentSentence = [];
+
+      function addWordToSentence() {
+        const word = this.textContent;
+        currentSentence.push(word);
+
+        updateSentenceDisplay();
+      }
+
+      function updateSentenceDisplay() {
+        const sentenceArea = document.getElementById("sentenceArea");
+        sentenceArea.innerHTML = "";
+
+        if (currentSentence.length === 0) {
+          sentenceArea.innerHTML =
+            "<p>Your magical sentence will appear here...</p>";
+          return;
+        }
+
+        currentSentence.forEach((word) => {
+          const wordSpan = document.createElement("span");
+          wordSpan.className = "chosen-word";
+          wordSpan.textContent = word;
+          sentenceArea.appendChild(wordSpan);
+        });
+      }
+
+      function clearSentence() {
+        currentSentence = [];
+        updateSentenceDisplay();
+        document.getElementById("writingFeedback").textContent = "";
+      }
+
+      function checkSentence() {
+        const feedback = document.getElementById("writingFeedback");
+
+        if (currentSentence.length < 3) {
+          feedback.textContent =
+            "Your spell is too short! Try adding more words.";
+          return;
+        }
+
+        // Check if sentence starts with capital letter
+        let firstWord = currentSentence[0];
+        let startsWithCapital =
+          firstWord.charAt(0) === firstWord.charAt(0).toUpperCase();
+
+        // Simple check if sentence has a subject and verb
+        // This is very simplified and not accurate for all cases
+        let hasSubject = wordList
+          .slice(0, 10)
+          .some((word) => currentSentence.includes(word));
+        let hasVerb = wordList
+          .slice(10, 15)
+          .some((word) => currentSentence.includes(word));
+
+        if (hasSubject && hasVerb) {
+          feedback.textContent =
+            "✨ Magnificent spell crafting! Your sentence has power! ✨";
+        } else {
+          feedback.textContent =
+            "Your spell needs more work. Make sure it has a subject and action!";
+        }
+      }
+
+      // Grammar Game
+      const grammarChallenges = [
+        {
+          incorrect: "The wizard and the apprentice is mixing potions.",
+          correct: "The wizard and the apprentice are mixing potions.",
+        },
+        {
+          incorrect: "She dont know how to cast that spell.",
+          correct: "She doesn't know how to cast that spell.",
+        },
+        {
+          incorrect: "They was studying ancient magic books.",
+          correct: "They were studying ancient magic books.",
+        },
+      ];
+
+      let currentGrammarChallenge = 0;
+
+      function checkGrammar() {
+        const userInput = document.getElementById("grammarInput").value.trim();
+        const correctAnswer =
+          grammarChallenges[currentGrammarChallenge].correct;
+
+        const feedback = document.getElementById("grammarFeedback");
+
+        if (userInput.toLowerCase() === correctAnswer.toLowerCase()) {
+          feedback.textContent =
+            "🧪 Perfect potion brewing! Your grammar is excellent! 🧪";
+
+          // Move to next challenge
+          currentGrammarChallenge =
+            (currentGrammarChallenge + 1) % grammarChallenges.length;
+          document.getElementById("grammarSentence").textContent =
+            grammarChallenges[currentGrammarChallenge].incorrect;
+          document.getElementById("grammarInput").value = "";
+        } else {
+          feedback.textContent =
+            "Not quite right. Check your grammar potion again!";
+        }
+      }
+
+      // Tongue Twisters
+      const tongueTwisters = [
+        "Six slick, slim, slippery snakes slid slowly southward.",
+        "Wizard Winston wished for windy weather while Witch Wanda wanted warm water.",
+        "Three free fireflies flew freely from frightful flames.",
+        "Peter Piper picked a peck of pickled peppers.",
+        "She sells seashells by the seashore.",
+        "Red dragons roar dramatically during dreary days.",
+      ];
+
+      let currentTwister = 0;
+
+      function nextTongueTwister() {
+        currentTwister = (currentTwister + 1) % tongueTwisters.length;
+        const container = document.getElementById("tongueTwisterContainer");
+        container.innerHTML = `<p>"${tongueTwisters[currentTwister]}"</p>`;
+      }
+
+      function practiceSpeech() {
+        document.getElementById("oralFeedback").textContent =
+          "🔮 Great practice! Try saying it faster each time! 🔮";
+      }
+
+      // Listening Game
+      function checkListening() {
+        const userInput = document
+          .getElementById("listeningInput")
+          .value.trim();
+        const feedback = document.getElementById("listeningFeedback");
+
+        if (userInput.length > 0) {
+          feedback.textContent = `🔮 You've successfully cast the spell for your ${userInput}! Your listening skills are magical! 🔮`;
+        } else {
+          feedback.textContent =
+            "You need to follow all the instructions carefully.";
+        }
+      }
+    </script>
+  </body>
+</html>

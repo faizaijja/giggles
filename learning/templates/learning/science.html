@@ -1,0 +1,1738 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Science Explorer</title>
+    <style>
+      :root {
+        --deep-space: #0f0028;
+        --cosmic-blue: #1a237e;
+        --nebula-purple: #4a148c;
+        --star-yellow: #ffea00;
+        --star-white: #ffffff;
+        --planet-green: #00c853;
+        --planet-red: #d50000;
+        --planet-blue: #2962ff;
+        --meteor-orange: #ff6d00;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial Rounded MT Bold", "Arial", sans-serif;
+      }
+
+      body {
+        background-color: var(--deep-space);
+        color: var(--star-white);
+        overflow-x: hidden;
+        background-image: radial-gradient(
+            circle at 25% 15%,
+            rgba(255, 255, 255, 0.2) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 75% 45%,
+            rgba(255, 255, 255, 0.1) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 35% 65%,
+            rgba(255, 255, 255, 0.3) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 65% 25%,
+            rgba(255, 255, 255, 0.2) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 90% 85%,
+            rgba(255, 255, 255, 0.1) 1px,
+            transparent 1px
+          ),
+          radial-gradient(
+            circle at 15% 85%,
+            rgba(255, 255, 255, 0.2) 1px,
+            transparent 1px
+          );
+        background-size: 200px 200px;
+      }
+
+      .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .main-content {
+        flex-grow: 1;
+        margin-left: 240px; /* Match sidebar width */
+        padding-top: 90px; /* Header height + some padding */
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 30px;
+      }
+
+      /* Sidebar styling */
+      .sidebar {
+        width: 240px;
+        background: linear-gradient(360deg, #9c27b0, #e91e63);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        flex-direction: column;
+        position: fixed;
+        height: 100vh;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 20px 0;
+      }
+
+      .logo-container {
+        padding: 0 24px 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2a4b8d;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #28a4c9;
+        margin-left: 2px;
+      }
+      .logo-text {
+        color: white;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .nav-menu {
+        margin-top: 24px;
+        flex-grow: 1;
+      }
+
+      .nav-list {
+        list-style: none;
+        padding: 0 12px;
+      }
+
+      .nav-item {
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+      }
+
+      .nav-link:hover {
+        background-color: #f0f7ff;
+        color: #2a4b8d;
+      }
+
+      .nav-link.active {
+        background-color: #e4f0ff;
+        color: #2a4b8d;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-icon svg {
+        width: 20px;
+        height: 20px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .nav-link.active .nav-icon svg {
+        stroke: #2a4b8d;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: linear-gradient(
+          180deg,
+          rgba(26, 35, 126, 0.8) 0%,
+          rgba(15, 0, 40, 0.5) 100%
+        );
+        border-bottom: 2px solid var(--nebula-purple);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        margin-left: 240px;
+        position: fixed;
+        width: 85%;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo h1 {
+        font-size: 2rem;
+        background: linear-gradient(
+          to right,
+          var(--star-white),
+          var(--star-yellow)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 8px rgba(255, 234, 0, 0.3);
+      }
+
+      .mission-control {
+        display: flex;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        background: rgba(26, 35, 126, 0.6);
+        border-radius: 50px;
+        border: 1px solid var(--nebula-purple);
+      }
+
+      .control-btn {
+        background: none;
+        border: none;
+        color: var(--star-white);
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .control-btn:hover,
+      .control-btn.active {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px var(--star-yellow);
+      }
+
+      .control-btn.active {
+        background-color: var(--nebula-purple);
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      .welcome-message {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .welcome-message h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--star-white);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+
+      .welcome-message p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      .planet-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .planet {
+        position: relative;
+        background: rgba(26, 35, 126, 0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        cursor: pointer;
+        overflow: hidden;
+        background-color: whitesmoke;
+      }
+
+      .planet::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .planet:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        border-color: var(--star-yellow);
+      }
+
+      .planet-icon {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        position: relative;
+      }
+
+      .planet-icon.life {
+        background: radial-gradient(circle, var(--planet-green), #004d40);
+        box-shadow: 0 0 20px rgba(0, 200, 83, 0.5);
+      }
+
+      .planet-icon.earth {
+        background: radial-gradient(circle, var(--planet-blue), #0d47a1);
+        box-shadow: 0 0 20px rgba(41, 98, 255, 0.5);
+      }
+
+      .planet-icon.physical {
+        background: radial-gradient(circle, var(--meteor-orange), #bf360c);
+        box-shadow: 0 0 20px rgba(255, 109, 0, 0.5);
+      }
+
+      .planet-icon.environmental {
+        background: linear-gradient(
+          to bottom right,
+          var(--planet-green),
+          var(--planet-blue)
+        );
+        box-shadow: 0 0 20px rgba(0, 200, 83, 0.3);
+      }
+
+      .planet-icon.tech {
+        background: radial-gradient(
+          circle,
+          var(--star-white),
+          var(--nebula-purple)
+        );
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      }
+
+      .planet h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--star-yellow);
+      }
+
+      .planet p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        color: black;
+      }
+
+      .mission-btn {
+        background: var(--nebula-purple);
+        color: var(--star-white);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mission-btn:hover {
+        background: var(--cosmic-blue);
+        box-shadow: 0 0 15px rgba(255, 234, 0, 0.5);
+      }
+
+      #lesson-content {
+        display: none;
+        background: rgba(26, 35, 126, 0.4);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-top: 2rem;
+        border: 2px solid var(--nebula-purple);
+        animation: fadeIn 0.5s ease;
+      }
+
+      #lesson-content.active {
+        display: block;
+      }
+
+      #lesson-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: var(--star-yellow);
+      }
+
+      .lesson-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .lesson-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .lesson-section {
+        margin-bottom: 2rem;
+      }
+
+      .lesson-section h4 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: var(--star-white);
+      }
+
+      .interactive-activity {
+        background: rgba(74, 20, 140, 0.3);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+        border: 1px dashed var(--star-yellow);
+      }
+
+      .interactive-activity h4 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: var(--star-yellow);
+      }
+
+      .choice-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--nebula-purple);
+        padding: 1rem;
+        margin: 0.5rem;
+        border-radius: 10px;
+        color: var(--star-white);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .choice-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--star-yellow);
+      }
+
+      .choice-btn.correct {
+        background: rgba(0, 200, 83, 0.3);
+        border-color: var(--planet-green);
+      }
+
+      .choice-btn.incorrect {
+        background: rgba(213, 0, 0, 0.3);
+        border-color: var(--planet-red);
+      }
+
+      .btn-icon {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .progress-container {
+        width: 100%;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        margin: 2rem 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-rocket {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        background-color: var(--star-yellow);
+        border-radius: 50%;
+        transition: left 0.5s ease;
+        z-index: 2;
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+          to right,
+          var(--cosmic-blue),
+          var(--nebula-purple)
+        );
+        border-radius: 50px;
+        transition: width 0.5s ease;
+      }
+
+      .progress-stars {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px;
+        align-items: center;
+      }
+
+      .progress-star {
+        width: 10px;
+        height: 10px;
+        background-color: rgba(255, 234, 0, 0.3);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .progress-star.active {
+        background-color: var(--star-yellow);
+        box-shadow: 0 0 10px var(--star-yellow);
+      }
+
+      .back-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--star-white);
+        border: 1px solid var(--nebula-purple);
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--star-yellow);
+      }
+
+      .result-feedback {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 10px;
+        text-align: center;
+        display: none;
+      }
+
+      .result-feedback.correct {
+        background: rgba(0, 200, 83, 0.2);
+        border: 1px solid var(--planet-green);
+      }
+
+      .result-feedback.incorrect {
+        background: rgba(213, 0, 0, 0.2);
+        border: 1px solid var(--planet-red);
+      }
+
+      .visual-aid {
+        max-width: 100%;
+        height: 200px;
+        margin: 1.5rem 0;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .visual-aid img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .help-controls {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .help-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--nebula-purple);
+        color: var(--star-white);
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .help-btn:hover {
+        background: var(--cosmic-blue);
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 234, 0, 0.5);
+      }
+
+      .help-panel {
+        position: fixed;
+        bottom: 6rem;
+        right: 2rem;
+        width: 300px;
+        background: rgba(26, 35, 126, 0.9);
+        border-radius: 15px;
+        padding: 1.5rem;
+        display: none;
+        border: 2px solid var(--nebula-purple);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+      }
+
+      .help-panel.active {
+        display: block;
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Enhance readability for learning disabilities */
+      .readability-enhanced {
+        line-height: 1.8;
+        letter-spacing: 0.03em;
+        word-spacing: 0.1em;
+      }
+
+      /* Visual supports */
+      .visual-support {
+        margin: 1rem 0;
+        padding: 0.5rem;
+        border-left: 3px solid var(--star-yellow);
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .visual-support-icon {
+        font-size: 1.5rem;
+        color: var(--star-yellow);
+      }
+
+      /* Audio controls for text-to-speech */
+      .audio-control {
+        background: none;
+        border: none;
+        color: var(--star-white);
+        font-size: 1rem;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: 1rem;
+      }
+
+      .audio-control:hover {
+        opacity: 1;
+        color: var(--star-yellow);
+      }
+
+      /* Loading animation */
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--star-yellow);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .mission-control {
+          display: none;
+        }
+
+        header {
+          justify-content: center;
+        }
+
+        .logo h1 {
+          font-size: 1.5rem;
+        }
+
+        .planet-container {
+          grid-template-columns: 1fr;
+        }
+
+        .welcome-message h2 {
+          font-size: 1.8rem;
+        }
+
+        .welcome-message p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+    <div class="sidebar">
+      <div class="logo-container">
+        <a href="#" class="logo">
+          <div class="logo-icon">
+            <img
+              src="{% static 'images/Giggles logo.png' %}"
+              alt="Giggles Logo"
+            />
+          </div>
+          <div class="logo-text">Giggles<span></span></div>
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url 'index' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                  />
+                  <path d="M9 22V12H15V22" />
+                </svg>
+              </div>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'lessons' %}" class="nav-link active">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M2 3H8C9.06087 3 10.0783 3.42143 10.8284 4.17157C11.5786 4.92172 12 5.93913 12 7V21C12 20.2044 11.6839 19.4413 11.1213 18.8787C10.5587 18.3161 9.79565 18 9 18H2V3Z"
+                  />
+                  <path
+                    d="M22 3H16C14.9391 3 13.9217 3.42143 13.1716 4.17157C12.4214 4.92172 12 5.93913 12 7V21C12 20.2044 12.3161 19.4413 12.8787 18.8787C13.4413 18.3161 14.2044 18 15 18H22V3Z"
+                  />
+                </svg>
+              </div>
+              <span>Lessons</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'socials' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  />
+                  <path
+                    d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"
+                  />
+                  <path
+                    d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13"
+                  />
+                  <path
+                    d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88"
+                  />
+                </svg>
+              </div>
+              <span>Social Skills</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'progress' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                  <path d="M3 20H21" />
+                </svg>
+              </div>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link">
+              <div class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                  />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  />
+                </svg>
+              </div>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <header>
+      <div class="logo">
+        <div style="font-size: 2.5rem">🚀</div>
+        <h1>Space Science Explorer</h1>
+      </div>
+      <nav class="mission-control">
+        <button class="control-btn active">Mission Hub</button>
+        <button class="control-btn">
+          <div class="user-profile">
+            <div class="user-info">
+              <span class="user-name"
+                >{{ user.get_full_name|default:user.username }}</span
+              >
+            </div>
+          </div>
+        </button>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+      </nav>
+    </header>
+
+    <div class="content">
+      <div class="main-content">
+        <main>
+          <div class="welcome-message">
+            <h2>Welcome, Space Cadet! 👨‍🚀👩‍🚀</h2>
+            <p class="readability-enhanced">
+              Are you ready to explore the amazing universe of science? Choose a
+              planet to start your mission and discover incredible things about
+              our world and beyond!
+            </p>
+          </div>
+
+          <div class="planet-container">
+            <div class="planet" data-planet="life">
+              <div class="planet-icon life">🌱</div>
+              <h3>Planet Life</h3>
+              <p class="readability-enhanced">
+                Explore amazing plants and animals that share our world. Learn
+                how living things grow and change!
+              </p>
+              <button class="mission-btn">Start Mission <span>🚀</span></button>
+            </div>
+
+            <div class="planet" data-planet="earth">
+              <div class="planet-icon earth">🌍</div>
+              <h3>Planet Earth & Space</h3>
+              <p class="readability-enhanced">
+                Blast off to discover secrets about our planet and the stars
+                above. What's beyond our sky?
+              </p>
+              <button class="mission-btn">Start Mission <span>🚀</span></button>
+            </div>
+
+            <div class="planet" data-planet="physical">
+              <div class="planet-icon physical">⚡</div>
+              <h3>Physics Planet</h3>
+              <p class="readability-enhanced">
+                Experiment with forces, energy, and matter. Make things move,
+                float, and change!
+              </p>
+              <button class="mission-btn">Start Mission <span>🚀</span></button>
+            </div>
+
+            <div class="planet" data-planet="environmental">
+              <div class="planet-icon environmental">♻️</div>
+              <h3>Eco Planet</h3>
+              <p class="readability-enhanced">
+                Learn how to protect our beautiful planet and all the creatures
+                who call it home.
+              </p>
+              <button class="mission-btn">Start Mission <span>🚀</span></button>
+            </div>
+
+            <div class="planet" data-planet="tech">
+              <div class="planet-icon tech">🤖</div>
+              <h3>Tech Planet</h3>
+              <p class="readability-enhanced">
+                Build amazing machines and solve problems with science and
+                engineering!
+              </p>
+              <button class="mission-btn">Start Mission <span>🚀</span></button>
+            </div>
+          </div>
+
+          <div id="lesson-content">
+            <!-- Content will be loaded here -->
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div class="help-controls">
+      <button class="help-btn" id="textSize">Aa</button>
+      <button class="help-btn" id="helpBtn">?</button>
+    </div>
+
+    <div class="help-panel" id="helpPanel">
+      <h4>Mission Help Center</h4>
+      <p class="readability-enhanced">
+        Need some help with your space mission? Here are some tips:
+      </p>
+      <ul
+        class="readability-enhanced"
+        style="padding-left: 1.5rem; margin-top: 1rem"
+      >
+        <li>Click on the planets to start a science mission</li>
+        <li>Use the "Aa" button to make text bigger or smaller</li>
+        <li>Click on words you don't understand for help</li>
+        <li>You can replay instructions by clicking the speaker icon</li>
+      </ul>
+    </div>
+
+    <script>
+      // Create stars background
+      function createStars() {
+        const stars = document.querySelector(".stars");
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement("div");
+          const size = Math.random() * 3 + 1;
+
+          star.style.position = "absolute";
+          star.style.width = `${size}px`;
+          star.style.height = `${size}px`;
+          star.style.background = "white";
+          star.style.borderRadius = "50%";
+          star.style.top = `${Math.random() * 100}%`;
+          star.style.left = `${Math.random() * 100}%`;
+          star.style.opacity = Math.random() * 0.8 + 0.2;
+          star.style.animation = `twinkle ${
+            Math.random() * 5 + 3
+          }s infinite alternate`;
+
+          stars.appendChild(star);
+        }
+      }
+
+      // Define lesson content
+      const lessonContent = {
+        life: {
+          title: "Mission: Amazing Plant Life",
+          icon: "🌱",
+          iconClass: "life",
+          intro:
+            "Welcome to Planet Life! Today we'll learn about how plants grow and why they're so important for all living things.",
+          sections: [
+            {
+              title: "Plant Parts and Their Jobs",
+              content: `
+                            <p class="readability-enhanced">Every plant has special parts that help it live and grow. Let's explore them!</p>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌿</div>
+                                <p><strong>Leaves</strong> - Catch sunlight to make food (like solar panels!)</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌱</div>
+                                <p><strong>Stems</strong> - Hold the plant up and carry water (like drinking straws!)</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌷</div>
+                                <p><strong>Flowers</strong> - Help make new plants (like having babies!)</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌰</div>
+                                <p><strong>Seeds</strong> - Baby plants that can grow into new plants</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🥕</div>
+                                <p><strong>Roots</strong> - Drink water from the ground and hold the plant in place</p>
+                            </div>
+                        `,
+            },
+            {
+              title: "How Plants Grow",
+              content: `
+                            <p class="readability-enhanced">Plants need special things to grow healthy and strong:</p>
+                            
+                            <div class="visual-aid">
+                                <div style="display: flex; justify-content: space-around; width: 100%;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">☀️</div>
+                                        <p>Sunlight</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">💧</div>
+                                        <p>Water</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🌬️</div>
+                                        <p>Air</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🏞️</div>
+                                        <p>Soil</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="readability-enhanced">Plants make their own food using sunlight! This is called <strong>photosynthesis</strong>. It's like having a super power that turns sunshine into energy!</p>
+                        `,
+            },
+          ],
+          activity: {
+            title: "Space Mission: Save the Plants!",
+            instruction:
+              "The plants on our space station need help! Choose what each plant needs to grow healthy:",
+            questions: [
+              {
+                question:
+                  "This plant's leaves are turning yellow. What does it need?",
+                choices: [
+                  { text: "More water", correct: false },
+                  { text: "More sunlight", correct: true },
+                  { text: "Less air", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "Great job! Yellow leaves often mean a plant needs more sunlight to make food.",
+                  incorrect:
+                    "Try again! Yellow leaves usually tell us the plant needs more sunlight to make food through photosynthesis.",
+                },
+              },
+              {
+                question:
+                  "Our space tomato plant is drooping. What should we give it?",
+                choices: [
+                  { text: "More water", correct: true },
+                  { text: "More soil", correct: false },
+                  { text: "More rocks", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "Awesome! When plants droop or wilt, they often need a drink of water.",
+                  incorrect:
+                    "Not quite! When plants droop or wilt like this, they usually need water. Think about how you feel when you're thirsty!",
+                },
+              },
+            ],
+          },
+        },
+        earth: {
+          title: "Mission: Earth and Beyond",
+          icon: "🌍",
+          iconClass: "earth",
+          intro:
+            "Welcome to Earth & Space Mission! Today we'll learn about our planet Earth and its place in our solar system.",
+          sections: [
+            {
+              title: "Our Amazing Planet",
+              content: `
+                            <p class="readability-enhanced">Earth is our home planet. It's the third planet from the Sun and the only place we know that has living things!</p>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">💧</div>
+                                <p>Earth is called the <strong>Blue Planet</strong> because it's covered mostly by water (oceans and seas)</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🏔️</div>
+                                <p>Earth has mountains, valleys, deserts, forests, and oceans - lots of different habitats</p>
+                           </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌡️</div>
+                                <p>Earth is just the right distance from the Sun - not too hot and not too cold for life!</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🧲</div>
+                                <p>Earth has a special magnetic shield that protects us from dangerous rays from space</p>
+                            </div>
+                        `,
+            },
+            {
+              title: "Our Solar System",
+              content: `
+                            <p class="readability-enhanced">Earth is part of a family of planets that travel around our star, the Sun. This family is called our Solar System.</p>
+                            
+                            <div class="visual-aid">
+                                <div style="display: flex; justify-content: space-around; align-items: center; width: 100%;">
+                                    <div style="text-align: center; transform: scale(2.0);">☀️</div>
+                                    <div style="text-align: center;">🪐</div>
+                                    <div style="text-align: center; transform: scale(0.6);">🔴</div>
+                                    <div style="text-align: center; transform: scale(0.8);">🔵</div>
+                                    <div style="text-align: center; transform: scale(0.7);">🟤</div>
+                                </div>
+                            </div>
+                            
+                            <p class="readability-enhanced">The planets in our Solar System are: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune.</p>
+                            
+                            <p class="readability-enhanced">Earth takes 365 days (1 year) to travel all the way around the Sun. It also spins like a top, which gives us day and night!</p>
+                        `,
+            },
+          ],
+          activity: {
+            title: "Space Mission: Planet Explorer",
+            instruction:
+              "You're now a space explorer! Answer these questions about Earth and space:",
+            questions: [
+              {
+                question: "Why is Earth called the Blue Planet?",
+                choices: [
+                  { text: "Because the sky is blue", correct: false },
+                  {
+                    text: "Because it's covered mostly in water",
+                    correct: true,
+                  },
+                  { text: "Because it's very cold", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "That's right! From space, Earth looks blue because oceans cover about 70% of our planet.",
+                  incorrect:
+                    "Not quite! Earth is called the Blue Planet because when astronauts look at Earth from space, they see mostly blue oceans covering our planet.",
+                },
+              },
+              {
+                question: "What gives us day and night on Earth?",
+                choices: [
+                  { text: "Earth spinning (rotating)", correct: true },
+                  { text: "Earth moving around the Sun", correct: false },
+                  { text: "The Moon blocking the Sun", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "Excellent! Earth spins (rotates) once every 24 hours, giving us day on the side facing the Sun and night on the other side.",
+                  incorrect:
+                    "Try again! Day and night happen because Earth spins (rotates) on its axis. This means part of Earth faces the Sun (day) while the other part faces away (night).",
+                },
+              },
+            ],
+          },
+        },
+        physical: {
+          title: "Mission: Forces and Motion",
+          icon: "⚡",
+          iconClass: "physical",
+          intro:
+            "Welcome to Physics Planet! Today we'll learn about forces and how they make things move.",
+          sections: [
+            {
+              title: "Amazing Forces",
+              content: `
+                            <p class="readability-enhanced">Forces are pushes and pulls that can make things move, speed up, slow down, or change direction.</p>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🏃</div>
+                                <p><strong>Push</strong> - When you push something, you move it away from you</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🧲</div>
+                                <p><strong>Pull</strong> - When you pull something, you move it toward you</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🍎</div>
+                                <p><strong>Gravity</strong> - A special force that pulls things toward Earth (makes things fall down!)</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🛝</div>
+                                <p><strong>Friction</strong> - A force that slows things down when they rub against each other</p>
+                            </div>
+                        `,
+            },
+            {
+              title: "Motion and Speed",
+              content: `
+                            <p class="readability-enhanced">When forces act on objects, they can create motion - making things move!</p>
+                            
+                            <div class="visual-aid">
+                                <div style="display: flex; justify-content: space-around; align-items: center; width: 100%;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🚶</div>
+                                        <p>Slow</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🏃</div>
+                                        <p>Medium</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🚀</div>
+                                        <p>Fast</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="readability-enhanced">Speed tells us how fast something is moving. We can measure speed by looking at how far something goes in a certain amount of time.</p>
+                            
+                            <p class="readability-enhanced">The more force you use, the faster something will move!</p>
+                        `,
+            },
+          ],
+          activity: {
+            title: "Space Mission: Space Race",
+            instruction:
+              "You need to get your space rover moving on a new planet! Answer these questions about forces:",
+            questions: [
+              {
+                question:
+                  "Your space rover is stuck in the sand. What force is making it hard to move?",
+                choices: [
+                  { text: "Gravity", correct: false },
+                  { text: "Friction", correct: true },
+                  { text: "Magnetism", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "That's right! Friction between the wheels and the sand is making it harder for your rover to move.",
+                  incorrect:
+                    "Not quite! When things rub against each other and make movement difficult, that's a force called friction.",
+                },
+              },
+              {
+                question:
+                  "If you want your space ball to go farther, what should you do?",
+                choices: [
+                  { text: "Push it with more force", correct: true },
+                  { text: "Make it heavier", correct: false },
+                  { text: "Make it brighter", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "Excellent! The more force you use to push something, the faster and farther it will go.",
+                  incorrect:
+                    "Try again! To make something go farther, you need to apply more force when you push it.",
+                },
+              },
+            ],
+          },
+        },
+        environmental: {
+          title: "Mission: Protect Our Planet",
+          icon: "♻️",
+          iconClass: "environmental",
+          intro:
+            "Welcome to Eco Planet! Today we'll learn how we can help protect our amazing Earth and all the plants and animals that live here.",
+          sections: [
+            {
+              title: "Our Environment",
+              content: `
+                            <p class="readability-enhanced">The environment is everything around us - the air, water, land, plants, and animals. All living things need a clean and healthy environment to survive.</p>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌊</div>
+                                <p>Oceans, rivers, and lakes give us clean water and homes for fish and other water animals</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌳</div>
+                                <p>Forests give us clean air, wood, and homes for many animals</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🦋</div>
+                                <p>All living things are connected in a web of life - if one part is harmed, it affects others too</p>
+                            </div>
+                        `,
+            },
+            {
+              title: "Helping Our Planet",
+              content: `
+                            <p class="readability-enhanced">Even kids can help protect our planet! Here are some ways you can make a difference:</p>
+                            
+                            <div class="visual-aid">
+                                <div style="display: flex; justify-content: space-around; width: 100%;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">♻️</div>
+                                        <p>Recycle</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">💧</div>
+                                        <p>Save Water</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">💡</div>
+                                        <p>Save Energy</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🌱</div>
+                                        <p>Plant Trees</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="readability-enhanced">When we reduce, reuse, and recycle, we make less trash and help keep our planet clean!</p>
+                        `,
+            },
+          ],
+          activity: {
+            title: "Space Mission: Earth Guardians",
+            instruction:
+              "You're now an Earth Guardian! Help solve these environmental challenges:",
+            questions: [
+              {
+                question:
+                  "You have an empty plastic water bottle. What's the best thing to do with it?",
+                choices: [
+                  { text: "Throw it in the trash", correct: false },
+                  { text: "Put it in the recycling bin", correct: true },
+                  { text: "Leave it on the ground", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "Great job! Recycling plastic bottles means they can be made into new things instead of polluting our planet.",
+                  incorrect:
+                    "Try again! Plastic bottles can be recycled and turned into new things. This helps reduce waste and pollution.",
+                },
+              },
+              {
+                question: "What helps clean the air we breathe?",
+                choices: [
+                  { text: "More cars", correct: false },
+                  { text: "More factories", correct: false },
+                  { text: "More trees and plants", correct: true },
+                ],
+                feedback: {
+                  correct:
+                    "That's right! Trees and plants take in carbon dioxide and release oxygen, cleaning the air we breathe.",
+                  incorrect:
+                    "Not quite! Trees and plants are nature's air cleaners. They take in carbon dioxide and give out oxygen that we need to breathe.",
+                },
+              },
+            ],
+          },
+        },
+        tech: {
+          title: "Mission: Amazing Machines",
+          icon: "🤖",
+          iconClass: "tech",
+          intro:
+            "Welcome to Tech Planet! Today we'll learn about simple machines that make work easier and how they help us build amazing things.",
+          sections: [
+            {
+              title: "Simple Machines",
+              content: `
+                            <p class="readability-enhanced">Simple machines are tools that make work easier. They help us lift, move, and build things with less effort!</p>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">📏</div>
+                                <p><strong>Lever</strong> - Like a seesaw or crowbar, helps lift heavy things</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">🌀</div>
+                                <p><strong>Wheel and Axle</strong> - Like a bicycle wheel or doorknob, helps things move or turn</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">📐</div>
+                                <p><strong>Inclined Plane</strong> - Like a ramp or slide, helps move things up and down</p>
+                            </div>
+                            
+                            <div class="visual-support">
+                                <div class="visual-support-icon">⚙️</div>
+                                <p><strong>Gears</strong> - Toothed wheels that work together to change speed or direction</p>
+                            </div>
+                        `,
+            },
+            {
+              title: "Engineering Process",
+              content: `
+                            <p class="readability-enhanced">Engineers solve problems by designing and building things. They follow these steps:</p>
+                            
+                            <div class="visual-aid">
+                                <div style="display: flex; justify-content: space-around; width: 100%;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">❓</div>
+                                        <p>Ask</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">📝</div>
+                                        <p>Plan</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🛠️</div>
+                                        <p>Create</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🔍</div>
+                                        <p>Test</p>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem;">🔄</div>
+                                        <p>Improve</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="readability-enhanced">Engineers often need to try many times before they find the best solution. Making mistakes is part of learning!</p>
+                        `,
+            },
+          ],
+          activity: {
+            title: "Space Mission: Space Station Builder",
+            instruction:
+              "You're helping build a new space station! Answer these questions about machines and engineering:",
+            questions: [
+              {
+                question:
+                  "You need to move a heavy box up to the space station. What would help the most?",
+                choices: [
+                  { text: "A ball", correct: false },
+                  { text: "A ramp (inclined plane)", correct: true },
+                  { text: "A piece of string", correct: false },
+                ],
+                feedback: {
+                  correct:
+                    "Great job! A ramp (inclined plane) makes it easier to move heavy objects upward with less force.",
+                  incorrect:
+                    "Try again! When moving something heavy upward, a ramp or inclined plane makes the work easier by spreading the force over a longer distance.",
+                },
+              },
+              {
+                question:
+                  "Your space rover design didn't work the first time. What should a good engineer do?",
+                choices: [
+                  {
+                    text: "Give up and try a completely different project",
+                    correct: false,
+                  },
+                  {
+                    text: "Get angry because it should have worked",
+                    correct: false,
+                  },
+                  {
+                    text: "Test what went wrong and make improvements",
+                    correct: true,
+                  },
+                ],
+                feedback: {
+                  correct:
+                    "That's right! Engineers learn from failures and use that information to make their designs better.",
+                  incorrect:
+                    "Not quite! Engineers expect to test and improve their designs many times. Making mistakes and learning from them is an important part of engineering.",
+                },
+              },
+            ],
+          },
+        },
+      };
+
+      // Load lesson content
+      function loadLesson(planet) {
+        const lesson = lessonContent[planet];
+        const lessonContentDiv = document.getElementById("lesson-content");
+
+        let content = `
+                <div class="lesson-header">
+                    <div class="lesson-icon ${lesson.iconClass}">${lesson.icon}</div>
+                    <h3>${lesson.title}</h3>
+                    <button class="audio-control">
+                        <span>🔊</span>
+                    </button>
+                </div>
+                
+                <p class="readability-enhanced">${lesson.intro}</p>
+                
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                    <div class="progress-stars">
+                        <div class="progress-star" data-step="1"></div>
+                        <div class="progress-star" data-step="2"></div>
+                        <div class="progress-star" data-step="3"></div>
+                    </div>
+                    <div class="progress-rocket">🚀</div>
+                </div>
+            `;
+
+        // Add sections
+        lesson.sections.forEach((section, index) => {
+          content += `
+                    <div class="lesson-section" data-section="${index + 1}">
+                        <h4>${section.title}</h4>
+                        ${section.content}
+                    </div>
+                `;
+        });
+
+        // Add activity
+        content += `
+                <div class="interactive-activity" data-section="3">
+                    <h4>${lesson.activity.title}</h4>
+                    <p class="readability-enhanced">${lesson.activity.instruction}</p>
+                    <div id="question-container">
+                        <!-- Questions will be loaded here -->
+                    </div>
+                </div>
+                
+                <button class="back-btn">
+                    <span>🔙</span> Back to Mission Hub
+                </button>
+            `;
+
+        lessonContentDiv.innerHTML = content;
+        lessonContentDiv.className = "active";
+
+        // Show first question
+        showQuestion(0, planet);
+
+        // Update progress
+        updateProgress(1);
+
+        // Set up back button
+        document.querySelector(".back-btn").addEventListener("click", () => {
+          lessonContentDiv.className = "";
+          setTimeout(() => {
+            lessonContentDiv.innerHTML = "";
+          }, 300);
+        });
+      }
+
+      // Show question
+      function showQuestion(index, planet) {
+        const questionContainer = document.getElementById("question-container");
+        const questions = lessonContent[planet].activity.questions;
+
+        if (index >= questions.length) {
+          // All questions answered
+          questionContainer.innerHTML = `
+                    <div class="result-feedback correct" style="display: block;">
+                        <h4>Mission Complete! 🎉</h4>
+                        <p class="readability-enhanced">Great job, Space Cadet! You've completed your mission on ${
+                          planet.charAt(0).toUpperCase() + planet.slice(1)
+                        } Planet.</p>
+                    </div>
+                `;
+          updateProgress(3);
+          return;
+        }
+
+        const question = questions[index];
+        let choicesHTML = "";
+
+        question.choices.forEach((choice, choiceIndex) => {
+          choicesHTML += `
+                    <button class="choice-btn" data-correct="${
+                      choice.correct
+                    }" data-index="${choiceIndex}">
+                        <div class="btn-icon">${String.fromCharCode(
+                          65 + choiceIndex
+                        )}</div>
+                        <span>${choice.text}</span>
+                    </button>
+                `;
+        });
+
+        questionContainer.innerHTML = `
+                <div class="question">
+                    <p class="readability-enhanced" style="margin-bottom: 1rem;"><strong>Question ${
+                      index + 1
+                    }:</strong> ${question.question}</p>
+                    <div class="choices">
+                        ${choicesHTML}
+                    </div>
+                    <div class="result-feedback correct"></div>
+                    <div class="result-feedback incorrect"></div>
+                </div>
+            `;
+
+        // Add event listeners to choices
+        document.querySelectorAll(".choice-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            const correct = button.getAttribute("data-correct") === "true";
+            const feedbackType = correct ? "correct" : "incorrect";
+            const feedbackText = question.feedback[feedbackType];
+
+            // Show feedback
+            document.querySelectorAll(".choice-btn").forEach((btn) => {
+              btn.disabled = true;
+
+              if (btn === button) {
+                btn.classList.add(feedbackType);
+              }
+            });
+
+            const feedback = document.querySelector(
+              `.result-feedback.${feedbackType}`
+            );
+            feedback.innerHTML = `<p>${feedbackText}</p>`;
+            feedback.style.display = "block";
+
+            // Update progress
+            updateProgress(2);
+
+            // Move to next question after delay
+            setTimeout(() => {
+              if (correct) {
+                showQuestion(index + 1, planet);
+              } else {
+                // Reset question for retry
+                showQuestion(index, planet);
+              }
+            }, 2000);
+          });
+        });
+      }
+
+      // Update progress bar
+      function updateProgress(step) {
+        const progressBar = document.querySelector(".progress-bar");
+        const progressRocket = document.querySelector(".progress-rocket");
+        const progressStars = document.querySelectorAll(".progress-star");
+
+        let width = 0;
+
+        switch (step) {
+          case 1:
+            width = 10;
+            break;
+          case 2:
+            width = 50;
+            break;
+          case 3:
+            width = 100;
+            break;
+        }
+
+        progressBar.style.width = `${width}%`;
+        progressRocket.style.left = `${width}%`;
+
+        // Update stars
+        progressStars.forEach((star, index) => {
+          if (index < step) {
+            star.classList.add("active");
+          } else {
+            star.classList.remove("active");
+          }
+        });
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        createStars();
+
+        // Set up planet clicks
+        document.querySelectorAll(".planet").forEach((planet) => {
+          planet.addEventListener("click", () => {
+            const planetType = planet.getAttribute("data-planet");
+            loadLesson(planetType);
+          });
+        });
+
+        // Set up help button
+        document.getElementById("helpBtn").addEventListener("click", () => {
+          document.getElementById("helpPanel").classList.toggle("active");
+        });
+
+        // Text size button (simple toggle between normal and larger)
+        let textSizeIncreased = false;
+        document.getElementById("textSize").addEventListener("click", () => {
+          textSizeIncreased = !textSizeIncreased;
+          document.body.style.fontSize = textSizeIncreased ? "1.2rem" : "1rem";
+        });
+      });
+    </script>
+  </body>
+</html>
